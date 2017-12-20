@@ -1,5 +1,7 @@
-package com.telran.model;
+package com.telran.model.subjectMover;
 
+
+import com.telran.model.subjectMover.Account;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -36,6 +38,22 @@ public class Mover extends Account {
     public Mover(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull String enabled, @NotBlank String name, @NotBlank byte[] logo) {
         super(id, phone, email, password, enabled);
         this.name = name;
+        this.logo = logo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public void setLogo(byte[] logo) {
         this.logo = logo;
     }
 }

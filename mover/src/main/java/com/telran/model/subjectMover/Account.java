@@ -1,4 +1,6 @@
-package com.telran.model;
+package com.telran.model.subjectMover;
+
+import com.telran.model.AbstractBaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;

@@ -1,5 +1,7 @@
-package com.telran.model;
+package com.telran.model.subjectMover;
 
+
+import com.telran.model.subjectMover.Account;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

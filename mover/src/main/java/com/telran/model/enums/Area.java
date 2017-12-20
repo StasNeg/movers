@@ -1,4 +1,4 @@
-package com.telran.model;
+package com.telran.model.enums;
 
 
 public enum Area {
