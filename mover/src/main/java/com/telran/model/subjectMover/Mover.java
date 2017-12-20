@@ -1,12 +1,14 @@
 package com.telran.model.subjectMover;
 
 
-import com.telran.model.subjectMover.Account;
+import com.telran.model.objectMover.Request;
+import com.telran.model.objectMover.RequestAdress;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Entity
@@ -20,6 +22,10 @@ public class Mover extends Account {
     @NotBlank
     @Column(name = "logo", nullable = false)
     private byte[] logo;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mover")
+    private List<Request> request;
+
 
     public Mover() {
     }
@@ -55,5 +61,13 @@ public class Mover extends Account {
 
     public void setLogo(byte[] logo) {
         this.logo = logo;
+    }
+
+    public List<Request> getRequest() {
+        return request;
+    }
+
+    public void setRequest(List<Request> request) {
+        this.request = request;
     }
 }

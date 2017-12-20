@@ -3,13 +3,14 @@ package com.telran.model.subjectMover;
 
 import com.telran.model.AbstractBaseEntity;
 import com.telran.model.enums.Area;
+import com.telran.model.objectMover.Request;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-
+import java.util.List;
 
 
 @Entity
@@ -45,6 +46,11 @@ public class Truck extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mover_id")
     private Mover mover;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "truck")
+    private List<Request> request;
+
+
 
     public Truck() {
     }
@@ -116,4 +122,11 @@ public class Truck extends AbstractBaseEntity {
         this.mover = mover;
     }
 
+    public List<Request> getRequest() {
+        return request;
+    }
+
+    public void setRequest(List<Request> request) {
+        this.request = request;
+    }
 }

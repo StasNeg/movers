@@ -1,12 +1,14 @@
 package com.telran.model.subjectMover;
 
 
+import com.telran.model.objectMover.Request;
 import com.telran.model.subjectMover.Account;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Entity
@@ -31,6 +33,10 @@ public class Customer extends Account {
     @Column(name = "avatar", nullable = false)
     @NotBlank
     private byte[] avatar;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<Request> request;
+
 
     public Customer() {
     }
@@ -90,4 +96,11 @@ public class Customer extends Account {
         this.avatar = avatar;
     }
 
+    public List<Request> getRequest() {
+        return request;
+    }
+
+    public void setRequest(List<Request> request) {
+        this.request = request;
+    }
 }
