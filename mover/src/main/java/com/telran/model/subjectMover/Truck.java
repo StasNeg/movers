@@ -1,5 +1,8 @@
-package com.telran.model;
+package com.telran.model.subjectMover;
 
+
+import com.telran.model.AbstractBaseEntity;
+import com.telran.model.enums.Area;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
