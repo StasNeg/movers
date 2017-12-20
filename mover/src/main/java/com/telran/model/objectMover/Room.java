@@ -27,4 +27,53 @@ public class Room extends AbstractBaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Item> items;
 
+    public Room() {
+    }
+
+    public Room(RoomType roomType, @NotBlank byte[] image, Request request, List<Item> items) {
+        this.roomType = roomType;
+        this.image = image;
+        this.request = request;
+        this.items = items;
+    }
+
+    public Room(Integer id, RoomType roomType, @NotBlank byte[] image, Request request, List<Item> items) {
+        super(id);
+        this.roomType = roomType;
+        this.image = image;
+        this.request = request;
+        this.items = items;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 }

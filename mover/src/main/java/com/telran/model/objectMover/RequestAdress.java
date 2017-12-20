@@ -25,4 +25,41 @@ public class RequestAdress extends AbstractBaseEntity{
 
     public RequestAdress() {
     }
+
+    public RequestAdress(@NotNull int seqnumberRequest, Request request, Address address) {
+        this.seqnumberRequest = seqnumberRequest;
+        this.request = request;
+        this.address = address;
+    }
+
+    public RequestAdress(Integer id, @NotNull int seqnumberRequest, Request request, Address address) {
+        super(id);
+        this.seqnumberRequest = seqnumberRequest;
+        this.request = request;
+        this.address = address;
+    }
+
+    public int getSeqnumberRequest() {
+        return seqnumberRequest;
+    }
+
+    public void setSeqnumberRequest(int seqnumberRequest) {
+        this.seqnumberRequest = seqnumberRequest;
+    }
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }
