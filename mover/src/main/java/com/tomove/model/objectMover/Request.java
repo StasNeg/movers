@@ -1,11 +1,11 @@
-package com.telran.model.objectMover;
+package com.tomove.model.objectMover;
 
-import com.telran.model.AbstractBaseEntity;
-import com.telran.model.enums.Place;
-import com.telran.model.enums.Status;
-import com.telran.model.subjectMover.Customer;
-import com.telran.model.subjectMover.Mover;
-import com.telran.model.subjectMover.Truck;
+import com.tomove.model.AbstractBaseEntity;
+import com.tomove.model.enums.Place;
+import com.tomove.model.enums.Status;
+import com.tomove.model.subjectMover.Customer;
+import com.tomove.model.subjectMover.Mover;
+import com.tomove.model.subjectMover.Truck;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

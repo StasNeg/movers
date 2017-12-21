@@ -1,7 +1,7 @@
-package com.telran.model.objectMover;
+package com.tomove.model.objectMover;
 
-import com.telran.model.AbstractBaseEntity;
-import com.telran.model.enums.RoomType;
+import com.tomove.model.AbstractBaseEntity;
+import com.tomove.model.enums.RoomType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

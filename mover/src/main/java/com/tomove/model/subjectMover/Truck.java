@@ -1,9 +1,9 @@
-package com.telran.model.subjectMover;
+package com.tomove.model.subjectMover;
 
 
-import com.telran.model.AbstractBaseEntity;
-import com.telran.model.enums.Area;
-import com.telran.model.objectMover.Request;
+import com.tomove.model.AbstractBaseEntity;
+import com.tomove.model.enums.Area;
+import com.tomove.model.objectMover.Request;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;

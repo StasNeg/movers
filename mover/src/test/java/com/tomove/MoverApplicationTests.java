@@ -1,4 +1,4 @@
-package com.telran;
+package com.tomove;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

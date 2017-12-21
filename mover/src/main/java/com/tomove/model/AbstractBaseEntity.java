@@ -1,4 +1,4 @@
-package com.telran.model;
+package com.tomove.model;
 
 import javax.persistence.*;
 
