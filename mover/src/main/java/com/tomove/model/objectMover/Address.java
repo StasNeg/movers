@@ -1,8 +1,8 @@
-package com.telran.model.objectMover;
+package com.tomove.model.objectMover;
 
-import com.telran.model.AbstractBaseEntity;
-import com.telran.model.enums.Area;
-import com.telran.model.enums.Lift;
+import com.tomove.model.AbstractBaseEntity;
+import com.tomove.model.enums.Area;
+import com.tomove.model.enums.Lift;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -27,9 +27,9 @@ public class Address extends AbstractBaseEntity{
     @NotBlank
     private String building;
 
-    @Column(name = "appartment", nullable = false)
+    @Column(name = "apartment", nullable = false)
     @NotBlank
-    private String appartment;
+    private String apartment;
 
     @Column(name = "longitude", nullable = false)
     @NotNull
@@ -64,12 +64,12 @@ public class Address extends AbstractBaseEntity{
     public Address() {
     }
 
-    public Address(Integer id, @NotBlank String city, @NotBlank String street, @NotBlank String building, @NotBlank String appartment, @NotNull float longitude, @NotNull float lattitude, @NotNull int floor, Lift lift, Area area) {
+    public Address(Integer id, @NotBlank String city, @NotBlank String street, @NotBlank String building, @NotBlank String apartment, @NotNull float longitude, @NotNull float lattitude, @NotNull int floor, Lift lift, Area area) {
         super(id);
         this.city = city;
         this.street = street;
         this.building = building;
-        this.appartment = appartment;
+        this.apartment = apartment;
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.floor = floor;
@@ -77,11 +77,11 @@ public class Address extends AbstractBaseEntity{
         this.area = area;
     }
 
-    public Address(@NotBlank String city, @NotBlank String street, @NotBlank String building, @NotBlank String appartment, @NotNull float longitude, @NotNull float lattitude, @NotNull int floor, Lift lift, Area area) {
+    public Address(@NotBlank String city, @NotBlank String street, @NotBlank String building, @NotBlank String apartment, @NotNull float longitude, @NotNull float lattitude, @NotNull int floor, Lift lift, Area area) {
         this.city = city;
         this.street = street;
         this.building = building;
-        this.appartment = appartment;
+        this.apartment = apartment;
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.floor = floor;
@@ -89,11 +89,11 @@ public class Address extends AbstractBaseEntity{
         this.area = area;
     }
 
-    public Address(@NotBlank String city, @NotBlank String street, @NotBlank String building, @NotBlank String appartment, @NotNull float longitude, @NotNull float lattitude, @NotNull int floor, Lift lift, Area area, List<Item> itemsFrom, List<Item> itemsTo, List<RequestAdress> requestAdresses) {
+    public Address(@NotBlank String city, @NotBlank String street, @NotBlank String building, @NotBlank String apartment, @NotNull float longitude, @NotNull float lattitude, @NotNull int floor, Lift lift, Area area, List<Item> itemsFrom, List<Item> itemsTo, List<RequestAdress> requestAdresses) {
         this.city = city;
         this.street = street;
         this.building = building;
-        this.appartment = appartment;
+        this.apartment = apartment;
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.floor = floor;
@@ -128,12 +128,12 @@ public class Address extends AbstractBaseEntity{
         this.building = building;
     }
 
-    public String getAppartment() {
-        return appartment;
+    public String getApartment() {
+        return apartment;
     }
 
-    public void setAppartment(String appartment) {
-        this.appartment = appartment;
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
     }
 
     public float getLongitude() {

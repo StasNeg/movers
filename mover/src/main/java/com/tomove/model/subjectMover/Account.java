@@ -1,6 +1,6 @@
-package com.telran.model.subjectMover;
+package com.tomove.model.subjectMover;
 
-import com.telran.model.AbstractBaseEntity;
+import com.tomove.model.AbstractBaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
