@@ -2,13 +2,15 @@ package com.tomove.model.subjectMover;
 
 import com.tomove.model.AbstractBaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-@MappedSuperclass
+@Entity
+@Table(name = "accounts", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "accounts_unique_email_idx")})
+@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue(value="account")
 public abstract class Account extends AbstractBaseEntity {
 
     @NotBlank
@@ -29,6 +31,8 @@ public abstract class Account extends AbstractBaseEntity {
     @Column(name = "enabled", nullable =  false)
     @NotNull
     protected String enabled;
+
+
 
     public Account() {
     }

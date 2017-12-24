@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Access(AccessType.FIELD)
-@Table(name = "customers", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "customers_unique_email_idx")})
+@DiscriminatorValue(value="customer")
 public class Customer extends Account {
 
     @Column(name = "first_name", nullable = false)

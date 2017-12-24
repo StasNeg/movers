@@ -9,10 +9,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-
 @Entity
+@DiscriminatorValue(value="mover")
 @Access(AccessType.FIELD)
-@Table(name = "movers", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "movers_unique_email_idx")})
 public class Mover extends Account {
     @NotBlank
     @Column(name = "name", nullable = false)
