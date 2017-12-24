@@ -30,21 +30,23 @@ public abstract class Account extends AbstractBaseEntity {
 
     @Column(name = "enabled", nullable =  false)
     @NotNull
-    protected String enabled;
+    protected boolean enabled;
 
-
+    @Column(name = "type", nullable =  false, insertable = false, updatable = false)
+//    @NotNull
+    protected String type;
 
     public Account() {
     }
 
-    public Account(@NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull String enabled) {
+    public Account(@NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled) {
         this.phone = phone;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
     }
 
-    public Account(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull String enabled) {
+    public Account(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled) {
         super(id);
         this.phone = phone;
         this.email = email;
@@ -76,12 +78,16 @@ public abstract class Account extends AbstractBaseEntity {
         this.password = password;
     }
 
-    public String getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(String enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getType() {
+        return type;
     }
 
 

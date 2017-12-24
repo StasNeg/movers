@@ -1,6 +1,7 @@
 package com.tomove.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Do not manipulate new (transient) entries in HashSet/HashMap without overriding hashCode
@@ -8,7 +9,7 @@ import javax.persistence.*;
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity implements Serializable{
     public static final int START_SEQ = 100000;
 
     @Id
