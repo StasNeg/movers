@@ -33,7 +33,6 @@ public abstract class Account extends AbstractBaseEntity {
     protected boolean enabled;
 
     @Column(name = "type", nullable =  false, insertable = false, updatable = false)
-//    @NotNull
     protected String type;
 
     public Account() {
