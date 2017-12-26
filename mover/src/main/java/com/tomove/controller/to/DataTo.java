@@ -2,9 +2,6 @@ package com.tomove.controller.to;
 
 import java.io.Serializable;
 
-/**
- * Created by Stanislav on 25.12.2017.
- */
 public class DataTo implements Serializable {
     private boolean succes;
     private Object data;
