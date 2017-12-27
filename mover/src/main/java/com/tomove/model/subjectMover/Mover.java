@@ -13,12 +13,12 @@ import java.util.List;
 @DiscriminatorValue(value="mover")
 @Access(AccessType.FIELD)
 public class Mover extends Account {
-    @NotBlank
-    @Column(name = "name", nullable = false)
+//    @NotBlank
+    @Column(name = "name")
     private String name;
 
-    @NotBlank
-    @Column(name = "logo", nullable = false)
+//    @NotBlank
+    @Column(name = "logo")
     private byte[] logo;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mover")
@@ -33,13 +33,13 @@ public class Mover extends Account {
         this.logo = logo;
     }
 
-    public Mover(@NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull String enabled, @NotBlank String name, @NotBlank byte[] logo) {
+    public Mover(@NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, @NotBlank String name, @NotBlank byte[] logo) {
         super(phone, email, password, enabled);
         this.name = name;
         this.logo = logo;
     }
 
-    public Mover(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull String enabled, @NotBlank String name, @NotBlank byte[] logo) {
+    public Mover(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, @NotBlank String name, @NotBlank byte[] logo) {
         super(id, phone, email, password, enabled);
         this.name = name;
         this.logo = logo;

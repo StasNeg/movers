@@ -15,22 +15,18 @@ import java.util.List;
 @DiscriminatorValue(value="customer")
 public class Customer extends Account {
 
-    @Column(name = "first_name", nullable = false)
-    @NotBlank
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
-    @NotBlank
+    @Column(name = "last_name")
     private String lastName;
 
 
-    @Column(name = "additional_skills", nullable = false)
-    @NotBlank
+    @Column(name = "additional_skills")
     private String additionalSkills;
 
 
-    @Column(name = "avatar", nullable = false)
-    @NotBlank
+    @Column(name = "avatar")
     private byte[] avatar;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
@@ -47,7 +43,7 @@ public class Customer extends Account {
         this.avatar = avatar;
     }
 
-    public Customer(@NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull String enabled, @NotBlank String firstName, @NotBlank String lastName, @NotBlank String additionalSkills, @NotBlank byte[] avatar) {
+    public Customer(@NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, @NotBlank String firstName, @NotBlank String lastName, @NotBlank String additionalSkills, @NotBlank byte[] avatar) {
         super(phone, email, password, enabled);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,7 +51,7 @@ public class Customer extends Account {
         this.avatar = avatar;
     }
 
-    public Customer(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull String enabled, @NotBlank String firstName, @NotBlank String lastName, @NotBlank String additionalSkills, @NotBlank byte[] avatar) {
+    public Customer(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, @NotBlank String firstName, @NotBlank String lastName, @NotBlank String additionalSkills, @NotBlank byte[] avatar) {
         super(id, phone, email, password, enabled);
         this.firstName = firstName;
         this.lastName = lastName;
