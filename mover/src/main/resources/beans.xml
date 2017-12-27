@@ -9,12 +9,19 @@
 
     <context:component-scan base-package="com.tomove"/>
 
+    <!-- LOAD properties to use them in XML as values -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>application.properties</value>
+        </property>
+    </bean>
+
     <!-- SET default mail properties -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.gmail.com"/>
         <property name="port" value="25"/>
-        <property name="username" value="mcfoton@gmail.com"/>
-        <property name="password" value="corjnzsdyunwdbwh"/>
+        <property name="username" value="${email_email}"/>
+        <property name="password" value="${email_password}"/>
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.transport.protocol">smtp</prop>
@@ -31,4 +38,5 @@
     <!--<property name="from" value="howtodoinjava@gmail.com"></property>-->
     <!--<property name="subject" value="FATAL - Application crash. Save your job !!"/>-->
     <!--</bean>-->
+
 </beans>
