@@ -86,8 +86,14 @@ public class LoginController {
         if (account == null || !account.isFlPasswordUpdate()) {
             return new DataTo(false, "No such token"); // shouldn't happen, but we check anyway
         } else {
-            account.setPassword(params.get("password"));
-            account.setFlPasswordUpdate(false);
+            String password = params.get("password");
+            /// TODO: 27/12/2017 ADD PROPER CHECK FOR LENGTH AM ERROR MESSAGE
+            if (password == null || password.length() == 0) {
+                return new DataTo(false, "Password can not be that");
+            } else {
+                account.setPassword(password);
+                account.setFlPasswordUpdate(false);
+            }
             repository.save(account);
             return new DataTo(true, "Password saved");
         }
