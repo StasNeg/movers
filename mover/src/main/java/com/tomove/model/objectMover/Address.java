@@ -104,7 +104,24 @@ public class Address extends AbstractBaseEntity{
         this.requestAdresses = requestAdresses;
     }
 
-    public String getCity() {
+    public Address(@NotBlank String city, @NotBlank String street, @NotBlank String building,
+			@NotBlank String apartment, @NotNull float longitude, @NotNull float lattitude, @NotNull int floor,
+			Lift lift, Area area, List<Item> itemsFrom, List<Item> itemsTo) {
+		super();
+		this.city = city;
+		this.street = street;
+		this.building = building;
+		this.apartment = apartment;
+		this.longitude = longitude;
+		this.lattitude = lattitude;
+		this.floor = floor;
+		this.lift = lift;
+		this.area = area;
+		this.itemsFrom = itemsFrom;
+		this.itemsTo = itemsTo;
+	}
+
+	public String getCity() {
         return city;
     }
 
