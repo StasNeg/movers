@@ -122,8 +122,25 @@ public class Request extends AbstractBaseEntity{
         this.requestAdresses = requestAdresses;
         this.rooms = rooms;
     }
+    
+    public Request(@NotNull LocalDateTime dateTime, @NotNull LocalDate creationDate, Status status,
+			@NotNull boolean isPersonal, @NotNull int cost, @NotNull int rate, Place place, Mover mover,
+			Customer customer, Truck truck, List<Room> rooms) {
+		super();
+		this.dateTime = dateTime;
+		this.creationDate = creationDate;
+		this.status = status;
+		this.isPersonal = isPersonal;
+		this.cost = cost;
+		this.rate = rate;
+		this.place = place;
+		this.mover = mover;
+		this.customer = customer;
+		this.truck = truck;
+		this.rooms = rooms;
+	}
 
-    public LocalDateTime getDateTime() {
+	public LocalDateTime getDateTime() {
         return dateTime;
     }
 

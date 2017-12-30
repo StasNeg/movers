@@ -16,8 +16,8 @@ public class Room extends AbstractBaseEntity {
     @Column(name = "room_type", nullable = false)
     private RoomType roomType;
 
-    @NotBlank
-    @Column(name = "image", nullable = false)
+   // @NotBlank
+    @Column(name = "image" )//, nullable = false)
     private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
