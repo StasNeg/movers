@@ -2,7 +2,6 @@ package com.tomove.controller;
 
 
 public class PathConstant {
-
     public static final String URL = "http://localhost:8080";
     public static final String GET_ALL_ACCOUNTS = "/";
     public static final String POST_LOGIN = "/login";
@@ -15,8 +14,7 @@ public class PathConstant {
     
     public static final String REQUEST_DATE = "request_date";
 
-    public static final String FORGOT_PASSWORD = "/forgot";
-    public static final String RESET_PASSWORD = "/reset";
-    public static final String CHECK_TOKEN = "/token/check";
-
+    public static final String FORGOT_PASSWORD = "/forgot"; // { "email" : "myemail@gmail.com" }
+    public static final String RESET_PASSWORD = "/reset"; // { "token" : "mytoken", "password" : "mynewpassword"}
+    public static final String CHECK_TOKEN = "/token/check"; // { "token" : "mytoken" }
 }
