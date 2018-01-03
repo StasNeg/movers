@@ -46,31 +46,31 @@ public class LoginController {
     public DataTo sendForgotPasswordEmail(@RequestBody Map<String, String> params) {
         String email = params.get("email");
         Account account = repository.findByEmail(email);
-        if (account == null) {
-            return new DataTo(false, String.format("No user with email: %s", email));
-        } else {
+        if (account != null) {
             account.setVerificationCode(UUID.randomUUID().toString());
-            account.setFlPasswordUpdate(true);
             repository.save(account);
             sendResetPasswordEmail(email, account.getVerificationCode());
-            return new DataTo(true, String.format("Email was sent to %s", email));
         }
+        return new DataTo(true, String.format("Email was sent to %s", email));
     }
 
     private void sendResetPasswordEmail(String email, String token) {
         // Email message
         SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
-        passwordResetEmail.setFrom("support@demo.com");
+        passwordResetEmail.setFrom("support@tomove.co");
         passwordResetEmail.setTo(email);
-        passwordResetEmail.setSubject("Password Reset Request");
+        passwordResetEmail.setSubject("ToMove Password Reset Request");
+        // FIXME: 02/01/2018 GENERATE LINK WITH FRONT DOMAIN AND PORT
         passwordResetEmail.setText("To reset your password, click the link below:\n" + URL
                 + "/reset?token=" + token);
 
         emailService.sendEmail(passwordResetEmail);
     }
 
+    // FIXME: 02/01/2018 REMOVE @CrossOrigin
+    @CrossOrigin
     @RequestMapping(value = CHECK_TOKEN, method = RequestMethod.GET)
-    public DataTo checkToken(String token) {
+    public DataTo checkToken(@RequestParam String token) {
         Account account = repository.findByVerificationCode(token);
         if (account == null) {
             return new DataTo(false, "Password reset token invalid");
@@ -79,20 +79,23 @@ public class LoginController {
         }
     }
 
+    // FIXME: 02/01/2018 REMOVE @CrossOrigin
+    @CrossOrigin
     @RequestMapping(value = RESET_PASSWORD, method = RequestMethod.POST)
     public DataTo storeNewPassword(@RequestBody Map<String, String> params) {
         String token = params.get("token");
         Account account = repository.findByVerificationCode(token);
-        if (account == null || !account.isFlPasswordUpdate()) {
+        if (account == null) {
             return new DataTo(false, "No such token"); // shouldn't happen, but we check anyway
         } else {
             String password = params.get("password");
-            /// TODO: 27/12/2017 ADD PROPER CHECK FOR LENGTH AM ERROR MESSAGE
+            // TODO: 27/12/2017 ADD PROPER CHECK FOR PASSWORD LENGTH AND ERROR MESSAGE
+            // TODO: 28/12/2017 ADD TOKEN EXPIRATION
             if (password == null || password.length() == 0) {
                 return new DataTo(false, "Password can not be that");
             } else {
                 account.setPassword(password);
-                account.setFlPasswordUpdate(false);
+                account.setVerificationCode("");
             }
             repository.save(account);
             return new DataTo(true, "Password saved");
