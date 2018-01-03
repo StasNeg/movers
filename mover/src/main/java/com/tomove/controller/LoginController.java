@@ -61,7 +61,7 @@ public class LoginController {
         passwordResetEmail.setTo(email);
         passwordResetEmail.setSubject("ToMove Password Reset Request");
         // FIXME: 02/01/2018 GENERATE LINK WITH FRONT DOMAIN AND PORT
-        passwordResetEmail.setText("To reset your password, click the link below:\n" + URL
+        passwordResetEmail.setText("To reset your password, click the link below:\n" + URL_FRONT
                 + "/reset?token=" + token);
 
         emailService.sendEmail(passwordResetEmail);
