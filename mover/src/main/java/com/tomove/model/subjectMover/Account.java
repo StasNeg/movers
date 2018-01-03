@@ -35,19 +35,8 @@ public abstract class Account extends AbstractBaseEntity {
     @Column(name = "type", nullable =  false, insertable = false, updatable = false)
     protected String type;
 
-    @Column(name = "fl_password_update")
-    protected boolean flPasswordUpdate;
-
     @Column(name = "verification_code")
     protected String verificationCode;
-
-    public boolean isFlPasswordUpdate() {
-        return flPasswordUpdate;
-    }
-
-    public void setFlPasswordUpdate(boolean flPasswordUpdate) {
-        this.flPasswordUpdate = flPasswordUpdate;
-    }
 
     public String getVerificationCode() {
         return verificationCode;
