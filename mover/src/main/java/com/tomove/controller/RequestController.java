@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.tomove.controller;
 
 
@@ -36,13 +37,19 @@ import java.util.stream.Collectors;
 public class RequestController {
 	private AccountRepository accRepo;
 	private RequestORM requestManager;
-	//FIXME	DISCUSS USE OF THIS REPO
+	//FIXME	DISCUSS USE OF THIS REPOS
 	private RequestRepository requestRepository;
+	private AccountRepository accountRepository;
 
-	@Autowired public RequestController(RequestORM requestManager, AccountRepository accRepo, RequestRepository requestRepository) {
+	@Autowired public RequestController(
+			RequestORM requestManager,
+			AccountRepository accRepo,
+			RequestRepository requestRepository,
+			AccountRepository accountRepository) {
 		this.requestManager = requestManager;
 		this.accRepo = accRepo;
 		this.requestRepository = requestRepository;
+		this.accountRepository = accountRepository;
 	}
 	
 	@RequestMapping(value=GET_RECENT_CUSTOMER_REQUESTS, method=RequestMethod.GET)
@@ -130,5 +137,36 @@ public class RequestController {
 	public DataTo getRequestInfo(@RequestParam Integer id) {
 		Request request = requestRepository.findById(id).orElse(null);
 		return request == null ? new DataTo(false, "No request with id " + id) : new DataTo(true, request);
+	}
+
+	@GetMapping(value = REQUEST_GET_INFO)
+	public DataTo getRequestInfo(@RequestParam Integer id) {
+		Request request = requestRepository.findById(id).orElse(null);
+		return request == null ? new DataTo(false, "No request with id " + id) : new DataTo(true, request);
+	}
+
+	@PostMapping(value = REQUEST_ASSIGN_TO_MOVER)
+	public DataTo assignRequestToMover(@RequestBody Map<String, Integer> params) {
+		Integer request_id = params.get("request_id");
+		Integer mover_id = params.get("mover_id");
+		Request request = requestRepository.findById(request_id).orElse(null);
+		Account mover = accountRepository.findById(mover_id).orElse(null);
+		if (mover == null) {
+			return new DataTo(false, "No mover with id = " + mover_id);
+		}
+		if (request == null) {
+			return new DataTo(false, "No request with id = " + request_id);
+		}
+		// TODO: 05/01/2018 MAKE RETURN CONSTANT CODE i.e. REQUEST_NOT_AVAILABLE
+		if (request.getMover() != null) {
+			return new DataTo(false, "Request " + request_id + " is already assigned");
+		}
+		// FIXME: 05/01/2018 UGLY CASTING. ALSO, SHOULD WE CHECK FOR MOVER.GETTYPE?
+		request.setMover((Mover) mover);
+		requestRepository.save(request);
+
+		((Mover) mover).getRequest().add(request);
+		accountRepository.save(mover);
+		return new DataTo(true, String.format("Request %d was assigned to mover %d", request_id, mover_id));
 	}
 }
