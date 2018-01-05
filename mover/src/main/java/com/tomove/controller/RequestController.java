@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 package com.tomove.controller;
-
 
 import com.tomove.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,9 +144,7 @@ public class RequestController {
 	}
 
 	@PostMapping(value = REQUEST_ASSIGN_TO_MOVER)
-	public DataTo assignRequestToMover(@RequestBody Map<String, Integer> params) {
-		Integer request_id = params.get("request_id");
-		Integer mover_id = params.get("mover_id");
+	public DataTo assignRequestToMover(@RequestParam Integer request_id, @RequestParam Integer mover_id) {
 		Request request = requestRepository.findById(request_id).orElse(null);
 		Account mover = accountRepository.findById(mover_id).orElse(null);
 		if (mover == null) {
