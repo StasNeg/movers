@@ -1,19 +1,18 @@
 package com.tomove.controller;
 
 
-import com.tomove.controller.to.DataTo;
+import com.tomove.common.DataTo;
 import com.tomove.model.subjectMover.Account;
 import com.tomove.repository.AccountRepository;
 import com.tomove.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Map;
 import java.util.UUID;
 
-import static com.tomove.controller.PathConstant.*;
+import static com.tomove.common.PathConstant.*;
 
 @RestController
 @CrossOrigin
@@ -21,8 +20,8 @@ public class LoginController {
 
     private AccountRepository repository;
 
-    @Autowired
-    private EmailService emailService;
+//    @Autowired
+//    private EmailService emailService;
 
     @Autowired
     public LoginController(AccountRepository repository) {
@@ -64,7 +63,7 @@ public class LoginController {
         passwordResetEmail.setText("To reset your password, click the link below:\n" + URL_FRONT
                 + "/reset?token=" + token);
 
-        emailService.sendEmail(passwordResetEmail);
+//        emailService.sendEmail(passwordResetEmail);
     }
 
     // FIXME: 02/01/2018 REMOVE @CrossOrigin

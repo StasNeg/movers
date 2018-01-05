@@ -1,4 +1,4 @@
-package com.tomove.controller;
+package com.tomove.common;
 
 
 public class PathConstant {
@@ -12,4 +12,7 @@ public class PathConstant {
     public static final String FORGOT_PASSWORD = "/forgot"; // { "email" : "myemail@gmail.com" }
     public static final String RESET_PASSWORD = "/reset"; // { "token" : "mytoken", "password" : "mynewpassword"}
     public static final String CHECK_TOKEN = "/token/check"; // { "token" : "mytoken" }
+
+    public static final String REQUEST_GET_INFO = "/request/get";
+    public static final String REQUEST_ASSIGN_TO_MOVER = "/request/assign";
 }
