@@ -1,4 +1,4 @@
-package com.tomove.controller.to;
+package com.tomove.common;
 
 import java.io.Serializable;
 

@@ -1,6 +1,7 @@
 package com.tomove.controller;
 
 
+import com.tomove.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,10 +36,13 @@ import java.util.stream.Collectors;
 public class RequestController {
 	private AccountRepository accRepo;
 	private RequestORM requestManager;
-	
-	@Autowired public RequestController(RequestORM requestManager, AccountRepository accRepo) {
+	//FIXME	DISCUSS USE OF THIS REPO
+	private RequestRepository requestRepository;
+
+	@Autowired public RequestController(RequestORM requestManager, AccountRepository accRepo, RequestRepository requestRepository) {
 		this.requestManager = requestManager;
 		this.accRepo = accRepo;
+		this.requestRepository = requestRepository;
 	}
 	
 	@RequestMapping(value=GET_RECENT_CUSTOMER_REQUESTS, method=RequestMethod.GET)
@@ -121,5 +125,10 @@ public class RequestController {
 		});		
 		return res;		
 	}
-	
+
+	@GetMapping(value = REQUEST_GET_INFO)
+	public DataTo getRequestInfo(@RequestParam Integer id) {
+		Request request = requestRepository.findById(id).orElse(null);
+		return request == null ? new DataTo(false, "No request with id " + id) : new DataTo(true, request);
+	}
 }
