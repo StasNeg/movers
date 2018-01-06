@@ -34,7 +34,10 @@ public class RequestController {
     }
 
     @PostMapping(value = REQUEST_ASSIGN_TO_MOVER)
-    public DataTo assignRequestToMover(@RequestParam Integer request_id, @RequestParam Integer mover_id) {
+    // TODO: 06/01/2018 ASK STAS HOW TO TAKE PARAMS DIRECTLY
+    public DataTo assignRequestToMover(@RequestBody Map<String, Integer> params) {
+        Integer request_id = params.get("request_id");
+        Integer mover_id = params.get("mover_id");
         Request request = requestRepository.findById(request_id).orElse(null);
         Account mover = accountRepository.findById(mover_id).orElse(null);
         if (mover == null) {
@@ -55,29 +58,4 @@ public class RequestController {
         accountRepository.save(mover);
         return new DataTo(true, String.format("Request %d was assigned to mover %d", request_id, mover_id));
     }
-//
-//
-//    @RequestMapping(value = POST_LOGIN, method = RequestMethod.POST)
-//    public DataTo getLoginAccount(@RequestBody Map<String, Object> params) {
-//        Account account = repository.findByEmailAndPassword((String) params.get("email"), (String) params.get("password"));
-//        return account == null ? new DataTo(false, "Wrong login") : new DataTo(true, account);
-//    }
-//
-//    @RequestMapping(value = GET_ALL_ACCOUNTS, method = RequestMethod.GET)
-//    public DataTo getAll() {
-//        Iterable<Account> account = repository.findAll();
-//        return account == null ? new DataTo(false, "Wrong login") : new DataTo(true, account);
-//    }
-//
-//    @RequestMapping(value = FORGOT_PASSWORD, method = RequestMethod.POST)
-//    public DataTo sendForgotPasswordEmail(@RequestBody Map<String, String> params) {
-//        String email = params.get("email");
-//        Account account = repository.findByEmail(email);
-//        if (account != null) {
-//            account.setVerificationCode(UUID.randomUUID().toString());
-//            repository.save(account);
-//            sendResetPasswordEmail(email, account.getVerificationCode());
-//        }
-//        return new DataTo(true, String.format("Email was sent to %s", email));
-//    }
 }
