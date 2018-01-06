@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.tomove.controller;
 
 import com.tomove.repository.RequestRepository;
@@ -144,7 +145,10 @@ public class RequestController {
 	}
 
 	@PostMapping(value = REQUEST_ASSIGN_TO_MOVER)
-	public DataTo assignRequestToMover(@RequestParam Integer request_id, @RequestParam Integer mover_id) {
+	// TODO: 06/01/2018 ASK STAS HOW TO TAKE PARAMS DIRECTLY
+	public DataTo assignRequestToMover(@RequestBody Map<String, Integer> params) {
+		Integer request_id = params.get("request_id");
+		Integer mover_id = params.get("mover_id");
 		Request request = requestRepository.findById(request_id).orElse(null);
 		Account mover = accountRepository.findById(mover_id).orElse(null);
 		if (mover == null) {
