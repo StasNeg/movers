@@ -25,4 +25,54 @@ public class ItemType extends AbstractBaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "itemType")
     private Set<Item> items;
+
+    public ItemType() {
+    }
+
+    public ItemType(RoomType roomType, @NotBlank String name, Set<TypeProperties> properties, Set<Item> items) {
+        this.roomType = roomType;
+        this.name = name;
+        this.properties = properties;
+        this.items = items;
+    }
+
+    public ItemType(Integer id, RoomType roomType, @NotBlank String name, Set<TypeProperties> properties, Set<Item> items) {
+        super(id);
+        this.roomType = roomType;
+        this.name = name;
+        this.properties = properties;
+        this.items = items;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<TypeProperties> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Set<TypeProperties> properties) {
+        this.properties = properties;
+    }
+
+    public Set<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
+    }
 }
