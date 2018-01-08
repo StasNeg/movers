@@ -16,8 +16,9 @@ public class Item extends AbstractBaseEntity {
     @NotBlank
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
-    private Set<TypeProperties> properties;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_type")
+    private ItemType itemType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "add_from")
@@ -34,18 +35,18 @@ public class Item extends AbstractBaseEntity {
     public Item() {
     }
 
-    public Item(@NotBlank String name, Set<TypeProperties> properties, Address from, Address to, Room room) {
+    public Item(@NotBlank String name, ItemType itemType, Address from, Address to, Room room) {
         this.name = name;
-        this.properties = properties;
+        this.itemType = itemType;
         this.from = from;
         this.to = to;
         this.room = room;
     }
 
-    public Item(Integer id, @NotBlank String name, Set<TypeProperties> properties, Address from, Address to, Room room) {
+    public Item(Integer id, @NotBlank String name, ItemType itemType, Address from, Address to, Room room) {
         super(id);
         this.name = name;
-        this.properties = properties;
+        this.itemType = itemType;
         this.from = from;
         this.to = to;
         this.room = room;
@@ -59,12 +60,12 @@ public class Item extends AbstractBaseEntity {
         this.name = name;
     }
 
-    public Set<TypeProperties> getProperties() {
-        return properties;
+    public ItemType getItemType() {
+        return itemType;
     }
 
-    public void setProperties(Set<TypeProperties> properties) {
-        this.properties = properties;
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
     }
 
     public Address getFrom() {

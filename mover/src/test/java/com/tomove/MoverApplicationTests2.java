@@ -98,7 +98,7 @@ public class MoverApplicationTests2 {
 				Lift.LIFT,Area.CENTER,items3,items2);
 		address3 = new Address("Rehovot", "Palmah Boulevard", "22", "18A", 31.13f, 34.10f, 10, 
 				Lift.NO_LIFT, Area.CENTER, items1, items2);
-		itemProps = new TypeProperties("Length", "110", item1);
+		itemProps = new TypeProperties();
 		setProps = new HashSet<TypeProperties>();
 		setProps.add(itemProps);
 		date1 = LocalDate.now();
