@@ -1,6 +1,7 @@
 package com.tomove.controller;
 
 import com.tomove.common.DataTo;
+import com.tomove.common.RequestData;
 import com.tomove.common.TotalCostEstimate;
 import com.tomove.repository.AccountRepository;
 import com.tomove.repository.RequestRepository;
@@ -19,10 +20,10 @@ public class CostEstimateController {
     private AccountRepository accountRepository;
     private RequestRepository requestRepository;
 
-    @Value("cartonPrice")
+    @Value("${cartonPrice}")
     Integer cartonPrice;
 
-    @Value("packetPrice")
+    @Value("${packetPrice}")
     Integer packetPrice;
 
     @Autowired
@@ -32,8 +33,15 @@ public class CostEstimateController {
     }
 
     @PostMapping(value = GET_TOTAL_COST_ESTIMATE)
-    public DataTo getTotalCostEstimate(@RequestBody Map<String, String> data) {
-        Integer totalCostEstimate = calculateCost(data);
-        return new DataTo(true, new TotalCostEstimate(totalCostEstimate, cartonPrice, packetPrice)})
+    public DataTo getTotalCostEstimate(@RequestBody RequestData data) {
+        System.out.println(data);
+//        Integer totalCost = calculateCost(data);
+        Integer totalCost = 200;
+        return new DataTo(true, new TotalCostEstimate(totalCost, cartonPrice, packetPrice));
+    }
+
+    private Integer calculateCost(Map<String, String> data) {
+//        System.out.println(data);
+        return 200;
     }
 }
