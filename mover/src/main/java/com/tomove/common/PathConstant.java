@@ -21,4 +21,5 @@ public class PathConstant {
 
     public static final String REQUEST_GET_INFO = "/request/get";
     public static final String REQUEST_ASSIGN_TO_MOVER = "/request/assign";
+    public static final String GET_TOTAL_COST_ESTIMATE = "/request/estimate/get";
 }
