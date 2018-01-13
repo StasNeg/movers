@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RequestData {
     String date;
-    List<Item> items;
+    List<Move> moves;
 
     public RequestData() {
     }
@@ -13,7 +13,7 @@ public class RequestData {
         return date;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Move> getMoves() {
+        return moves;
     }
 }
