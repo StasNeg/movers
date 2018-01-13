@@ -4,6 +4,7 @@ import com.google.maps.*;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.TravelMode;
 import com.tomove.common.DataTo;
+import com.tomove.common.Move;
 import com.tomove.common.RequestData;
 import com.tomove.common.TotalCostEstimate;
 import com.tomove.repository.AccountRepository;
@@ -42,9 +43,17 @@ public class CostEstimateController {
     }
 
     private Integer calculateCost(RequestData data) {
-        Double distancePrice = getDistance(data.getItems().get(0).getAddressIn(), data.getItems().get(0).getAddressOut())*PRICE_PER_KM;
-        //TODO CALCULATE PRICE FOR ALL ITEMS AND LIFTS
-        return distancePrice.intValue();
+
+        Double distancePrice = 0.;
+        Double itemsPrice = 0.;
+
+        for (Move move : data.getMoves()) {
+            distancePrice += getDistance(move.getAddressIn(), move.getAddressOut()) * PRICE_PER_KM;
+            itemsPrice += move.getItems().size() * 3.;
+            //TODO CALCULATE PRICE FOR ALL ITEMS AND LIFTS
+        }
+
+        return distancePrice.intValue() + itemsPrice.intValue();
     }
 
     private Integer getDistance(String addressIn, String addressOut) {
@@ -64,6 +73,7 @@ public class CostEstimateController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println((int) (results.routes[0].legs[0].distance.inMeters) / 1000);
 
         return ((int) results.routes[0].legs[0].distance.inMeters) / 1000;
     }
