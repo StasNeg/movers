@@ -3,23 +3,23 @@ package com.tomove.controller.to;
 import java.io.Serializable;
 
 public class DataTo implements Serializable {
-    private boolean succes;
+    private boolean success;
     private Object data;
 
     public DataTo() {
     }
 
     public DataTo(boolean succes, Object data) {
-        this.succes = succes;
+        this.success = succes;
         this.data = data;
     }
 
-    public boolean isSucces() {
-        return succes;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setSucces(boolean succes) {
-        this.succes = succes;
+    public void setSucces(boolean success) {
+        this.success = success;
     }
 
     public Object getData() {

@@ -1,10 +1,15 @@
 package com.tomove;
 
+import com.tomove.controller.to.AddressDto;
+import com.tomove.controller.to.RequestDetailsDTO;
 import com.tomove.model.enums.Area;
 import com.tomove.model.enums.Lift;
 import com.tomove.model.enums.Place;
 import com.tomove.model.enums.RoomType;
 import com.tomove.model.enums.Status;
+import com.tomove.model.mapping.RequestDetails;
+import com.tomove.model.mapping.RequestMapping;
+import com.tomove.model.mapping.RequestORM;
 import com.tomove.model.objectMover.Address;
 import com.tomove.model.objectMover.Item;
 import com.tomove.model.objectMover.ItemType;
@@ -30,6 +35,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +44,7 @@ import java.util.Set;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MoverApplicationTests2 {
-	private Customer customer1;
+	private Customer customer1,customer2;
 	private Mover mover1;
 	private Truck truck1;
 	private Item item1,item2,item3,item4,item5;
@@ -46,8 +52,8 @@ public class MoverApplicationTests2 {
 	private Room room1, room2, room3;
 	private Address address1, address2, address3;
 	private Request request1;
-	private RequestAdress reqAddress1, reqAddress2;
-	private LocalDate date1;
+	private RequestAdress reqAddress0, reqAddress1, reqAddress2;
+	private LocalDate date1,date3;
 	private LocalDateTime date2;
 	private byte[] image;
 	
@@ -80,6 +86,9 @@ public class MoverApplicationTests2 {
 	private RequestAddressRepository reqAddrRepo;
 	@Autowired
 	private ItemRepository itemRepo;
+	@Autowired
+	private RequestORM requestsManager;
+
 
 
 	@Before
@@ -103,68 +112,73 @@ public class MoverApplicationTests2 {
 		setProps.add(itemProps);
 		date1 = LocalDate.now();
 		date2 = LocalDateTime.of(2018, 5, 25, 17, 30);
+		date3 = LocalDate.of(2018, 5, 25);
 		image = "someImamge".getBytes();
 		customer1 = new Customer("050887766", "iamcustomer@co.il", "qwerty", true, "Izya", "Katsman", "whatuhskills", null);
+		customer2 = new Customer("050887766", "iamcustomer2@co.il", "qwerty", true, "Vasya", "Katsman", "whatuhskills", null);
 		mover1 = new Mover("0503121421", "moveyou@co.il", "bumbumbigalow", true, "Wizzy", null);
-		truck1 = new Truck("Kamaz 20T", "123sdq13", 5, 3, Area.CENTER, mover1);
-		item1 = new Item("Sofa", null, address1, address2, room1);
-		//items1.add(item1);
-		/*item2 = new Item("TV",null,address1,address2,room2);
-		items2.add(item2);
-		item3 = new Item("Brah",null,address1,address3,room3);
-		items3.add(item3);*/
-
-		room1 = new Room(RoomType.SALON, null, request1, items1);
-		room2 = new Room(RoomType.BEDROOM, null, request1, items2);
-		room3 = new Room(RoomType.BEDROOM, null, request1, items3);
-		
-		roomsList = Arrays.asList(room1,room2);
-		
+		truck1 = new Truck("Kamaz 20T", "123sdq13", 5, 3, Area.CENTER, mover1);			
 		
 		request1 = new Request(date2, date1, Status.INITIAL, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
 		
+		room1 = new Room(RoomType.SALON, null, request1, items1);
+		room2 = new Room(RoomType.BEDROOM, null, request1, items2);
+		room3 = new Room(RoomType.BEDROOM, null, request1, items3);		
 		
-		accounts = Arrays.asList(customer1, mover1);
+		item1 = new Item("Sofa", null, address1, address2, room1);
+		items1 = new ArrayList<Item>();
+		items1.add(item1);
+		item2 = new Item("TV",null,address1,address2,room2);
+		item3 = new Item("Brah",null,address1,address3,room3);				
+		
+		accounts = Arrays.asList(customer1,customer2, mover1);
 		trucks = Arrays.asList(truck1);
-		rooms = Arrays.asList(room1,room2);
+		rooms = Arrays.asList(room1,room2,room3);
 		requests = Arrays.asList(request1);
 		addresses = Arrays.asList(address1,address2,address3);
-
+		items = Arrays.asList(item1,item2,item3);
+		
+		reqAddress0 = new RequestAdress(0, request1, address1);
 		reqAddress1 = new RequestAdress(1, request1, address3);
 		reqAddress2 = new RequestAdress(2, request1, address2);
-		requestAdresses = Arrays.asList(reqAddress1,reqAddress2);
+		requestAdresses = Arrays.asList(reqAddress0, reqAddress1, reqAddress2);
 		
 		accountRepo.saveAll(accounts);		
 		truckRepo.saveAll(trucks);
 		addressRepo.saveAll(addresses);
-		requestRepo.saveAll(requests);
-		
-		
-		
-		
+		requestRepo.saveAll(requests);		
 		reqAddrRepo.saveAll(requestAdresses);
 		roomRepo.saveAll(rooms);
-
-		
+		itemRepo.saveAll(items);		
 	}
+
 	@Test
 	public void contextLoads() {
-	}
-
-	/*@Test
-	public void findByEmail() {
-		Assert.assertEquals(customer, accountRepo.findByEmailAndPassword("stasn@ua.fm", "password"));
-	}
-
+	}		
+	
 	@Test
-	public void findByWrongEmail() {
-		Assert.assertEquals(null, accountRepo.findByEmailAndPassword("stas@ua.fm", "password"));
+	public void findByUserId(){
+		List<RequestDetails> res = requestsManager.getRequestDetailsByCustomer(customer1);
+		Assert.assertEquals(1,res.size());
+		List<RequestDetails> res2 = requestsManager.getRequestDetailsByCustomer(customer2);
+		Assert.assertNotEquals(1,res2.size());
 	}
-
 	@Test
-	public void findByWrongPassword() {
-		Assert.assertEquals(null, accountRepo.findByEmailAndPassword("stasn@ua.fm", "pasord"));
-	}*/
+	public void findByUserIdFromDate(){
+		List<RequestDetails> res = requestsManager.getRequestDetailsByCustomerFromDay(customer1,date1);
+		Assert.assertEquals(1,res.size());
+		List<RequestDetails> res2 = requestsManager.getRequestDetailsByCustomerFromDay(customer2,date1);
+		Assert.assertNotEquals(1,res2.size());
+	}
+	@Test
+	public void findByUserIdByDate(){
+		List<RequestDetails> res = requestsManager.getRequestDetailsByCustomerAndDay(customer1,date3);
+		Assert.assertEquals(1,res.size());
+		List<RequestDetails> res3 = requestsManager.getRequestDetailsByCustomerAndDay(customer1,date1);
+		Assert.assertNotEquals(1,res3.size());
+		List<RequestDetails> res2 = requestsManager.getRequestDetailsByCustomerAndDay(customer2,date1);
+		Assert.assertNotEquals(1,res2.size());
+	}	
 
 	@After
 	public void after() {
