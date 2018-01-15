@@ -60,7 +60,6 @@ public class CostEstimateController {
         Double itemsPrice = 0.;
 
         LocalDate date = LocalDate.parse(data.date);
-        System.out.println(date);
 
         // TODO CHECK FOR HOLIDAY
         /**  В даты с 1 по 8 и с 24 по 31, а так же в прздничные дни + 5% */
