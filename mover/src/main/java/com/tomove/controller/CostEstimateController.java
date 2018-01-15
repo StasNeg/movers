@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.tomove.common.PathConstant.*;
 
 @RestController
@@ -23,12 +27,18 @@ public class CostEstimateController {
     private RequestRepository requestRepository;
 
     private static double PRICE_PER_KM = 30;
+    private static double PERCENT_PER_FLOOR_NO_LIFT = 1.03;
+    private static double PERCENT_PER_FLOOR_YES_LIFT = 1.01;
+    private static double PERCENT_IF_HOLIDAY = 1.05;
 
     @Value("${cartonPrice}")
     Integer cartonPrice;
 
     @Value("${packetPrice}")
     Integer packetPrice;
+
+    @Value("{carSupplyPrice}")
+    Integer carSupplyPrice;
 
     @Autowired
     public CostEstimateController(AccountRepository accountRepository, RequestRepository requestRepository) {
@@ -44,16 +54,44 @@ public class CostEstimateController {
 
     private Integer calculateCost(RequestData data) {
 
+        Double dateCoeff = 1.;
+        Double elevatorCoeff = 0.;
         Double distancePrice = 0.;
         Double itemsPrice = 0.;
 
-        for (Move move : data.getMoves()) {
-            distancePrice += getDistance(move.getAddressIn(), move.getAddressOut()) * PRICE_PER_KM;
-            itemsPrice += move.getItems().size() * 3.;
-            //TODO CALCULATE PRICE FOR ALL ITEMS AND LIFTS
+        LocalDate date = LocalDate.parse(data.date);
+        System.out.println(date);
+
+        // TODO CHECK FOR HOLIDAY
+        /**  В даты с 1 по 8 и с 24 по 31, а так же в прздничные дни + 5% */
+
+        List holidays = new ArrayList();
+        if (holidays.contains(date)) {
+            dateCoeff = PERCENT_IF_HOLIDAY;
         }
 
-        return distancePrice.intValue() + itemsPrice.intValue();
+        for (Move move : data.getMoves()) {
+
+            // TODO CAP AT 15%(YES_ELEV) AND 5%(NO_ELEV)
+            /* Calculate elevation price */
+            if (!move.addressIn.elevator) {
+                elevatorCoeff += move.addressIn.floor*PERCENT_PER_FLOOR_NO_LIFT;
+            } else {
+                elevatorCoeff += move.addressIn.floor*PERCENT_PER_FLOOR_YES_LIFT;
+            }
+            if (!move.addressOut.elevator) {
+                elevatorCoeff += move.addressOut.floor*PERCENT_PER_FLOOR_NO_LIFT;
+            } else {
+                elevatorCoeff += move.addressOut.floor*PERCENT_PER_FLOOR_YES_LIFT;
+            }
+
+            distancePrice += getDistance(move.addressIn.address, move.addressOut.address) * PRICE_PER_KM;
+            itemsPrice += move.getItems().size() * 3.;
+            //TODO CALCULATE PRICE FOR ALL ITEMS
+        }
+
+        //// FIXME: 15/01/2018 carSupplyPrice only once?
+        return (int) ((carSupplyPrice + distancePrice + itemsPrice)*elevatorCoeff*dateCoeff);
     }
 
     private Integer getDistance(String addressIn, String addressOut) {
@@ -73,7 +111,7 @@ public class CostEstimateController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println((int) (results.routes[0].legs[0].distance.inMeters) / 1000);
+//        System.out.println((int) (results.routes[0].legs[0].distance.inMeters) / 1000);
 
         return ((int) results.routes[0].legs[0].distance.inMeters) / 1000;
     }
