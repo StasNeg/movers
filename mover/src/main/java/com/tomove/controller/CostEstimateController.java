@@ -59,7 +59,7 @@ public class CostEstimateController {
         Double distancePrice = 0.;
         Double itemsPrice = 0.;
 
-        LocalDate date = LocalDate.parse(data.date);
+        LocalDate date = LocalDate.parse(data.move_date);
 
         // TODO CHECK FOR HOLIDAY
         /**  В даты с 1 по 8 и с 24 по 31, а так же в прздничные дни + 5% */
@@ -74,14 +74,14 @@ public class CostEstimateController {
             // TODO CAP AT 15%(YES_ELEV) AND 5%(NO_ELEV)
             /* Calculate elevation price */
             if (!move.addressIn.elevator) {
-                elevatorCoeff += move.addressIn.floor*PERCENT_PER_FLOOR_NO_LIFT;
+                elevatorCoeff += move.addressIn.floor * PERCENT_PER_FLOOR_NO_LIFT;
             } else {
-                elevatorCoeff += move.addressIn.floor*PERCENT_PER_FLOOR_YES_LIFT;
+                elevatorCoeff += move.addressIn.floor * PERCENT_PER_FLOOR_YES_LIFT;
             }
             if (!move.addressOut.elevator) {
-                elevatorCoeff += move.addressOut.floor*PERCENT_PER_FLOOR_NO_LIFT;
+                elevatorCoeff += move.addressOut.floor * PERCENT_PER_FLOOR_NO_LIFT;
             } else {
-                elevatorCoeff += move.addressOut.floor*PERCENT_PER_FLOOR_YES_LIFT;
+                elevatorCoeff += move.addressOut.floor * PERCENT_PER_FLOOR_YES_LIFT;
             }
 
             distancePrice += getDistance(move.addressIn.address, move.addressOut.address) * PRICE_PER_KM;
@@ -90,7 +90,7 @@ public class CostEstimateController {
         }
 
         //// FIXME: 15/01/2018 carSupplyPrice only once?
-        return (int) ((carSupplyPrice + distancePrice + itemsPrice)*elevatorCoeff*dateCoeff);
+        return (int) ((carSupplyPrice + distancePrice + itemsPrice) * elevatorCoeff * dateCoeff);
     }
 
     private Integer getDistance(String addressIn, String addressOut) {
@@ -110,9 +110,13 @@ public class CostEstimateController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-//        System.out.println((int) (results.routes[0].legs[0].distance.inMeters) / 1000);
 
-        return ((int) results.routes[0].legs[0].distance.inMeters) / 1000;
+        if (results.routes == null) {
+            System.out.println("Null response from google API");
+            return 0;
+        } else {
+            return ((int) results.routes[0].legs[0].distance.inMeters) / 1000;
+        }
     }
 }
 
