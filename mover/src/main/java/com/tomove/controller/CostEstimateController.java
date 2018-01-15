@@ -37,7 +37,7 @@ public class CostEstimateController {
     @Value("${packetPrice}")
     Integer packetPrice;
 
-    @Value("{carSupplyPrice}")
+    @Value("${carSupplyPrice}")
     Integer carSupplyPrice;
 
     @Autowired
