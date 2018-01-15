@@ -3,18 +3,18 @@ package com.tomove.common;
 import java.util.List;
 
 public class Move {
-    String addressIn;
-    String addressOut;
-    List<Item> items;
+    public Address addressIn;
+    public Address addressOut;
+    public List<Item> items;
 
     public Move() {
     }
 
-    public String getAddressIn() {
+    public Address getAddressIn() {
         return addressIn;
     }
 
-    public String getAddressOut() {
+    public Address getAddressOut() {
         return addressOut;
     }
 

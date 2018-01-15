@@ -3,8 +3,8 @@ package com.tomove.common;
 import java.util.List;
 
 public class RequestData {
-    String date;
-    List<Move> moves;
+    public String date;
+    public List<Move> moves;
 
     public RequestData() {
     }
