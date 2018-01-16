@@ -18,24 +18,24 @@ public class TypeProperties extends AbstractBaseEntity {
     private String value;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @JoinColumn(name = "item_type_id")
+    private ItemType itemType;
 
 
     public TypeProperties() {
     }
 
-    public TypeProperties(@NotBlank String name, @NotBlank String value, Item item) {
+    public TypeProperties(@NotBlank String name, @NotBlank String value, ItemType itemType) {
         this.name = name;
         this.value = value;
-        this.item = item;
+        this.itemType = itemType;
     }
 
-    public TypeProperties(Integer id, @NotBlank String name, @NotBlank String value, Item item) {
+    public TypeProperties(Integer id, @NotBlank String name, @NotBlank String value, ItemType itemType) {
         super(id);
         this.name = name;
         this.value = value;
-        this.item = item;
+        this.itemType = itemType;
     }
 
     public String getName() {
@@ -54,11 +54,11 @@ public class TypeProperties extends AbstractBaseEntity {
         this.value = value;
     }
 
-    public Item getItem() {
-        return item;
+    public ItemType getItemType() {
+        return itemType;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
     }
 }
