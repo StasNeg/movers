@@ -1,16 +1,11 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 package com.tomove.controller;
 
+import com.tomove.common.DataTo;
+import com.tomove.model.objectMover.Request;
 import com.tomove.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.tomove.controller.to.DataTo;
 import com.tomove.controller.to.RequestDetailsDTO;
 import com.tomove.model.mapping.RequestDetails;
 import com.tomove.model.mapping.RequestORM;
@@ -19,12 +14,7 @@ import com.tomove.model.subjectMover.Customer;
 import com.tomove.model.subjectMover.Mover;
 import com.tomove.repository.AccountRepository;
 
-import javassist.expr.Instanceof;
-
-import static com.tomove.controller.PathConstant.*;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.HashMap;
@@ -32,22 +22,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.tomove.common.PathConstant.*;
+
 @RestController
 @CrossOrigin
 public class RequestController {
-	private AccountRepository accRepo;
-	private RequestORM requestManager;
-	//FIXME	DISCUSS USE OF THIS REPOS
-	private RequestRepository requestRepository;
 	private AccountRepository accountRepository;
+	private RequestORM requestManager;
+	//FIXME	DISCUSS USE OF THIS REPO
+	private RequestRepository requestRepository;
 
 	@Autowired public RequestController(
 			RequestORM requestManager,
-			AccountRepository accRepo,
 			RequestRepository requestRepository,
 			AccountRepository accountRepository) {
 		this.requestManager = requestManager;
-		this.accRepo = accRepo;
 		this.requestRepository = requestRepository;
 		this.accountRepository = accountRepository;
 	}
@@ -57,7 +46,7 @@ public class RequestController {
 		//test period only - should be changed to get user from token
 		int userid = Integer.parseInt(tokenVal);
 		
-		Account account = accRepo.findById(userid).orElse(new Account() {}); 
+		Account account = accountRepository.findById(userid).orElse(new Account() {});
 		if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
 		Customer customer1 = (Customer) account; 
 		
@@ -71,7 +60,7 @@ public class RequestController {
 		//test period only - should be changed to get user from token
 		int userid = Integer.parseInt(tokenVal);
 		
-		Account account = accRepo.findById(userid).orElse(new Account() {}); 
+		Account account = accountRepository.findById(userid).orElse(new Account() {});
 		if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
 		Customer customer1 = (Customer) account; 
 		
@@ -86,7 +75,7 @@ public class RequestController {
 		//test period only - should be changed to get user from token
 		int userid = Integer.parseInt(tokenVal);
 		
-		Account account = accRepo.findById(userid).orElse(new Account() {}); 
+		Account account = accountRepository.findById(userid).orElse(new Account() {});
 		if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
 		Customer customer1 = (Customer) account; 
 		
@@ -101,7 +90,7 @@ public class RequestController {
 		//test period only - should be changed to get user from token
 		int userid = Integer.parseInt(tokenVal); 
 		
-		Account account = accRepo.findById(userid).orElse(new Account() {}); 
+		Account account = accountRepository.findById(userid).orElse(new Account() {});
 		if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
 		Mover mover1 = (Mover) account; 
 		LocalDate requestDate = getRequestDate(userDate);
@@ -131,12 +120,6 @@ public class RequestController {
 			res.put(dateval, dateList);
 		});		
 		return res;		
-	}
-
-	@GetMapping(value = REQUEST_GET_INFO)
-	public DataTo getRequestInfo(@RequestParam Integer id) {
-		Request request = requestRepository.findById(id).orElse(null);
-		return request == null ? new DataTo(false, "No request with id " + id) : new DataTo(true, request);
 	}
 
 	@GetMapping(value = REQUEST_GET_INFO)
