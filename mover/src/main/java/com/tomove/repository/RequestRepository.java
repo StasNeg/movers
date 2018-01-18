@@ -39,6 +39,13 @@ public interface RequestRepository extends CrudRepository<Request,Integer>{
     		+ " and r.status in ('INITIAL','CONFIRMED','UPDATED') and r.dateTime >= :reqDateFrom "
     		+ " order by r.id asc ")
 	public Iterable<RequestDetails> reqDetailsFromDate(@Param("userId") Account userId, @Param("reqDateFrom") LocalDateTime reqDateMin);
+    
+    @Query("select new com.tomove.model.mapping.RequestDetails(r.id, r.status, r.dateTime, r.cost, r.isPersonal) from Request r "
+    		+ " join Truck tr on tr.id = r.truck "
+    		+ " where tr.mover = :moverId "
+    		+ " and r.dateTime between :reqDateFrom and :reqDateTo "
+    		+ " order by r.id asc ")
+    public Iterable<RequestDetails> reqDetailsMoverDate(@Param("moverId") Account userId, @Param("reqDateFrom") LocalDateTime reqDateMin, @Param("reqDateTo") LocalDateTime reqDateMax);
 
 	
 }

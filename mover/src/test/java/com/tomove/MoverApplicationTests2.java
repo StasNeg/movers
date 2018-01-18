@@ -152,17 +152,29 @@ public class MoverApplicationTests2 {
 		itemRepo.saveAll(items);		
 	}
 
-	@Test
+	/*@Test
 	public void contextLoads() {
-	}		
+	}	*/	
 	
 	@Test
+	public void otherTests(){
+		System.out.println("START");
+		List<RequestDetails> res = requestsManager.getRequestDetailsByMoverAndDay(mover1,date3);
+		if(res.size()>0){
+			res.forEach(System.out::println);
+		}
+		System.out.println("FINISH");
+	}
+	
+/*	@Test
 	public void findByUserId(){
+		System.out.println("YO2");
 		List<RequestDetails> res = requestsManager.getRequestDetailsByCustomer(customer1);
 		Assert.assertEquals(1,res.size());
 		List<RequestDetails> res2 = requestsManager.getRequestDetailsByCustomer(customer2);
 		Assert.assertNotEquals(1,res2.size());
-	}
+	}*/
+	/*
 	@Test
 	public void findByUserIdFromDate(){
 		List<RequestDetails> res = requestsManager.getRequestDetailsByCustomerFromDay(customer1,date1);
@@ -178,7 +190,7 @@ public class MoverApplicationTests2 {
 		Assert.assertNotEquals(1,res3.size());
 		List<RequestDetails> res2 = requestsManager.getRequestDetailsByCustomerAndDay(customer2,date1);
 		Assert.assertNotEquals(1,res2.size());
-	}	
+	}	*/
 
 	@After
 	public void after() {
