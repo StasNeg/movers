@@ -9,8 +9,8 @@ public class DataTo implements Serializable {
     public DataTo() {
     }
 
-    public DataTo(boolean succes, Object data) {
-        this.success = succes;
+    public DataTo(boolean success, Object data) {
+        this.success = success;
         this.data = data;
     }
 
@@ -18,7 +18,7 @@ public class DataTo implements Serializable {
         return success;
     }
 
-    public void setSucces(boolean success) {
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
