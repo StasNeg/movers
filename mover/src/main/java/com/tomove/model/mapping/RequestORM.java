@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.tomove.controller.to.AddressDto;
 import com.tomove.model.subjectMover.Customer;
+import com.tomove.model.subjectMover.Mover;
 import com.tomove.repository.RequestAddressRepository;
 import com.tomove.repository.RequestRepository;
 
@@ -47,7 +48,17 @@ public class RequestORM implements RequestMapping{
 		res = (List<RequestDetails>) requestRepo.reqDetailsFromDate(customer, datefrom);
 		addAddressesToRequest(res);
 		return res;
-	}	
+	}
+	
+	@Override
+	public List<RequestDetails> getRequestDetailsByMoverAndDay(Mover mover, LocalDate date) {
+		List<RequestDetails> res = new ArrayList<RequestDetails>();
+		LocalDateTime datefrom = date.atStartOfDay();
+		LocalDateTime dateto = date.atTime(23,59);
+		res = (List<RequestDetails>) requestRepo.reqDetailsMoverDate(mover, datefrom, dateto);
+		addAddressesToRequest(res);
+		return res;
+	}
 	
 	private void addAddressesToRequest(List<RequestDetails> res){
 		if(res.size()>0){
@@ -57,5 +68,7 @@ public class RequestORM implements RequestMapping{
 				});
 		}
 	}
+
+	
 	
 }

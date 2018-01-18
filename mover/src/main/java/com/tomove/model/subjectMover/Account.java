@@ -110,6 +110,16 @@ public abstract class Account extends AbstractBaseEntity {
     public String getType() {
         return type;
     }
+    
+    public boolean isCustomer(){
+    	if (this instanceof Customer) return true;
+    	return false;
+    }
+    
+    public boolean isMover(){
+    	if (this instanceof Mover) return true;
+    	return false;
+    }
 
 
 }
