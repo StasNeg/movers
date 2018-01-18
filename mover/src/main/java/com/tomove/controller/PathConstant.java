@@ -13,4 +13,8 @@ public class PathConstant {
     public static final String GET_DATE_MOVER_REQUESTS = "/dashboard/requests/mover/getfordate";
     
     public static final String REQUEST_DATE = "request_date";
+
+    public static final String GET_ALL_ROOMS_TYPE = "/roomstype/all";
+    public static final String GET_ALL_ITEMS_FROM_ROOMTYPE = "/itemtype/roomtype";
+    public static final String PROPERTIES_OF_ITEM = "/item_properties/value";
 }
