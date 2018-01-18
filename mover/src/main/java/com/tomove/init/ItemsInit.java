@@ -65,8 +65,9 @@ public class ItemsInit implements ApplicationRunner {
             List<TypePrice> typePrices = Arrays.asList(
                     new TypePrice("Cupboard_doors=one", 10.),
                     new TypePrice("Cupboard_doors=two", 15.),
-                    new TypePrice("Cupboard_doors=disassemble-assemble", 20.),
-                    new TypePrice("Cupboard_doors=moveDown-moveUp", 25.)
+                    new TypePrice("Cupboard_task=disassemble-assemble", 20.),
+                    new TypePrice("Cupboard_task=moveDown-moveUp", 25.),
+                    new TypePrice("Cupboard_doors=one_task=moveDown-moveUp", 35.)
             );
 
             typePriceRepository.saveAll(typePrices);

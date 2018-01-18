@@ -3,12 +3,10 @@ package com.tomove.controller;
 import com.google.maps.*;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.TravelMode;
-import com.tomove.common.DataTo;
-import com.tomove.common.Move;
-import com.tomove.common.RequestData;
-import com.tomove.common.TotalCostEstimate;
+import com.tomove.common.*;
 import com.tomove.repository.AccountRepository;
 import com.tomove.repository.RequestRepository;
+import com.tomove.repository.TypePriceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.tomove.common.PathConstant.*;
 
@@ -25,6 +24,7 @@ public class CostEstimateController {
 
     private AccountRepository accountRepository;
     private RequestRepository requestRepository;
+    private TypePriceRepository typePriceRepository;
 
     private static double PRICE_PER_KM = 30;
     private static double PERCENT_PER_FLOOR_NO_LIFT = 1.03;
@@ -41,9 +41,13 @@ public class CostEstimateController {
     Integer carSupplyPrice;
 
     @Autowired
-    public CostEstimateController(AccountRepository accountRepository, RequestRepository requestRepository) {
+    public CostEstimateController(
+            AccountRepository accountRepository,
+            RequestRepository requestRepository,
+            TypePriceRepository typePriceRepository) {
         this.accountRepository = accountRepository;
         this.requestRepository = requestRepository;
+        this.typePriceRepository = typePriceRepository;
     }
 
     @PostMapping(value = GET_TOTAL_COST_ESTIMATE)
@@ -58,6 +62,7 @@ public class CostEstimateController {
         Double elevatorCoeff = 0.;
         Double distancePrice = 0.;
         Double itemsPrice = 0.;
+        Double totalPrice = 0.;
 
         LocalDate date = LocalDate.parse(data.move_date);
 
@@ -83,14 +88,26 @@ public class CostEstimateController {
             } else {
                 elevatorCoeff += move.addressOut.floor * PERCENT_PER_FLOOR_YES_LIFT;
             }
+            /* Calculate distance price */
+            distancePrice = getDistance(move.addressIn.address, move.addressOut.address) * PRICE_PER_KM;
 
-            distancePrice += getDistance(move.addressIn.address, move.addressOut.address) * PRICE_PER_KM;
-            itemsPrice += move.getItems().size() * 3.;
-            //TODO CALCULATE PRICE FOR ALL ITEMS
+            /* Calculate items price */
+            for (Item item : move.getItems()) {
+                StringBuilder itemNameConcat = new StringBuilder();
+                itemNameConcat.append(item.getName());
+                for (Map.Entry<String, String> property: item.getProperties().entrySet()) {
+                    itemNameConcat.append("_" + property.getKey() + "=" + property.getValue());
+                }
+                Double itemPrice = typePriceRepository.findByName(itemNameConcat.toString()).getPrice();
+                itemsPrice += itemPrice;
+            }
+            // TODO: 18/01/2018 COVER CALCULATION WITH TESTS
+            totalPrice += (distancePrice + itemsPrice) * elevatorCoeff * dateCoeff;
         }
 
-        //// FIXME: 15/01/2018 carSupplyPrice only once?
-        return (int) ((carSupplyPrice + distancePrice + itemsPrice) * elevatorCoeff * dateCoeff);
+        // FIXME: 15/01/2018 carSupplyPrice only once?
+        // FIXME: 18/01/2018 return int?
+        return (int) (carSupplyPrice + totalPrice);
     }
 
     private Integer getDistance(String addressIn, String addressOut) {

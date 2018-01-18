@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class Item {
     String name;
+    String room;
     Map<String, String> properties;
 
     public Item() {

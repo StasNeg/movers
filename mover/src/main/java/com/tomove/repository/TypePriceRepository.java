@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TypePriceRepository extends CrudRepository<TypePrice, Integer> {
-
+    TypePrice findByName(String name);
 }
