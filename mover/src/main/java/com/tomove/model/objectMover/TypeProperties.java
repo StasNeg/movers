@@ -1,5 +1,6 @@
 package com.tomove.model.objectMover;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tomove.model.AbstractBaseEntity;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class TypeProperties extends AbstractBaseEntity {
     @NotBlank
     private String value;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_type_id")
     private ItemType itemType;

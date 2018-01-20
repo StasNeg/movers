@@ -33,7 +33,6 @@ public class AddItemsController {
 	@RequestMapping(value = GET_ALL_ITEMS_FROM_ROOMTYPE, method = RequestMethod.GET)
 	public DataTo getAllItemsForTypeRoom(@RequestParam(value = "room", required = false) String room) {
 		Iterable<ItemType> data = null;
-
 		if (!room.isEmpty() && isValidRoom(room)) {
 			data = repository.findAllByroomType(RoomType.valueOf(room));
 		}
@@ -43,12 +42,12 @@ public class AddItemsController {
 	private boolean isValidRoom(String room) {
 		return Stream.of(RoomType.values()).map(RoomType::name).anyMatch(x->x.equals(room));
 	}
+
 	@RequestMapping(value = PROPERTIES_OF_ITEM, method = RequestMethod.GET)
 	public DataTo getAllPropertiesOfItem(@RequestParam(value = "idItemType", required = false) String itemType) {
 		Iterable<TypeProperties> data = null;
 		System.out.print("hello there");
 		data = repository.findTypeProperties(Integer.parseInt(itemType));
-
 		return new DataTo(false,data);
 	}
 

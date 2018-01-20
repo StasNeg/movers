@@ -1,5 +1,6 @@
 package com.tomove.model.objectMover;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tomove.model.AbstractBaseEntity;
 import com.tomove.model.enums.RoomType;
 
@@ -19,10 +20,10 @@ public class ItemType extends AbstractBaseEntity {
     @Column(name = "name", nullable = false)
     @NotBlank
     private String name;
-
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "itemType")
     private Set<TypeProperties> properties;
-
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "itemType")
     private Set<Item> items;
 
@@ -42,6 +43,11 @@ public class ItemType extends AbstractBaseEntity {
         this.name = name;
         this.properties = properties;
         this.items = items;
+    }
+
+    public ItemType(RoomType roomType, @NotBlank String name) {
+        this.roomType = roomType;
+        this.name = name;
     }
 
     public RoomType getRoomType() {
