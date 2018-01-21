@@ -50,10 +50,6 @@ public class ItemType extends AbstractBaseEntity {
         this.items = items;
     }
 
-    public ItemType(RoomType roomType, @NotBlank String name) {
-        this.roomType = roomType;
-        this.name = name;
-    }
 
     public RoomType getRoomType() {
         return roomType;
