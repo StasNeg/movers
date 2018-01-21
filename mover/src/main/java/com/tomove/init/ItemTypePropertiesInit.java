@@ -40,14 +40,16 @@ public class ItemTypePropertiesInit implements ApplicationRunner {
             ItemType room3 = new ItemType(RoomType.SALON, "table");
 
 
-            TypeProperties generalProperties = new TypeProperties("width","18 20, 40,50", general1);
-            TypeProperties generalProperties1 = new TypeProperties("width","18 20, 40,50", general2);
-            TypeProperties generalProperties3 = new TypeProperties("length","18 20, 40,50", general1);
+            TypeProperties generalProperties = new TypeProperties("width","18 20, 40, 50", general1);
+            TypeProperties generalProperties1 = new TypeProperties("width","18 20, 40, 50", general2);
+            TypeProperties generalProperties3 = new TypeProperties("length","18 20, 40, 50", general1);
             TypeProperties kitchenProperties1 = new TypeProperties("type","big small", kitchen1);
             TypeProperties kitchenProperties2 = new TypeProperties("type","twoDoors oneDoors", kitchen2);
+            TypeProperties kitchenProperties3 = new TypeProperties("material","steal wood", kitchen1);
+            TypeProperties kitchenProperties4 = new TypeProperties("assembling","Assembling NoAssembling", kitchen1);
 
             List<ItemType> itempTypes = Arrays.asList(general1, general2, kitchen1,kitchen2,room1,room2,room3);
-            List<TypeProperties> typesProperties = Arrays.asList(generalProperties,generalProperties1,generalProperties3,kitchenProperties1,kitchenProperties2);
+            List<TypeProperties> typesProperties = Arrays.asList(generalProperties,generalProperties1,generalProperties3,kitchenProperties1,kitchenProperties2,kitchenProperties3,kitchenProperties4);
             repository.saveAll(itempTypes);
             typeRepository.saveAll(typesProperties);
         }
