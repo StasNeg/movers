@@ -89,7 +89,7 @@ public class CostEstimateController {
                 elevatorCoeff += move.addressOut.floor * PERCENT_PER_FLOOR_YES_LIFT;
             }
             /* Calculate distance price */
-            distancePrice = getDistance(move.addressIn.address, move.addressOut.address) * PRICE_PER_KM;
+            distancePrice = getDistance(move.addressIn.getAddressString(), move.addressOut.getAddressString()) * PRICE_PER_KM;
 
             /* Calculate items price */
             for (Item item : move.getItems()) {

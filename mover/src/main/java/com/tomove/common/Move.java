@@ -1,20 +1,22 @@
 package com.tomove.common;
 
+import com.tomove.controller.to.AddressDto;
+
 import java.util.List;
 
 public class Move {
-    public Address addressIn;
-    public Address addressOut;
+    public AddressDto addressIn;
+    public AddressDto addressOut;
     public List<Item> items;
 
     public Move() {
     }
 
-    public Address getAddressIn() {
+    public AddressDto getAddressIn() {
         return addressIn;
     }
 
-    public Address getAddressOut() {
+    public AddressDto getAddressOut() {
         return addressOut;
     }
 

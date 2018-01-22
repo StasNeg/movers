@@ -1,5 +1,7 @@
 package com.tomove.common;
 
+import com.tomove.controller.to.AddressDto;
+
 import java.util.List;
 
 public class RequestData {
@@ -8,11 +10,15 @@ public class RequestData {
     public String move_time;
     public boolean personal;
     public String place_type;
-    public List<Address> addresses;
-
+    public List<AddressDto> addresses;
+    public Integer cost;
     public List<Move> moves;
 
     public RequestData() {
+    }
+
+    public Integer getCost() {
+        return cost;
     }
 
     public String getCustomerId() {
@@ -39,7 +45,7 @@ public class RequestData {
         return moves;
     }
 
-    public List<Address> getAddresses() {
+    public List<AddressDto> getAddresses() {
         return addresses;
     }
 }
