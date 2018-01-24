@@ -1,0 +1,46 @@
+<div class="form-group">
+<div class="col-sm-12">
+  <label class="col-sm-1">{{title}}</label><label class="col-sm-offset-10">Floor</label>
+  <div *ngIf="!openMap">
+      <button class="btn btn-default col-sm-1">
+        <img src="../../assets/Location_icon.png" width="22" (click)="onLocationClick()"/>
+      </button>
+  </div>
+  <div *ngIf="openMap">
+    <div class="form-group col-sm-3">
+      <button class="btn btn-block btn-primary" (click)="saveMarkers()">Confirm </button>
+      <button class="btn btn-block btn-primary" (click)="closeMarkers()">Close</button>
+    </div>
+    <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onMapClick($event)" [zoom]="zoom">
+      <agm-marker [latitude]="lat" [longitude]="lng">
+      </agm-marker>
+    </agm-map>
+  </div>
+  <div class="form-group col-sm-offset-0 col-sm-9">
+    <input  placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+           class="form-control" #search [formControl]="searchControl">
+  </div>
+  <input type="number" class="form-control" class="col-sm-offset-0 col-sm-2"  [(ngModel)] = "floor" [disabled] = "!isCorrectForSwitch()" (change)="floorOnChange()">
+
+</div>
+<div class="form-inline">
+      <span class="col-sm-3">
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="haveLift" [disabled] = "!isCorrectForSwitch()" (change)="haveLiftOnClick()">
+              <span class="slider round"></span>
+            </label>
+            <label class="control-label">Lift</label>
+      </span>
+  <div *ngIf="isFromTo">
+      <span class="col-sm-offset-7">
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="makePacking" [disabled] = "!isCorrectForSwitch()" (change)="makePackingOnclick()">
+              <span class="slider round"></span>
+            </label>
+              <label class="control-label">Packaging</label>
+       </span>
+  </div>
+</div>
+
+
+</div>

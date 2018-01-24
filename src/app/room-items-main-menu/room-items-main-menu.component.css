@@ -1,0 +1,79 @@
+.types {
+  margin:4px;
+  float:inherit;
+}
+
+.types label {
+  float: inherit;
+  width:120px;
+  margin:4px;
+  background-color:#EFEFEF;
+  border-radius:4px;
+  border:1px solid #D0D0D0;
+  overflow:auto;
+
+}
+
+.types label span {
+  text-align:center;
+  font-size: 18px;
+  padding:13px 0px;
+  display: flex;
+}
+
+.types input {display:none;}
+
+.types label input {
+  position:absolute;
+  top:-20px;
+}
+
+.types input:checked + span {
+  background-color:#404040;
+  color:#F7F7F7;
+}
+
+.types .black {
+  background-color:#000000;
+  color:#FFDD00;
+}
+
+.types .yellow {
+  background-color:#FFCC00;
+  color:#333;
+}
+
+.types .blue {
+  background-color:#00BFFF;
+  color:#333;
+}
+
+.types .pink {
+  background-color:#FF99FF;
+  color:#333;
+}
+
+.types .green {
+  background-color:#A3D900;
+  color:#333;
+}
+.types .purple {
+  background-color:#B399FF;
+  color:#333;
+}
+.types .orange {
+  background-color: #eea537;
+  color:#333;
+}
+
+.types .brown {
+  background-color: #69052b;
+  color:#F7F7F7;;
+}
+.types .dark-blue {
+  background-color: #081769;
+  color:#F7F7F7;
+}
+
+
+
