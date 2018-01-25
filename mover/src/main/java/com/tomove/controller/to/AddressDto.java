@@ -48,6 +48,9 @@ public class AddressDto {
         this.elevator = elevator;
     }
 
+    public AddressDto() {
+    }
+
     @Override
     public String toString() {
         return "AddressDto [seqnumber=" + seqnumber + ", city=" + city + ", street=" + street + ", building=" + building
