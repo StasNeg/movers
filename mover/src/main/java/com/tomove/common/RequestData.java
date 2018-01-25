@@ -5,7 +5,7 @@ import com.tomove.controller.to.AddressDto;
 import java.util.List;
 
 public class RequestData {
-    public String customerId;
+    public Integer customerId;
     public String move_date;
     public String move_time;
     public boolean personal;
@@ -21,7 +21,7 @@ public class RequestData {
         return cost;
     }
 
-    public String getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
