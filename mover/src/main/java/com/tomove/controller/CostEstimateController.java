@@ -4,6 +4,8 @@ import com.google.maps.*;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.TravelMode;
 import com.tomove.common.*;
+import com.tomove.controller.to.AddressDto;
+import com.tomove.model.objectMover.Address;
 import com.tomove.repository.AccountRepository;
 import com.tomove.repository.RequestRepository;
 import com.tomove.repository.TypePriceRepository;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +32,8 @@ public class CostEstimateController {
     private static double PRICE_PER_KM = 30;
     private static double PERCENT_PER_FLOOR_NO_LIFT = 1.03;
     private static double PERCENT_PER_FLOOR_YES_LIFT = 1.01;
+    private static double PERCENT_PER_FLOOR_NO_LIFT_CAP = 1.15;
+    private static double PERCENT_PER_FLOOR_YES_LIFT_CAP = 1.05;
     private static double PERCENT_IF_HOLIDAY = 1.05;
 
     @Value("${cartonPrice}")
@@ -58,8 +63,8 @@ public class CostEstimateController {
 
     private Integer calculateCost(RequestData data) {
 
-        Double dateCoeff = 1.;
-        Double elevatorCoeff = 0.;
+        Double coeffDate = 1.;
+        Double coeffElevator = 0.;
         Double distancePrice = 0.;
         Double itemsPrice = 0.;
         Double totalPrice = 0.;
@@ -71,42 +76,51 @@ public class CostEstimateController {
 
         List holidays = new ArrayList();
         if (holidays.contains(date)) {
-            dateCoeff = PERCENT_IF_HOLIDAY;
+            coeffDate = PERCENT_IF_HOLIDAY;
         }
 
         for (Move move : data.getMoves()) {
 
-            // TODO CAP AT 15%(YES_ELEV) AND 5%(NO_ELEV)
             /* Calculate elevation price */
-            if (!move.addressIn.elevator) {
-                elevatorCoeff += move.addressIn.floor * PERCENT_PER_FLOOR_NO_LIFT;
-            } else {
-                elevatorCoeff += move.addressIn.floor * PERCENT_PER_FLOOR_YES_LIFT;
+            List<AddressDto> moveAddresses = Arrays.asList(move.addressIn, move.addressOut);
+            for (AddressDto moveAddress : moveAddresses) {
+
+                Double coeffElevatorMove = 0.;
+
+                if (!moveAddress.elevator) {
+                    coeffElevatorMove += moveAddress.floor * PERCENT_PER_FLOOR_NO_LIFT;
+                    if (coeffElevatorMove >= PERCENT_PER_FLOOR_NO_LIFT_CAP) {
+                        coeffElevatorMove = PERCENT_PER_FLOOR_NO_LIFT_CAP;
+                    }
+                } else {
+                    coeffElevatorMove += moveAddress.floor * PERCENT_PER_FLOOR_YES_LIFT;
+                    if (coeffElevatorMove >= PERCENT_PER_FLOOR_YES_LIFT_CAP) {
+                        coeffElevatorMove = PERCENT_PER_FLOOR_YES_LIFT_CAP;
+                    }
+                }
+                coeffElevator += coeffElevatorMove;
             }
-            if (!move.addressOut.elevator) {
-                elevatorCoeff += move.addressOut.floor * PERCENT_PER_FLOOR_NO_LIFT;
-            } else {
-                elevatorCoeff += move.addressOut.floor * PERCENT_PER_FLOOR_YES_LIFT;
-            }
+
             /* Calculate distance price */
             distancePrice = getDistance(move.addressIn.getAddressString(), move.addressOut.getAddressString()) * PRICE_PER_KM;
 
             /* Calculate itemDtos price */
-            for (ItemDto item : move.getItemDtos()) {
+            for (ItemDto item : move.getItems()) {
                 StringBuilder itemNameConcat = new StringBuilder();
                 itemNameConcat.append(item.getName());
-                for (Map.Entry<String, String> property: item.getProperties().entrySet()) {
+                for (Map.Entry<String, String> property : item.getProperties().entrySet()) {
                     itemNameConcat.append("_" + property.getKey() + "=" + property.getValue());
                 }
                 Double itemPrice = typePriceRepository.findByName(itemNameConcat.toString()).getPrice();
                 itemsPrice += itemPrice;
             }
-            // TODO: 18/01/2018 COVER CALCULATION WITH TESTS
-            totalPrice += (distancePrice + itemsPrice) * elevatorCoeff * dateCoeff;
+            // TODO: 18/01/2018 HOW TO COVER CALCULATION WITH TESTS?
+            /* Calculate total price */
+            totalPrice += (distancePrice + itemsPrice) * coeffElevator * coeffDate;
         }
 
-        // FIXME: 15/01/2018 carSupplyPrice only once?
-        // FIXME: 18/01/2018 return int?
+        // FIXME: 15/01/2018 IS IT RIGHT TO ADD carSupplyPrice ONLY ONCE?
+        // FIXME: 18/01/2018 IS IT RIGHT TO RETURN INT OR DOUBLE?
         return (int) (carSupplyPrice + totalPrice);
     }
 
