@@ -91,8 +91,8 @@ public class CostEstimateController {
             /* Calculate distance price */
             distancePrice = getDistance(move.addressIn.getAddressString(), move.addressOut.getAddressString()) * PRICE_PER_KM;
 
-            /* Calculate items price */
-            for (Item item : move.getItems()) {
+            /* Calculate itemDtos price */
+            for (ItemDto item : move.getItemDtos()) {
                 StringBuilder itemNameConcat = new StringBuilder();
                 itemNameConcat.append(item.getName());
                 for (Map.Entry<String, String> property: item.getProperties().entrySet()) {
