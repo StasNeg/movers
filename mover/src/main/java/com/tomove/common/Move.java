@@ -7,7 +7,7 @@ import java.util.List;
 public class Move {
     public AddressDto addressIn;
     public AddressDto addressOut;
-    public List<Item> items;
+    public List<ItemDto> itemDtos;
 
     public Move() {
     }
@@ -20,7 +20,7 @@ public class Move {
         return addressOut;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<ItemDto> getItemDtos() {
+        return itemDtos;
     }
 }
