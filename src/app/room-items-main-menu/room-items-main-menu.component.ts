@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AddressService} from "../services/address.service";
-import {ItemService} from "../services/item.service";
-import {ItemAddressData} from "../interfaces/itemAddress-data";
-import {MatDialog} from "@angular/material";
-import {DialogComponent} from "./dialog/dialogItem/dialog.component";
-import {DialogRoomComponent} from "./dialog/dialogRoom/dialogRoom.component";
+import {AddressService} from '../services/address.service';
+import {ItemService} from '../services/item.service';
+import {ItemAddressData} from '../interfaces/itemAddress-data';
+import {MatDialog} from '@angular/material';
+import {DialogComponent} from './dialog/dialogItem/dialog.component';
+import {DialogRoomComponent} from './dialog/dialogRoom/dialogRoom.component';
 import {Room} from '../interfaces/room';
 import {Mover} from '../interfaces/mover';
 
@@ -49,9 +49,9 @@ export class RoomItemsMainMenuComponent implements OnInit {
           id: j,
           roomType: this.roomTypeTotal[j],
           items: []
-        }
+        };
       }
-      let item: ItemAddressData = {
+      const item: ItemAddressData = {
         city: this.addresses[i].city,
         street: this.addresses[i].street,
         rooms: tempRooms
@@ -73,10 +73,10 @@ export class RoomItemsMainMenuComponent implements OnInit {
   onAddressChange(i) {
     this.addressesCurrentIndex = i;
     this.roomType = [];
-    for(let i = 0; i< this.arrayItems[this.addressesCurrentIndex].rooms.length; i++){
+    for (let i = 0; i < this.arrayItems[this.addressesCurrentIndex].rooms.length; i++) {
       this.roomType.push(this.arrayItems[this.addressesCurrentIndex].rooms[i].roomType);
     }
-    if(this.roomTypeCurrentIndex != -1 && this.roomType.length <= this.roomTypeCurrentIndex) {
+    if (this.roomTypeCurrentIndex != -1 && this.roomType.length <= this.roomTypeCurrentIndex) {
       this.items = [];
       this.roomTypeCurrentIndex = -1;
       return;
@@ -116,8 +116,8 @@ export class RoomItemsMainMenuComponent implements OnInit {
           id: this.arrayItems[this.addressesCurrentIndex].rooms.length,
           roomType: result,
           items: []
-        })
-        this.onAddressChange(this.addressesCurrentIndex)
+        });
+        this.onAddressChange(this.addressesCurrentIndex);
       }
     });
   }
@@ -167,33 +167,75 @@ export class RoomItemsMainMenuComponent implements OnInit {
     return true;
   }
 
+
   addMover(addressTo, item) {
-    let isMoverExist = false;
-    if(this.arrayMovers.length) {
-      isMoverExist = this.arrayMovers.every((mover) => {
+
+    if (this.arrayMovers.length === 0) {
+      let mover: Mover = {
+        addressFrom: this.addresses[this.addressesCurrentIndex],
+        addressTo: addressTo,
+        rooms: [],
+      };
+      let room: Room = new Room();
+      room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
+      room.items.push(item);
+      mover.rooms.push(room);
+      this.arrayMovers.push(mover);
+    }
+    else {
+
+      this.arrayMovers.map((mover) => {
         if (mover.addressTo === addressTo && mover.addressFrom === this.addresses[this.addressesCurrentIndex]) {
           let room: Room = new Room();
           room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
           room.items.push(item);
           mover.rooms.push(room);
-          this.arrayMovers.push(mover);
-          return true;
         }
-        return false;
+        else {
+          let mover: Mover = {
+            addressFrom: this.addresses[this.addressesCurrentIndex],
+            addressTo: addressTo,
+            rooms: []
+          };
+          this.arrayMovers.push(mover);
+          let room: Room = new Room();
+          room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
+          room.items.push(item);
+          mover.rooms.push(room);
+
+
+        }
       });
-    }
-    if(!isMoverExist) {
-      let room: Room = new Room();
-      room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
-      room.items.push(item);
-      let mover: Mover = {
-        addressFrom: this.addresses[this.addressesCurrentIndex],
-        addressTo: addressTo,
-        rooms:[]
-      };
-      mover.rooms.push(room);
-      this.arrayMovers.push(mover);
     }
     console.log(this.arrayMovers);
   }
+
+  //    let isMoverExist = false;
+  //   if (this.arrayMovers.length) {
+  //     isMoverExist = this.arrayMovers.every((mover) => {
+  //       if (mover.addressTo === addressTo && mover.addressFrom === this.addresses[this.addressesCurrentIndex]) {
+  //         let room: Room = new Room();
+  //         room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
+  //         room.items.push(item);
+  //         mover.rooms.push(room);
+  //         this.arrayMovers.push(mover);
+  //         return true;
+  //       }
+  //       return false;
+  //     });
+  //   }
+  //   if (!isMoverExist) {
+  //     let room: Room = new Room();
+  //     room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
+  //     room.items.push(item);
+  //     let mover: Mover = {
+  //       addressFrom: this.addresses[this.addressesCurrentIndex],
+  //       addressTo: addressTo,
+  //       rooms: []
+  //     };
+  //     mover.rooms.push(room);
+  //     this.arrayMovers.push(mover);
+  //   }
+  //   console.log(this.arrayMovers);
+
 }
