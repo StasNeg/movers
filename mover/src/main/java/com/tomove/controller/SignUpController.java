@@ -32,12 +32,19 @@ public class SignUpController {
 		if (((String) params.get("type")).equals("customer"))
 			account = new Customer();
 
+
 		if (((String) params.get("type")).equals("mover"))
 			account = new Mover();
 
 		account.setEmail((String) params.get("email"));
 		account.setPassword((String) params.get("password"));
 		repository.save(account);
+
+//		int checkNumber = 1000+(int)(Math.random()*9000);
+//		String code=""+checkNumber;
+//		com.tomove.controller.SmsUtils.sendSMS(account.getPhone(), code, "toMove");
+//		account.setVerificationCode(code);
+
 
 		return new DataTo(true, account);
 	}
