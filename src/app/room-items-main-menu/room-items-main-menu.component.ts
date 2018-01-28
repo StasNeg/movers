@@ -174,8 +174,21 @@ export class RoomItemsMainMenuComponent implements OnInit {
     return mover.addressTo === addressTo && mover.addressFrom === this.addresses[this.addressesCurrentIndex];
   }
 
+  // isItemExist(item, room, mover) {
+  //   let itemExits = false;
+  //   this.arrayMovers.some((mover) => {
+  //     if (item.id === room.item.id) {
+  //       delete[this.mover.room.item.id];
+  //       return true;
+  //     }
+  //     return false;
+  //   });
+  //
+  // }
+
 
   addMover(addressTo, item) {
+
     if (this.arrayMovers.length === 0) {
       let mover: Mover = {
         addressFrom: this.addresses[this.addressesCurrentIndex],
