@@ -38,12 +38,12 @@ public class SignUpController {
 
 		account.setEmail((String) params.get("email"));
 		account.setPassword((String) params.get("password"));
-		repository.save(account);
 
 		int checkNumber = 1000+(int)(Math.random()*9000);
 		String code=""+checkNumber;
 		com.tomove.controller.SmsUtils.sendSMS(account.getPhone(), code, "toMove");
 		account.setVerificationCode(code);
+		repository.save(account);
 
 
 		return new DataTo(true, account);
