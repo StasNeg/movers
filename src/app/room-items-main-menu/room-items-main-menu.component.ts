@@ -74,7 +74,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
     for (let i = 0; i < this.arrayItems[this.addressesCurrentIndex].rooms.length; i++) {
       this.roomType.push(this.arrayItems[this.addressesCurrentIndex].rooms[i].roomType);
     }
-    if (this.roomTypeCurrentIndex != -1 && this.roomType.length <= this.roomTypeCurrentIndex) {
+    if (this.roomTypeCurrentIndex !== -1 && this.roomType.length <= this.roomTypeCurrentIndex) {
       this.items = [];
       this.roomTypeCurrentIndex = -1;
       return;
@@ -128,7 +128,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
         left: '350px'
       },
       height: '400px',
-      width: '600px',
+      width: '400px',
       data: {
         roomType: this.arrayItems[this.addressesCurrentIndex].rooms[this.roomTypeCurrentIndex].roomType
       }
@@ -165,6 +165,16 @@ export class RoomItemsMainMenuComponent implements OnInit {
     return true;
   }
 
+  pushItem(room, item) {
+    room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
+    room.items.push(item);
+  }
+
+  isSameAddresses(mover, addressTo) {
+    return mover.addressTo === addressTo && mover.addressFrom === this.addresses[this.addressesCurrentIndex];
+  }
+
+
   addMover(addressTo, item) {
     if (this.arrayMovers.length === 0) {
       let mover: Mover = {
@@ -173,15 +183,14 @@ export class RoomItemsMainMenuComponent implements OnInit {
         rooms: [],
       };
       let room: Room = new Room();
-      room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
-      room.items.push(item);
+      this.pushItem(room, item);
       mover.rooms.push(room);
       this.arrayMovers.push(mover);
     }
     else {
       let isMoverExist = false;
       isMoverExist = this.arrayMovers.some((mover) => {
-        if (mover.addressTo === addressTo && mover.addressFrom === this.addresses[this.addressesCurrentIndex]) {
+        if (this.isSameAddresses) {
           let isRoomExist = false;
           isRoomExist = mover.rooms.some(room => {
             if (room.roomType === this.roomTypeTotal[this.roomTypeCurrentIndex]) {
@@ -192,8 +201,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
           });
           if (!isRoomExist) {
             let room: Room = new Room();
-            room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
-            room.items.push(item);
+            this.pushItem(room, item);
             mover.rooms.push(room);
           }
           return true;
@@ -202,8 +210,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
       });
       if (!isMoverExist) {
         let room: Room = new Room();
-        room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
-        room.items.push(item);
+        this.pushItem(room, item);
         let mover: Mover = {
           addressFrom: this.addresses[this.addressesCurrentIndex],
           addressTo: addressTo,
