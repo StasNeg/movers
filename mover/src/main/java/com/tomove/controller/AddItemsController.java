@@ -1,6 +1,7 @@
 package com.tomove.controller;
 
-import com.tomove.controller.to.DataTo;
+
+import com.tomove.common.DataTo;
 import com.tomove.model.enums.RoomType;
 import com.tomove.model.objectMover.ItemType;
 import com.tomove.model.objectMover.TypeProperties;

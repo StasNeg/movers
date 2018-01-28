@@ -1,7 +1,7 @@
 package com.tomove.controller;
 
 
-import com.tomove.controller.to.DataTo;
+import com.tomove.common.DataTo;
 import com.tomove.model.subjectMover.Account;
 import com.tomove.model.subjectMover.Customer;
 import com.tomove.model.subjectMover.Mover;

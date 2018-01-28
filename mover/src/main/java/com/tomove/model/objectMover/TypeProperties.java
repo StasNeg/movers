@@ -33,6 +33,12 @@ public class TypeProperties extends AbstractBaseEntity {
         this.itemType = itemType;
     }
 
+    public TypeProperties(Integer id, @NotBlank String name, @NotBlank String value) {
+        this.id = id;
+        this.name = name;
+        this.value = value;
+    }
+
     public TypeProperties(Integer id, @NotBlank String name, @NotBlank String value, ItemType itemType) {
         super(id);
         this.name = name;

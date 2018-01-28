@@ -37,6 +37,11 @@ public class ItemType extends AbstractBaseEntity {
         this.items = items;
     }
 
+    public ItemType(RoomType roomType, @NotBlank String name) {
+        this.roomType = roomType;
+        this.name = name;
+    }
+
     public ItemType(Integer id, RoomType roomType, @NotBlank String name, Set<TypeProperties> properties, Set<Item> items) {
         super(id);
         this.roomType = roomType;
@@ -45,10 +50,6 @@ public class ItemType extends AbstractBaseEntity {
         this.items = items;
     }
 
-    public ItemType(RoomType roomType, @NotBlank String name) {
-        this.roomType = roomType;
-        this.name = name;
-    }
 
     public RoomType getRoomType() {
         return roomType;
