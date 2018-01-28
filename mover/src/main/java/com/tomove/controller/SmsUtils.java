@@ -18,7 +18,7 @@ public class SmsUtils {
     private static final String EXPIRATION_DELAY_INMINUTES = "120";
 
     // SenderName only one word;
-    private static boolean sendSMS(String Subscribers, String Message, String SenderName) throws Exception {
+    public static boolean sendSMS(String Subscribers, String Message, String SenderName) throws Exception {
         String requestURL = "http://simplesms.co.il/WebService/sendsmsws.asmx/SendSms";
         StringBuilder data = new StringBuilder();
         data.append("Subscribers=" + URLEncoder.encode(Subscribers, "UTF-8"));
@@ -49,7 +49,5 @@ public class SmsUtils {
         return responce == 200;
 
     }
-
-   
 
 }

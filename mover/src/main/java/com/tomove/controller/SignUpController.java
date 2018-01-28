@@ -24,7 +24,7 @@ public class SignUpController {
 
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public DataTo getSignUpAccount(@RequestBody Map<String, Object> params) {
+	public DataTo getSignUpAccount(@RequestBody Map<String, Object> params) throws Exception {
 		Account account = repository.findByEmail((String) params.get("email"));
 		if (account != null) {
 			return new DataTo(false, "Wrong email");
@@ -32,12 +32,19 @@ public class SignUpController {
 		if (((String) params.get("type")).equals("customer"))
 			account = new Customer();
 
+
 		if (((String) params.get("type")).equals("mover"))
 			account = new Mover();
 
 		account.setEmail((String) params.get("email"));
 		account.setPassword((String) params.get("password"));
+
+		int checkNumber = 1000+(int)(Math.random()*9000);
+		String code=""+checkNumber;
+		com.tomove.controller.SmsUtils.sendSMS(account.getPhone(), code, "toMove");
+		account.setVerificationCode(code);
 		repository.save(account);
+
 
 		return new DataTo(true, account);
 	}
