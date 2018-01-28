@@ -24,6 +24,10 @@ public class Mover extends Account {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mover")
     private List<Request> request;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mover")
+    private List<Truck> trucks;
+
+
 
     public Mover() {
     }
@@ -43,6 +47,22 @@ public class Mover extends Account {
         super(id, phone, email, password, enabled);
         this.name = name;
         this.logo = logo;
+    }
+
+    public Mover(@NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, String name, byte[] logo, List<Request> request, List<Truck> trucks) {
+        super(phone, email, password, enabled);
+        this.name = name;
+        this.logo = logo;
+        this.request = request;
+        this.trucks = trucks;
+    }
+
+    public Mover(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, String name, byte[] logo, List<Request> request, List<Truck> trucks) {
+        super(id, phone, email, password, enabled);
+        this.name = name;
+        this.logo = logo;
+        this.request = request;
+        this.trucks = trucks;
     }
 
     public String getName() {
@@ -67,5 +87,13 @@ public class Mover extends Account {
 
     public void setRequest(List<Request> request) {
         this.request = request;
+    }
+
+    public List<Truck> getTrucks() {
+        return trucks;
+    }
+
+    public void setTrucks(List<Truck> trucks) {
+        this.trucks = trucks;
     }
 }
