@@ -1,6 +1,7 @@
 package com.tomove.model.subjectMover;
 
 import com.tomove.model.AbstractBaseEntity;
+import com.tomove.model.enums.Language;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -38,6 +39,10 @@ public abstract class Account extends AbstractBaseEntity {
     @Column(name = "verification_code")
     protected String verificationCode;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "language")
+    protected Language language;
+
     public String getVerificationCode() {
         return verificationCode;
     }
@@ -56,12 +61,53 @@ public abstract class Account extends AbstractBaseEntity {
         this.enabled = enabled;
     }
 
+    public Account(@NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, String type, String verificationCode) {
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+        this.type = type;
+        this.verificationCode = verificationCode;
+    }
+
+
     public Account(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled) {
         super(id);
         this.phone = phone;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
+    }
+
+    public Account(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, String type, String verificationCode) {
+        super(id);
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+        this.type = type;
+        this.verificationCode = verificationCode;
+    }
+
+    public Account(@NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, String type, String verificationCode, Language language) {
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+        this.type = type;
+        this.verificationCode = verificationCode;
+        this.language = language;
+    }
+
+    public Account(Integer id, @NotBlank String phone, @Email @NotBlank String email, @NotBlank String password, @NotNull boolean enabled, String type, String verificationCode, Language language) {
+        super(id);
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+        this.type = type;
+        this.verificationCode = verificationCode;
+        this.language = language;
     }
 
     public String getPhone() {
@@ -110,5 +156,19 @@ public abstract class Account extends AbstractBaseEntity {
     	return false;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
 }
