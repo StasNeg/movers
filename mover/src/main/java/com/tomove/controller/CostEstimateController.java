@@ -88,12 +88,12 @@ public class CostEstimateController {
                 Double coeffElevatorMove = 0.;
 
                 if (!moveAddress.elevator) {
-                    coeffElevatorMove += moveAddress.floor * PERCENT_PER_FLOOR_NO_LIFT;
+                    coeffElevatorMove = moveAddress.floor * PERCENT_PER_FLOOR_NO_LIFT/100;
                     if (coeffElevatorMove >= PERCENT_PER_FLOOR_NO_LIFT_CAP) {
                         coeffElevatorMove = PERCENT_PER_FLOOR_NO_LIFT_CAP;
                     }
                 } else {
-                    coeffElevatorMove += moveAddress.floor * PERCENT_PER_FLOOR_YES_LIFT;
+                    coeffElevatorMove = moveAddress.floor * PERCENT_PER_FLOOR_YES_LIFT/100;
                     if (coeffElevatorMove >= PERCENT_PER_FLOOR_YES_LIFT_CAP) {
                         coeffElevatorMove = PERCENT_PER_FLOOR_YES_LIFT_CAP;
                     }
@@ -114,9 +114,10 @@ public class CostEstimateController {
                 Double itemPrice = typePriceRepository.findByName(itemNameConcat.toString()).getPrice();
                 itemsPrice += itemPrice;
             }
+
             // TODO: 18/01/2018 HOW TO COVER CALCULATION WITH TESTS?
             /* Calculate total price */
-            totalPrice += (distancePrice + itemsPrice) * coeffElevator * coeffDate;
+            totalPrice += (distancePrice + itemsPrice) * (coeffElevator + coeffDate);
         }
 
         // FIXME: 15/01/2018 IS IT RIGHT TO ADD carSupplyPrice ONLY ONCE?
