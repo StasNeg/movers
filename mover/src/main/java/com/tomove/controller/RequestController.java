@@ -1,12 +1,13 @@
 package com.tomove.controller;
 
 import com.tomove.common.DataTo;
+import com.tomove.common.ItemDto;
+import com.tomove.common.Move;
 import com.tomove.common.RequestData;
-import com.tomove.model.enums.Place;
-import com.tomove.model.enums.Status;
-import com.tomove.model.objectMover.Request;
-import com.tomove.model.objectMover.RequestAdress;
-import com.tomove.repository.RequestRepository;
+import com.tomove.controller.to.AddressDto;
+import com.tomove.model.enums.*;
+import com.tomove.model.objectMover.*;
+import com.tomove.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,6 @@ import com.tomove.model.mapping.RequestORM;
 import com.tomove.model.subjectMover.Account;
 import com.tomove.model.subjectMover.Customer;
 import com.tomove.model.subjectMover.Mover;
-import com.tomove.repository.AccountRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,14 +34,24 @@ public class RequestController {
 	private RequestORM requestManager;
 	//FIXME	DISCUSS USE OF THIS REPO
 	private RequestRepository requestRepository;
+	private AddressRepository addressRepository;
+	private RequestAddressRepository requestAddressRepository;
+	private ItemRepository itemRepository;
 
-	@Autowired public RequestController(
+	@Autowired
+	public RequestController(
 			RequestORM requestManager,
 			RequestRepository requestRepository,
-			AccountRepository accountRepository) {
+			AccountRepository accountRepository,
+			AddressRepository addressRepository,
+			RequestAddressRepository requestAddressRepository,
+			ItemRepository itemRepository) {
 		this.requestManager = requestManager;
 		this.requestRepository = requestRepository;
 		this.accountRepository = accountRepository;
+		this.addressRepository = addressRepository;
+		this.requestAddressRepository = requestAddressRepository;
+		this.itemRepository = itemRepository;
 	}
 	
 	@RequestMapping(value=GET_RECENT_CUSTOMER_REQUESTS, method=RequestMethod.GET)
@@ -156,49 +166,86 @@ public class RequestController {
 		accountRepository.save(mover);
 		return new DataTo(true, String.format("Request %d was assigned to mover %d", request_id, mover_id));
 	}
-<<<<<<< HEAD
-	
+
 	@RequestMapping(value = GET_CALENDAR_MOVER_REQUESTS, method=RequestMethod.GET)
 	public DataTo getRecentForMoverFromDate(@RequestParam(name="token") String tokenVal, @RequestParam(name=REQUEST_DATE) String userDate){
 		//test period only - should be changed to get user from token
-		int userid = Integer.parseInt(tokenVal); 
-				
+		int userid = Integer.parseInt(tokenVal);
+
 		Account account = accountRepository.findById(userid).orElse(new Account() {});
 		if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
-		Mover mover1 = (Mover) account; 
+		Mover mover1 = (Mover) account;
 		LocalDate requestDate = getRequestDate(userDate);
 		List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByMoverFromDay(mover1, requestDate).stream()
 				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
-		return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);			
+		return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
 	}
 
 	@RequestMapping(value = GET_RECENT_MOVER_REQUESTS, method=RequestMethod.GET)
 	public DataTo getPossibleForMover(@RequestParam(name="token") String tokenVal){
 		//test period only - should be changed to get user from token
-		int userid = Integer.parseInt(tokenVal); 
+		int userid = Integer.parseInt(tokenVal);
 		Account account = accountRepository.findById(userid).orElse(new Account() {});
 		if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
-		Mover mover1 = (Mover) account; 		
+		Mover mover1 = (Mover) account;
 		List<RequestDetailsDTO> resDb = requestManager.getPossibleRequestsForMover(mover1).stream()
 				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
-		return resDb.size() == 0 ? new DataTo(false, "No possible requests for this parameters") : new DataTo(true, resDb);			
+		return resDb.size() == 0 ? new DataTo(false, "No possible requests for this parameters") : new DataTo(true, resDb);
 	}
 
-//	@PostMapping(value = SAVE_REQUEST)
-//	public DataTo saveRequestToDatabase(@RequestBody RequestData requestData) {
-//		Request request = new Request(
-////				LocalDateTime.of(requestData.move_date, requestData.move_time),
-//				LocalDateTime.now(),
-//				LocalDate.now(),
-//				Status.INITIAL,
-//				false,
-//				requestData.cost,
-//				0,
-//				Place.valueOf(requestData.place_type),
-//				new List<RequestAdress>(Arrays.asList(requestData.addresses)),
-//
-//
-//
-//				);
-//	}
+    @GetMapping(value = REQUEST_GET_INFO)
+    public DataTo getRequestInfo(@RequestParam Integer id) {
+        Request request = requestRepository.findById(id).orElse(null);
+        return request == null ? new DataTo(false, "No request with id " + id) : new DataTo(true, request);
+    }
+
+    @PostMapping(value = SAVE_REQUEST)
+    public DataTo saveRequestToDatabase(@RequestBody RequestData requestData) {
+
+        List<RequestAdress> requestAdresses = new ArrayList<>();
+        for (AddressDto addressDto : requestData.getAddresses()) {
+            // TODO: 22/01/2018 DISCUSS USE LATITUDE AND LONGITUDE
+            // TODO: 22/01/2018 DISCUSS ELEVATOR VS LIST
+            // TODO: 22/01/2018 DISCUSS MOVING ROOMS OUT OF REQUEST TO ADDRESS
+            // TODO: 22/01/2018 CALCULATE AREA FOR ADDRESS BASED ON THE CITY|STREET
+            Address address = new Address(addressDto.city, addressDto.street, addressDto.building, addressDto.apartment, 0, 0, addressDto.floor, Lift.NO_LIFT, Area.CENTER);
+            addressRepository.save(address);
+            RequestAdress requestAdress = new RequestAdress(addressDto.seqnumber, address);
+            requestAdresses.add(requestAdress);
+        }
+
+        List<Room> rooms = new ArrayList<>();
+
+        Request request = new Request(
+                // TODO: 23/01/2018 USE PROPER DATE FROM REQUEST
+//				LocalDateTime.of(requestData.move_date, requestData.move_time),
+                LocalDateTime.now(),
+                LocalDate.now(),
+                Status.INITIAL,
+                false,
+                requestData.cost,
+                0,
+                Place.valueOf(requestData.place_type),
+                requestAdresses,
+                rooms
+        );
+        Customer customer = (Customer) accountRepository.findById(requestData.customerId).get();
+        request.setCustomer(customer);
+        requestRepository.save(request);
+
+        for (RequestAdress requestAdress : requestAdresses) {
+            requestAdress.setRequest(request);
+            requestAddressRepository.save(requestAdress);
+        }
+
+        for (Move move : requestData.getMoves()) {
+            for (ItemDto itemDto: move.getItems()) {
+                // FIXME: 23/01/2018 HOW TO SAVE ITEM PROPERTIES?
+//                Item item = new Item(itemDto.getName(),itemDto.getProperties(), )
+//                itemRepository.save(item);
+            }
+        }
+
+        return new DataTo(true, "Saved to db");
+    }
 }
