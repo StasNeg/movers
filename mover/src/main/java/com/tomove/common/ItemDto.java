@@ -3,9 +3,9 @@ package com.tomove.common;
 import java.util.Map;
 
 public class ItemDto {
-    String name;
-    String room;
-    Map<String, String> properties;
+    public String name;
+    public String room;
+    public Map<String, String> properties;
 
     public ItemDto() {
     }
