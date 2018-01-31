@@ -121,8 +121,7 @@ public class CostEstimateController {
         }
 
         // FIXME: 15/01/2018 IS IT RIGHT TO ADD carSupplyPrice ONLY ONCE?
-        // FIXME: 18/01/2018 IS IT RIGHT TO RETURN INT OR DOUBLE?
-        return (int) (carSupplyPrice + totalPrice);
+        return (int) (carSupplyPrice + totalPrice + 0.5);
     }
 
     private Integer getDistance(String addressIn, String addressOut) {
