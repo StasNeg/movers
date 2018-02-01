@@ -33,6 +33,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class RequestsInit implements ApplicationRunner {
@@ -59,12 +60,18 @@ public class RequestsInit implements ApplicationRunner {
         this.reqAddrRepo = reqAddrRepo;
         this.itemRepo = itemRepo;
     }    
+    
+    public static int randomInt(int min, int max){
+		return ThreadLocalRandom.current().nextInt(min, max + 1);		
+	}
 
     public void run(ApplicationArguments args) {
         if (!isInit.equals("none")) {
         	Customer customer1 = new Customer("050887766", "iamcustomer@co.il", "qwerty", true, "Izya", "Katsman", "whatuhskills", null);
+        	Customer customer2 = new Customer("050887766", "iamcustomer2@co.il", "qwerty", true, "Vasya", "Katsman", "whatuhskills", null);
         	Mover mover1 = new Mover("0503121421", "moveyou@co.il", "bumbumbigalow", true, "Wizzy", null);
-        	List<Account> accounts = Arrays.asList(customer1, mover1);
+        	Mover mover2 = new Mover("05031214212", "2@co.il", "bumbumbigalow", true, "Wizzy", null);
+        	List<Account> accounts = Arrays.asList(customer1, mover1,customer2,mover2);
         	accountRepo.saveAll(accounts);
         	
         	Address address1 = new Address("Ashkelon", "Bar Kochba", "209", "1203", 31.1231f,34.1231f,2, 
@@ -73,11 +80,13 @@ public class RequestsInit implements ApplicationRunner {
     				Lift.LIFT,Area.CENTER,null,null);
         	Address address3 = new Address("Rehovot", "Palmah Boulevard", "22", "18A", 31.13f, 34.10f, 10, 
     				Lift.NO_LIFT, Area.CENTER, null, null);
-        	List<Address> addresses = Arrays.asList(address1,address2,address3);
+        	Address address4 = new Address("Haifa", "Str", "1", "1", 33f, 44f, 5, Lift.LIFT_TRUCK, Area.NORTH, null, null);
+        	List<Address> addresses = Arrays.asList(address1,address2,address3,address4);
         	addressRepo.saveAll(addresses);
         	
         	Truck truck1 = new Truck("Kamaz 20T", "123sdq13", 5, 3, Area.CENTER, mover1);	
-        	List<Truck> trucks = Arrays.asList(truck1);
+        	Truck truck2 = new Truck("Kamaz 20T", "123sdq13", 5, 3, Area.NORTH, mover2);
+        	List<Truck> trucks = Arrays.asList(truck1,truck2);
         	truckRepo.saveAll(trucks);
         	
         	LocalDate date1 = LocalDate.now();
@@ -88,42 +97,54 @@ public class RequestsInit implements ApplicationRunner {
         	Request request1 = new Request(date2, date1, Status.INITIAL, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
         	Request request2 = new Request(date3, date1, Status.INITIAL, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
         	Request request3 = new Request(date4, date1, Status.INITIAL, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
-        	List<Request> requests = Arrays.asList(request1,request2,request3);
-        	requestRepo.saveAll(requests);		
+        	Request request4 = new Request(date2, date1, Status.INITIAL, false, 1500, 0, Place.APARTMENT, null, customer1, null, roomsList);
+        	Request request5 = new Request(date3, date1, Status.INITIAL, false, 1100, 0, Place.APARTMENT, null, customer1, null, roomsList);
+        	Request request6 = new Request(date4, date1, Status.INITIAL, false, 1400, 0, Place.APARTMENT, null, customer1, null, roomsList);
+        	Request request9 = new Request(date2, date1, Status.INITIAL, false, 1300, 0, Place.APARTMENT, null, customer2, null, roomsList);
+        	Request request8 = new Request(date3, date1, Status.CANCELLED_BY_CUSTOMERS, false, 1800, 0, Place.APARTMENT, null, customer1, null, roomsList);
+        	Request request7 = new Request(date4, date1, Status.CANCELLED_BY_MOVER, false, 1900, 0, Place.APARTMENT, null, customer1, null, roomsList);
+        	List<Request> requests = Arrays.asList(request1,request2,request3,request4,request5,request6,request7,request8,request9);    	
+        	requestRepo.saveAll(requests);	
         	
-        	RequestAdress reqAddress0 = new RequestAdress(0, request1, address1);
-       		RequestAdress reqAddress1 = new RequestAdress(1, request1, address3);
-       		RequestAdress reqAddress2 = new RequestAdress(2, request1, address2);
-       		RequestAdress reqAddress3 = new RequestAdress(0, request2, address2);
-       		RequestAdress reqAddress4 = new RequestAdress(1, request2, address3);
-       		RequestAdress reqAddress5 = new RequestAdress(0, request3, address1);
-       		RequestAdress reqAddress6 = new RequestAdress(1, request3, address3);
-    		List<RequestAdress> requestAdresses = Arrays.asList(reqAddress0,reqAddress1,reqAddress2,reqAddress3,reqAddress4,reqAddress5,reqAddress6);    		
-    		reqAddrRepo.saveAll(requestAdresses);
-    		
-    		List<Item> items1 = new ArrayList<Item>();
-    		List<Item> items2 = new ArrayList<Item>();
-    		List<Item> items3 = new ArrayList<Item>();
-    		Room room1 = new Room(RoomType.SALON, null, request1, items1);
-    		Room room2 = new Room(RoomType.BEDROOM, null, request1, items2);
-    		Room room3 = new Room(RoomType.BEDROOM, null, request1, items3);
-    		List<Room> rooms = Arrays.asList(room1,room2,room3);
+        	Room room1 = new Room();
+        	List<Item> items1 = new ArrayList<Item>();       	
+        	List<Room> rooms = new ArrayList<>();
+    		for(int i=0;i<10;i++){
+    			Request request = requests.get(randomInt(0,requests.size()-1));
+    			room1 = new Room(RoomType.SALON, null, request, items1);
+    			Room room2 = new Room(RoomType.BEDROOM, null, request, items1);
+    			Room room3 = new Room(RoomType.BATHROOM, null, request, items1);
+    			rooms.add(room1); 
+    			rooms.add(room2);
+    			rooms.add(room3);
+    		}
     		roomRepo.saveAll(rooms);
     		
-        	
-    				
-    		byte[] image = "someImamge".getBytes();  		
+    		List<RequestAdress> requestAdresses = new ArrayList<>();
+    		requests.forEach(x->{
+    			for(int i=0;i<2;i++){	
+    				int adressNum = randomInt(0,addresses.size()-1);			
+    				Address address = new Address();
+    				address =  addresses.get(adressNum);
+    				RequestAdress reqAddress = new RequestAdress(i, x, address);
+    				requestAdresses.add(reqAddress);
+    			}
+    		});
+    		
+    		reqAddrRepo.saveAll(requestAdresses);        	
+        	    		    		
+        	    				
+    		/*byte[] image = "someImamge".getBytes();  		
      		Item item1 = new Item("Sofa", null, address1, address2, room1);
     		items1 = new ArrayList<Item>();
       		Item item2 = new Item("TV",null,address1,address2,room2);
     		Item item3 = new Item("Brah",null,address1,address3,room3);	    		
     		List<Item> items = Arrays.asList(item1,item2,item3);
-    		itemRepo.saveAll(items);
-    		
-    		/*    		TypeProperties itemProps = new TypeProperties("Length", "110", item1);
-    		Set<TypeProperties> setProps = new HashSet<TypeProperties>();
-    		setProps.add(itemProps); */   
+    		itemRepo.saveAll(items);*/    		
+
         }
+        
+        
     }
 }
 

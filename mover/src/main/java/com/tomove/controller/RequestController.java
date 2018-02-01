@@ -153,4 +153,30 @@ public class RequestController {
 		accountRepository.save(mover);
 		return new DataTo(true, String.format("Request %d was assigned to mover %d", request_id, mover_id));
 	}
+	
+	@RequestMapping(value = GET_CALENDAR_MOVER_REQUESTS, method=RequestMethod.GET)
+	public DataTo getRecentForMoverFromDate(@RequestParam(name="token") String tokenVal, @RequestParam(name=REQUEST_DATE) String userDate){
+		//test period only - should be changed to get user from token
+		int userid = Integer.parseInt(tokenVal); 
+				
+		Account account = accountRepository.findById(userid).orElse(new Account() {});
+		if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
+		Mover mover1 = (Mover) account; 
+		LocalDate requestDate = getRequestDate(userDate);
+		List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByMoverFromDay(mover1, requestDate).stream()
+				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
+		return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);			
+	}
+
+	@RequestMapping(value = GET_RECENT_MOVER_REQUESTS, method=RequestMethod.GET)
+	public DataTo getPossibleForMover(@RequestParam(name="token") String tokenVal){
+		//test period only - should be changed to get user from token
+		int userid = Integer.parseInt(tokenVal); 
+		Account account = accountRepository.findById(userid).orElse(new Account() {});
+		if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
+		Mover mover1 = (Mover) account; 		
+		List<RequestDetailsDTO> resDb = requestManager.getPossibleRequestsForMover(mover1).stream()
+				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
+		return resDb.size() == 0 ? new DataTo(false, "No possible requests for this parameters") : new DataTo(true, resDb);			
+	}
 }
