@@ -88,12 +88,12 @@ public class CostEstimateController {
                 Double coeffLiftMove = 0.;
 
                 if (!moveAddress.lift) {
-                    coeffLiftMove = moveAddress.floor * PERCENT_PER_FLOOR_NO_LIFT/100;
+                    coeffLiftMove = moveAddress.floor * PERCENT_PER_FLOOR_NO_LIFT / 100;
                     if (coeffLiftMove >= PERCENT_PER_FLOOR_NO_LIFT_CAP) {
                         coeffLiftMove = PERCENT_PER_FLOOR_NO_LIFT_CAP;
                     }
                 } else {
-                    coeffLiftMove = moveAddress.floor * PERCENT_PER_FLOOR_YES_LIFT/100;
+                    coeffLiftMove = moveAddress.floor * PERCENT_PER_FLOOR_YES_LIFT / 100;
                     if (coeffLiftMove >= PERCENT_PER_FLOOR_YES_LIFT_CAP) {
                         coeffLiftMove = PERCENT_PER_FLOOR_YES_LIFT_CAP;
                     }
@@ -105,14 +105,16 @@ public class CostEstimateController {
             distancePrice = getDistance(move.addressIn.getAddressString(), move.addressOut.getAddressString()) * PRICE_PER_KM;
 
             /* Calculate itemDtos price */
-            for (ItemDto item : move.getItems()) {
-                StringBuilder itemNameConcat = new StringBuilder();
-                itemNameConcat.append(item.getName());
-                for (Map.Entry<String, String> property : item.getProperties().entrySet()) {
-                    itemNameConcat.append("_" + property.getKey() + "=" + property.getValue());
+            for (RoomDto room : move.getRooms()) {
+                for (ItemDto item : room.getItems()) {
+                    StringBuilder itemNameConcat = new StringBuilder();
+                    itemNameConcat.append(item.getName());
+                    for (Map.Entry<String, String> property : item.getProperties().entrySet()) {
+                        itemNameConcat.append("_" + property.getKey() + "=" + property.getValue());
+                    }
+                    Double itemPrice = typePriceRepository.findByName(itemNameConcat.toString()).getPrice();
+                    itemsPrice += itemPrice;
                 }
-                Double itemPrice = typePriceRepository.findByName(itemNameConcat.toString()).getPrice();
-                itemsPrice += itemPrice;
             }
 
             // TODO: 18/01/2018 HOW TO COVER CALCULATION WITH TESTS?

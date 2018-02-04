@@ -1,9 +1,6 @@
 package com.tomove.controller;
 
-import com.tomove.common.DataTo;
-import com.tomove.common.ItemDto;
-import com.tomove.common.Move;
-import com.tomove.common.RequestData;
+import com.tomove.common.*;
 import com.tomove.controller.to.AddressDto;
 import com.tomove.model.enums.*;
 import com.tomove.model.objectMover.*;
@@ -173,7 +170,6 @@ public class RequestController {
     }
 
     @PostMapping(value = REQUEST_ASSIGN_TO_MOVER)
-    // TODO: 06/01/2018 ASK STAS HOW TO TAKE PARAMS DIRECTLY
     public DataTo assignRequestToMover(@RequestBody Map<String, Integer> params) {
         Integer request_id = params.get("request_id");
         Integer mover_id = params.get("mover_id");
@@ -202,10 +198,16 @@ public class RequestController {
 
         List<RequestAdress> requestAdresses = new ArrayList<>();
         for (AddressDto addressDto : requestData.getAddresses()) {
-            // TODO: 22/01/2018 ASK STAS USE LATITUDE AND LONGITUDE
-            // TODO: 22/01/2018 DISCUSS ELEVATOR VS LIST
-            // TODO: 22/01/2018 ASK STAS CALCULATE AREA FOR ADDRESS BASED ON THE CITY|STREET
-            Address address = new Address(addressDto.city, addressDto.street, addressDto.building, addressDto.apartment, 0, 0, addressDto.floor, Lift.NO_LIFT, Area.CENTER);
+            Address address = new Address(
+                    addressDto.city,
+                    addressDto.street,
+                    addressDto.building,
+                    addressDto.apartment,
+                    addressDto.longitude,
+                    addressDto.latitude,
+                    addressDto.floor,
+                    Lift.NO_LIFT,
+                    getArea(addressDto.latitude, addressDto.longitude));
             addressRepository.save(address);
             RequestAdress requestAdress = new RequestAdress(addressDto.seqnumber, address);
             requestAdresses.add(requestAdress);
@@ -214,7 +216,7 @@ public class RequestController {
         List<Room> rooms = new ArrayList<>();
 
         Request request = new Request(
-                // FIXME: 23/01/2018 USE PROPER DATE FROM REQUEST WHEN WE SET FOR DATETIME FORMAT IN JSON
+                // FIXME: 23/01/2018 USE SEPARATE DATE AND TIME
 //				LocalDateTime.of(requestData.move_date, requestData.move_time),
                 LocalDateTime.now(),
                 LocalDate.now(),
@@ -236,22 +238,37 @@ public class RequestController {
         }
 
         for (Move move : requestData.getMoves()) {
-            // TODO: 31/01/2018 GET REQUEST ADDRESS BY SEQNUMBER AND NOT BY INDEX (NOW IS NOT GUARANTEED)
+            // FIXME: 31/01/2018 GET REQUEST ADDRESS BY SEQNUMBER AND NOT BY INDEX (NOW IS NOT GUARANTEED)
             Address addressFrom = requestAdresses.get(move.addressIn.seqnumber).getAddress();
             Address addressTo = requestAdresses.get(move.addressOut.seqnumber).getAddress();
-            for (ItemDto itemDto: move.getItems()) {
-                // TODO: 31/01/2018 SAVE ROOM IMAGE FROM REQUEST
-                Room room = new Room(RoomType.valueOf(itemDto.room), null, request);
-                // TODO: 23/01/2018 HANDLE PROPERTIES
-                // TODO: 23/01/2018 DISCUSS ITEM_TYPE AND NAME: MAYBE THEY ARE ONE FIELD?
-                Item item = new Item(itemDto.name, itemTypeRepository.findByName(itemDto.name).orElse(null), addressFrom, addressTo, room);
-                room.setItems(new ArrayList<>());
-                room.getItems().add(item);
-                roomRepository.save(room);
-                itemRepository.save(item);
+            for (RoomDto room : move.getRooms()) {
+                for (ItemDto itemDto : room.getItems()) {
+                    // TODO: 31/01/2018 SAVE ROOM IMAGE FROM REQUEST TO DB
+                    Room itemRoom = new Room(RoomType.valueOf(itemDto.room), null, request);
+                    StringBuilder itemName = new StringBuilder();
+                    itemName.append(itemDto.name);
+                    for (Map.Entry<String, String> property : itemDto.properties.entrySet()) {
+                        itemName.append("_" + property.getKey() + "=" + property.getValue());
+                    }
+
+                    Item item = new Item(itemName.toString(),
+                            itemTypeRepository.findByName(itemDto.name).orElse(null),
+                            addressFrom,
+                            addressTo,
+                            itemRoom);
+
+                    itemRoom.setItems(new ArrayList<>());
+                    itemRoom.getItems().add(item);
+                    roomRepository.save(itemRoom);
+                    itemRepository.save(item);
+                }
             }
         }
 
         return new DataTo(true, "Saved to db");
+    }
+    // TODO: 04/02/2018 @STAS: FILL THIS METHOD
+    private Area getArea(double latitude, double longitude) {
+        return Area.CENTER;
     }
 }
