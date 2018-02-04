@@ -64,7 +64,7 @@ public class CostEstimateController {
     private Integer calculateCost(RequestData data) {
 
         Double coeffDate = 1.;
-        Double coeffElevator = 0.;
+        Double coeffLift = 0.;
         Double distancePrice = 0.;
         Double itemsPrice = 0.;
         Double totalPrice = 0.;
@@ -85,20 +85,20 @@ public class CostEstimateController {
             List<AddressDto> moveAddresses = Arrays.asList(move.addressIn, move.addressOut);
             for (AddressDto moveAddress : moveAddresses) {
 
-                Double coeffElevatorMove = 0.;
+                Double coeffLiftMove = 0.;
 
-                if (!moveAddress.elevator) {
-                    coeffElevatorMove = moveAddress.floor * PERCENT_PER_FLOOR_NO_LIFT/100;
-                    if (coeffElevatorMove >= PERCENT_PER_FLOOR_NO_LIFT_CAP) {
-                        coeffElevatorMove = PERCENT_PER_FLOOR_NO_LIFT_CAP;
+                if (!moveAddress.lift) {
+                    coeffLiftMove = moveAddress.floor * PERCENT_PER_FLOOR_NO_LIFT/100;
+                    if (coeffLiftMove >= PERCENT_PER_FLOOR_NO_LIFT_CAP) {
+                        coeffLiftMove = PERCENT_PER_FLOOR_NO_LIFT_CAP;
                     }
                 } else {
-                    coeffElevatorMove = moveAddress.floor * PERCENT_PER_FLOOR_YES_LIFT/100;
-                    if (coeffElevatorMove >= PERCENT_PER_FLOOR_YES_LIFT_CAP) {
-                        coeffElevatorMove = PERCENT_PER_FLOOR_YES_LIFT_CAP;
+                    coeffLiftMove = moveAddress.floor * PERCENT_PER_FLOOR_YES_LIFT/100;
+                    if (coeffLiftMove >= PERCENT_PER_FLOOR_YES_LIFT_CAP) {
+                        coeffLiftMove = PERCENT_PER_FLOOR_YES_LIFT_CAP;
                     }
                 }
-                coeffElevator += coeffElevatorMove;
+                coeffLift += coeffLiftMove;
             }
 
             /* Calculate distance price */
@@ -117,7 +117,7 @@ public class CostEstimateController {
 
             // TODO: 18/01/2018 HOW TO COVER CALCULATION WITH TESTS?
             /* Calculate total price */
-            totalPrice += (distancePrice + itemsPrice) * (coeffElevator + coeffDate);
+            totalPrice += (distancePrice + itemsPrice) * (coeffLift + coeffDate);
         }
 
         // FIXME: 15/01/2018 IS IT RIGHT TO ADD carSupplyPrice ONLY ONCE?

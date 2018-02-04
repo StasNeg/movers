@@ -2,12 +2,14 @@ package com.tomove.controller.to;
 
 public class AddressDto {
     public int seqnumber;
+    public double latitude;
+    public double longitude;
     public String city;
     public String street;
     public String building;
     public String apartment;
     public int floor;
-    public boolean elevator;
+    public boolean lift;
 
     public int getSeqnumber() {
         return seqnumber;
@@ -33,11 +35,19 @@ public class AddressDto {
         return floor;
     }
 
-    public boolean isElevator() {
-        return elevator;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public AddressDto(int seqnumber, String city, String street, String building, String apartment, int floor, boolean elevator) {
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public boolean isLift() {
+        return lift;
+    }
+
+    public AddressDto(int seqnumber, String city, String street, String building, String apartment, int floor, boolean lift) {
         super();
         this.seqnumber = seqnumber;
         this.city = city;
@@ -45,7 +55,19 @@ public class AddressDto {
         this.building = building;
         this.apartment = apartment;
         this.floor = floor;
-        this.elevator = elevator;
+        this.lift = lift;
+    }
+
+    public AddressDto(int seqnumber, double latitude, double longitude, String city, String street, String building, String apartment, int floor, boolean lift) {
+        this.seqnumber = seqnumber;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.city = city;
+        this.street = street;
+        this.building = building;
+        this.apartment = apartment;
+        this.floor = floor;
+        this.lift = lift;
     }
 
     public AddressDto() {
@@ -54,7 +76,7 @@ public class AddressDto {
     @Override
     public String toString() {
         return "AddressDto [seqnumber=" + seqnumber + ", city=" + city + ", street=" + street + ", building=" + building
-                + ", apartment=" + apartment + ", floor=" + floor + ", elevator=" + elevator  + "]";
+                + ", apartment=" + apartment + ", floor=" + floor + ", lift=" + lift  + "]";
     }
 
     public String getAddressString() {
