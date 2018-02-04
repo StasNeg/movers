@@ -17,6 +17,10 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-b
 import {MatMenuModule, MatSelectModule} from '@angular/material';
 import {DialogRoomComponent} from './room-items-main-menu/dialog/dialogRoom/dialogRoom.component';
 import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main-menu.component';
+import {LoginComponent} from './auth/login/login.component';
+import {UsersService} from './services/users.service';
+import {AuthService} from './services/auth.service';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +30,8 @@ import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main
     RoomItemsMainMenuComponent,
     RoomsItemComponent,
     DialogComponent,
-    DialogRoomComponent
+    DialogRoomComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +50,7 @@ import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main
     MatSelectModule,
     MatMenuModule
   ],
-  providers: [AddressService, ItemService],
+  providers: [AddressService, ItemService, UsersService, AuthService],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent, DialogRoomComponent]
 })
