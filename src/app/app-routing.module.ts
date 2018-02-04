@@ -3,10 +3,11 @@ import {MoveMainAddressComponent} from './move-main-adress/move-main-address.com
 import {NgModule} from '@angular/core';
 import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main-menu.component';
 import {LoginComponent} from './auth/login/login.component';
+import {AuthGuard} from "./services/auth-guard.service";
 
 
 const appRoutes: Routes = [
-  {path: '', component: MoveMainAddressComponent},
+  {path: '', component: MoveMainAddressComponent, canActivate: [AuthGuard]},
   {path: 'address', component: MoveMainAddressComponent},
   {path: 'room', component: RoomItemsMainMenuComponent},
   {path: 'login', component: LoginComponent},
