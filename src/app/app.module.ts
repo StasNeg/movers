@@ -20,6 +20,7 @@ import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main
 import {LoginComponent} from './auth/login/login.component';
 import {UsersService} from './services/users.service';
 import {AuthService} from './services/auth.service';
+import {AuthGuard} from "./services/auth-guard.service";
 
 
 @NgModule({
@@ -50,7 +51,7 @@ import {AuthService} from './services/auth.service';
     MatSelectModule,
     MatMenuModule
   ],
-  providers: [AddressService, ItemService, UsersService, AuthService],
+  providers: [AddressService, ItemService, UsersService, AuthService, AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent, DialogRoomComponent]
 })

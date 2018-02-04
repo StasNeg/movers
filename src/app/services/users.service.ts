@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {User} from '../auth/models/user.model';
+// import {User} from '../auth/models/user.model';
 import {HttpClient} from '@angular/common/http';
 
 
@@ -14,10 +14,13 @@ export class UsersService {
     return this.http.post(`http://localhost:8080/login`, data);
   }
 
-  private userIn;
+  private userIn = null;
 
-  putUserIn(user: User) {
+
+  setUserIn(user: any) {
     this.userIn = user;
+    console.log(this.userIn);
+
   }
 
   getUserIn() {

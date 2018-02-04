@@ -4,6 +4,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {UsersService} from '../../services/users.service';
 import {AuthService} from '../../services/auth.service';
 import {Message} from '../models/message.model';
+import {DataTo} from "../../interfaces/data-to";
 
 
 @Component({
@@ -45,7 +46,15 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const formData = this.form.value;
-    this.usersService.getUserByEmail(formData.email, formData.password).subscribe((data: Object)=>{console.log(data)});
+    this.usersService.getUserByEmail(formData.email, formData.password).subscribe((data: DataTo) => {
+      if (!data.success) {
+        this.showMessage(new Message('danger', 'Login or password incorrect, try again'));
+      }
+      else {
+        this.usersService.setUserIn(data.data);
+
+      }
+    });
 
   }
 }
