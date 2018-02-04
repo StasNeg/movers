@@ -1,0 +1,27 @@
+.footer {
+  position: absolute;
+  width: 100vw;
+  height: 10px;
+
+}
+
+
+.bell{
+  width: 20px;
+  float: left;
+  z-index: 0;
+}
+.strips {
+  position: relative;
+  width: 20px;
+  float: left;
+  left: 55vw;
+  height: 20px;
+}
+.myRequests{
+position: relative;
+  float: left;
+  width: 20vw;
+  font-size: 13px;
+  left: 65vw;
+}

@@ -1,0 +1,187 @@
+$dayBase: 30px;
+
+.marked {
+  background: red;
+}
+
+.calendar {
+  display: block;
+  width: $dayBase * 7;
+  margin: 0 auto;
+  * {
+    box-sizing: border-box;
+  }
+
+  .calendar-navs {
+    background-color: cadetblue;
+  }
+
+  .month-nav {
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .year-nav {
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: 'Montserrat';
+  }
+  .month-grid {
+
+    .day-names {
+      display: flex;
+      flex-direction: row;
+      background: grey;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+
+    .weeks {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .week {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .week-date, .day-name {
+      text-align: center;
+      padding: 8px;
+      display: block;
+      width: $dayBase;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .week-date {
+      height: $dayBase;
+      position: relative;
+
+      .date-text {
+        z-index: 50;
+        font-size: 10px;
+        font-family: 'Montserrat', sans-serif;
+      }
+      &::after {
+        content: '';
+        height: $dayBase * 0.9;
+        width: $dayBase * 0.9;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: background-color 150ms linear, color 150ms linear;
+        z-index: 2;
+      }
+      &.enabled {
+        cursor: pointer;
+        &:hover {
+          &:after {
+            background-color: seagreen;
+          }
+        }
+      }
+      &.selected {
+        color: white;
+        &:after {
+          background-color: teal;
+        }
+        &:hover {
+          &:after {
+            background-color: teal;
+          }
+        }
+      }
+      &.disabled {
+        color: lightblue;
+      }
+    }
+    .today {
+      font-weight: bold;
+    }
+  }
+}
+
+.dots {
+
+  position: absolute;
+  float: left;
+  bottom: 10%;
+}
+
+.dot-green {
+  margin: 1px;
+  float: left;
+  position: relative;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: green;
+  left: 1px;
+  bottom: 1px;
+  z-index: 10;
+}
+
+.dot-red {
+  margin: 1px;
+  float: left;
+  position: relative;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: red;
+  left: 1px;
+  bottom: 1px;
+  z-index: 10;
+}
+
+.dot-orange {
+  margin: 1px;
+  float: left;
+  position: relative;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: orange;
+  left: 1px;
+  bottom: 1px;
+  z-index: 10;
+}
+
+.dot-blue {
+  margin: 1px;
+  float: left;
+  position: relative;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: blue;
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+  left: 1px;
+  bottom: 1px;
+  z-index: 10;
+}
+
+.dot-black{
+  margin: 1px;
+  float: left;
+  position: relative;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: black;
+  left: 1px;
+  bottom: 1px;
+  z-index: 10;
+}
+
+

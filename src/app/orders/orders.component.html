@@ -1,0 +1,21 @@
+<p> Across: {{requests}}</p>
+<div class="box" *ngFor="let i of requests"
+     [ngClass]="{
+     'confirmed': i.status == 'CONFIRMED',
+     'updated': i.status == 'UPDATED',
+     'initial': i.status =='INITIAL',
+     'canceled_by_customer': i.status == 'CANCELLED_BY_CUSTOMER',
+     'canceled_by_mover': i.status == 'CANCELLED_BY_MOVER'
+     }">
+  <p> Date : {{i.movedatetime}} </p>
+  <p class="address"> From: {{i.from.street + ", " + i.from.building+"/ " + i.from.city}} </p>
+  <p *ngFor="let across of i.addresses "> Across #{{across.seqnumber}}: {{across.building + ", " + across.building+"/ "
+    + across.city}} </p>
+  <p class="address"> To : {{i.from.street + ", " + i.from.building+"/ " + i.from.city}} </p>
+  <p id="cost"> $ {{i.cost}} </p>
+  <p class="status" *ngIf="i.status=='CONFIRMED'">Confirmed</p>
+  <p class="status" *ngIf="i.status=='CANCELLED_BY_CUSTOMER'">Canceled by customer</p>
+  <p class="status" *ngIf="i.status=='CANCELLED_BY_MOVER'"> Canceled by mover </p>
+  <p class="status" *ngIf="i.status=='UPDATED'">UPDATED</p>
+  <p class="status" *ngIf="i.status=='INITIAL'"> Waiting for Confirmation </p>
+</div>

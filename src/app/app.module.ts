@@ -20,7 +20,14 @@ import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main
 import {LoginComponent} from './auth/login/login.component';
 import {UsersService} from './services/users.service';
 import {AuthService} from './services/auth.service';
-import {AuthGuard} from "./services/auth-guard.service";
+import {AuthGuard} from './services/auth-guard.service';
+import {RequestService} from './request.service';
+import {LoginService} from './login.service';
+import {FooterComponent} from './footer/footer.component';
+import {OrdersComponent} from './orders/orders.component';
+import {RequestsComponent} from './requests/requests.component';
+import {HeadersComponent} from './header/header.component';
+import {CalendarComponent} from './calendar/calendar.component';
 
 
 @NgModule({
@@ -32,8 +39,12 @@ import {AuthGuard} from "./services/auth-guard.service";
     RoomsItemComponent,
     DialogComponent,
     DialogRoomComponent,
-    LoginComponent
-  ],
+    LoginComponent,
+    FooterComponent,
+    OrdersComponent,
+    RequestsComponent,
+    HeadersComponent,
+    CalendarComponent],
   imports: [
     BrowserModule,
     CommonModule,
@@ -51,7 +62,14 @@ import {AuthGuard} from "./services/auth-guard.service";
     MatSelectModule,
     MatMenuModule
   ],
-  providers: [AddressService, ItemService, UsersService, AuthService, AuthGuard],
+  providers: [
+    AddressService,
+    ItemService,
+    UsersService,
+    AuthService,
+    AuthGuard,
+    RequestService,
+    LoginService],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent, DialogRoomComponent]
 })

@@ -3,6 +3,7 @@ export class AddressService {
   public addressFrom = null;
   public addressTo = null;
   public typeAppartment = null;
+
   public isCorrectForm() {
     if (this.addressFrom === null)
       return false;
@@ -45,7 +46,7 @@ export class AddressService {
       lift: haveLift,
       packaging: makePacking,
 
-    }
+    };
   }
 
   saveTo(info, floor, haveLift) {
@@ -58,11 +59,11 @@ export class AddressService {
       lng: langlong.toJSON().lng,
       floor: floor,
       lift: haveLift
-    }
+    };
   }
 
   addTo() {
-    this.addressesTo.push(this.addressTo)
+    this.addressesTo.push(this.addressTo);
     this.addressTo = null;
   }
 
@@ -82,30 +83,30 @@ export class AddressService {
     this.addressFrom.packaging = packing;
   }
 
-  createAddressesArray(){
+  createAddressesArray() {
     let ad = [];
-    if ( this.addressFrom == null && this.addressesTo.length==0)
+    if (this.addressFrom == null && this.addressesTo.length == 0)
       return this.defaultMenu();
     ad.push({
       street: this.addressFrom.street,
       city: this.addressFrom.city
-    })
-    for(let i=0; i< this.addressesTo.length-1;i++){
+    });
+    for (let i = 0; i < this.addressesTo.length - 1; i++) {
       ad.push({
         street: this.addressesTo[i].street,
         city: this.addressesTo[i].city
-      })
+      });
     }
     return ad;
   }
 
-  defaultMenu(){
+  defaultMenu() {
     let ad = [];
-    for(let i=0; i< 8;i++){
+    for (let i = 0; i < 8; i++) {
       ad.push({
         street: 'Street: ' + i,
         city: 'City: ' + i
-      })
+      });
     }
     return ad;
   }

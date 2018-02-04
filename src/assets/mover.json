@@ -1,0 +1,300 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": 100006,
+      "movedatetime": "2018-01-21T17:30:00",
+      "status": "INITIAL",
+      "ispersonal": false,
+      "cost": 1200,
+      "from": {
+        "seqnumber": 0,
+        "city": "Ashkelon",
+        "street": "Bar Kochba",
+        "building": "209",
+        "apartment": "1203",
+        "floor": 2
+      },
+      "to": {
+        "seqnumber": 2,
+        "city": "Kfar Saba",
+        "street": "Kineret",
+        "building": "10",
+        "apartment": "55",
+        "floor": 4
+      },
+      "addresses": [
+        {
+          "seqnumber": 1,
+          "city": "Rehovot",
+          "street": "Palmah Boulevard",
+          "building": "22",
+          "apartment": "18A",
+          "floor": 10
+        }
+      ]
+    },
+    {
+      "id": 100007,
+      "movedatetime": "2018-01-21T12:30:00",
+      "status": "CONFIRMED",
+      "ispersonal": false,
+      "cost": 1200,
+      "from": {
+        "seqnumber": 0,
+        "city": "Kfar Saba",
+        "street": "Kineret",
+        "building": "10",
+        "apartment": "55",
+        "floor": 4
+      },
+      "to": {
+        "seqnumber": 1,
+        "city": "Rehovot",
+        "street": "Palmah Boulevard",
+        "building": "22",
+        "apartment": "18A",
+        "floor": 10
+      },
+      "addresses": [
+        {
+          "seqnumber": 1,
+          "city": "TEL-AVIV",
+          "street": "Palmah Boulevard",
+          "building": "22",
+          "apartment": "18A",
+          "floor": 10
+        }
+      ]
+    },
+    {
+      "id": 100008,
+      "movedatetime": "2018-01-21T15:38:00",
+      "status": "CANCELLED_BY_CUSTOMER",
+      "ispersonal": false,
+      "cost": 1200,
+      "from": {
+        "seqnumber": 0,
+        "city": "Ashkelon",
+        "street": "Bar Kochba",
+        "building": "209",
+        "apartment": "1203",
+        "floor": 2
+      },
+      "to": {
+        "seqnumber": 1,
+        "city": "Rehovot",
+        "street": "Palmah Boulevard",
+        "building": "22",
+        "apartment": "18A",
+        "floor": 10
+      },
+      "addresses": []
+    },
+    {
+      "id": 100009,
+      "movedatetime": "2018-01-21T15:38:00",
+      "status": "CANCELLED_BY_MOVER",
+      "ispersonal": false,
+      "cost": 1200,
+      "from": {
+        "seqnumber": 0,
+        "city": "Ashkelon",
+        "street": "Bar Kochba",
+        "building": "209",
+        "apartment": "1203",
+        "floor": 2
+      },
+      "to": {
+        "seqnumber": 1,
+        "city": "Rehovot",
+        "street": "Palmah Boulevard",
+        "building": "22",
+        "apartment": "18A",
+        "floor": 10
+      },
+      "addresses": [
+        {
+          "seqnumber": 1,
+          "city": "Beit Yam",
+          "street": "Palmah Boulevard",
+          "building": "22",
+          "apartment": "18A",
+          "floor": 10
+        },
+        {
+          "seqnumber": 2,
+          "city": "Beit Yam 2",
+          "street": "Bauman",
+          "building": "24",
+          "apartment": "5",
+          "floor": 1
+        }
+      ]
+    },
+    {
+      "id": 100008,
+      "movedatetime": "2018-01-11T15:38:00",
+      "status": "CANCELLED_BY_CUSTOMER",
+      "ispersonal": false,
+      "cost": 1200,
+      "from": {
+        "seqnumber": 0,
+        "city": "Ashkelon",
+        "street": "Bar Kochba",
+        "building": "209",
+        "apartment": "1203",
+        "floor": 2
+      },
+      "to": {
+        "seqnumber": 1,
+        "city": "Rehovot",
+        "street": "Palmah Boulevard",
+        "building": "22",
+        "apartment": "18A",
+        "floor": 10
+      },
+      "addresses": []
+    },
+    {
+      "id": 100010,
+      "movedatetime": "2018-01-22T15:38:00",
+      "status": "UPDATED",
+      "ispersonal": false,
+      "cost": 1200,
+      "from": {
+        "seqnumber": 0,
+        "city": "Ashkelon",
+        "street": "Bar Kochba",
+        "building": "209",
+        "apartment": "1203",
+        "floor": 2
+      },
+      "to": {
+        "seqnumber": 1,
+        "city": "Rehovot",
+        "street": "Palmah Boulevard",
+        "building": "22",
+        "apartment": "18A",
+        "floor": 10
+      },
+      "addresses": [
+        {
+          "seqnumber": 1,
+          "city": "Beit Yam",
+          "street": "Palmah Boulevard",
+          "building": "22",
+          "apartment": "18A",
+          "floor": 10
+        },
+        {
+          "seqnumber": 2,
+          "city": "Beit Yam 2",
+          "street": "Bauman",
+          "building": "24",
+          "apartment": "5",
+          "floor": 1
+        }
+      ]
+    },
+    {
+      "id": 100022,
+      "movedatetime": "2018-01-30T17:30:00",
+      "status": "INITIAL",
+      "ispersonal": false,
+      "cost": 1200,
+      "from": {
+        "seqnumber": 0,
+        "city": "Ashkelon",
+        "street": "Bar Kochba",
+        "building": "209",
+        "apartment": "1203",
+        "floor": 2
+      },
+      "to": {
+        "seqnumber": 2,
+        "city": "Kfar Saba",
+        "street": "Kineret",
+        "building": "10",
+        "apartment": "55",
+        "floor": 4
+      },
+      "addresses": [
+        {
+          "seqnumber": 1,
+          "city": "Rehovot",
+          "street": "Palmah Boulevard",
+          "building": "22",
+          "apartment": "18A",
+          "floor": 10
+        }
+      ]
+    },
+    {
+      "id": 100021,
+      "movedatetime": "2018-01-30T17:30:00",
+      "status": "CANCELLED_BY_MOVER",
+      "ispersonal": false,
+      "cost": 1200,
+      "from": {
+        "seqnumber": 0,
+        "city": "Ashkelon",
+        "street": "Bar Kochba",
+        "building": "209",
+        "apartment": "1203",
+        "floor": 2
+      },
+      "to": {
+        "seqnumber": 2,
+        "city": "Kfar Saba",
+        "street": "Kineret",
+        "building": "10",
+        "apartment": "55",
+        "floor": 4
+      },
+      "addresses": [
+        {
+          "seqnumber": 1,
+          "city": "Rehovot",
+          "street": "Palmah Boulevard",
+          "building": "22",
+          "apartment": "18A",
+          "floor": 10
+        }
+      ]
+    },
+    {
+      "id": 100020,
+      "movedatetime": "2018-01-30T17:30:00",
+      "status": "CANCELLED_BY_CUSTOMER",
+      "ispersonal": false,
+      "cost": 1200,
+      "from": {
+        "seqnumber": 0,
+        "city": "Ashkelon",
+        "street": "Bar Kochba",
+        "building": "209",
+        "apartment": "1203",
+        "floor": 2
+      },
+      "to": {
+        "seqnumber": 2,
+        "city": "Kfar Saba",
+        "street": "Kineret",
+        "building": "10",
+        "apartment": "55",
+        "floor": 4
+      },
+      "addresses": [
+        {
+          "seqnumber": 1,
+          "city": "Rehovot",
+          "street": "Palmah Boulevard",
+          "building": "22",
+          "apartment": "18A",
+          "floor": 10
+        }
+      ]
+    }
+  ]
+}

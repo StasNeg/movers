@@ -1,0 +1,72 @@
+.box {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin: 4px;
+  text-align: left;
+  padding: 4px;
+  width: 85vw;
+  font-size: 12px;
+}
+
+#cost {
+  position: absolute;
+  left: 65vw;
+  top: 20px;
+  font-weight: 100;
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+#delivery {
+  position: relative;
+  border-radius: 4px;
+  height: 10vh;
+  right: 0;
+  width: 35vw;
+
+}
+
+#move {
+  border-radius: 4px;
+  position: relative;
+  height: 10vh;
+  width: 35vw;
+  left: 0vw;
+}
+
+.address {
+  width: 75%;
+}
+
+.confirmed {
+  color: white;
+  background-color: green;
+
+}
+
+.updated {
+  color: white;
+  background-color: orange;
+}
+
+.canceled_by_mover {
+  color: white;
+  background-color: red;
+}
+
+.canceled_by_customer {
+  color: white;
+  background-color: red;
+}
+
+.status {
+  text-align: center;
+}
+
+.initial {
+  background-color: darkblue;
+  color: white;
+
+}
