@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Access(AccessType.FIELD)
-@Table(name = "items", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "items_unique_name_idx")})
+@Table(name = "items")
 public class Item extends AbstractBaseEntity {
 
     @Column(name = "name", nullable = false)
