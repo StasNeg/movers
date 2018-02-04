@@ -67,8 +67,6 @@ public class LoginController {
 //        emailService.sendEmail(passwordResetEmail);
     }
 
-    // FIXME: 02/01/2018 REMOVE @CrossOrigin
-    @CrossOrigin
     @RequestMapping(value = CHECK_TOKEN, method = RequestMethod.GET)
     public DataTo checkToken(@RequestParam String token) {
         Account account = repository.findByVerificationCode(token);
@@ -79,8 +77,6 @@ public class LoginController {
         }
     }
 
-    // FIXME: 02/01/2018 REMOVE @CrossOrigin
-    @CrossOrigin
     @RequestMapping(value = RESET_PASSWORD, method = RequestMethod.POST)
     public DataTo storeNewPassword(@RequestBody Map<String, String> params) {
         String token = params.get("token");
