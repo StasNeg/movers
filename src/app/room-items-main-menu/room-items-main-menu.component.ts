@@ -26,6 +26,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   roomTypeTotal;
   mover: Mover;
   arrayMovers: Mover[] = [];
+  tempItems = [];
 
   constructor(private addressService: AddressService, private itemService: ItemService, public dialog: MatDialog) {
   }
@@ -64,11 +65,25 @@ export class RoomItemsMainMenuComponent implements OnInit {
 
   onRoomTypeChange(i) {
     this.roomTypeCurrentIndex = i;
+    this.tempItems = [];
+    this.arrayMovers.forEach(mover => {
+      if (mover.addressTo === this.addresses[this.addressesCurrentIndex]) {
+        if (mover.rooms[this.roomTypeCurrentIndex]) {
+          this.tempItems.push(...mover.rooms[this.roomTypeCurrentIndex].items);
+        }
+      }
+    });
 
     this.showItems();
   }
 
   onAddressChange(i) {
+    this.tempItems = [];
+    this.arrayMovers.forEach(mover => {
+      if (mover.addressTo === this.addresses[i]) {
+        this.tempItems.push(...mover.rooms[this.roomTypeCurrentIndex].items);
+      }
+    });
     this.addressesCurrentIndex = i;
     this.roomType = [];
     for (let i = 0; i < this.arrayItems[this.addressesCurrentIndex].rooms.length; i++) {
@@ -171,39 +186,45 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
   isSameAddresses(mover, addressTo) {
-    return mover.addressTo === addressTo && mover.addressFrom === this.addresses[this.addressesCurrentIndex];
+    let sam = (mover.addressTo === addressTo && mover.addressFrom === this.addresses[this.addressesCurrentIndex]);
+    return sam;
   }
 
-  // isItemExist(item, room, mover) {
-  //   let itemExits = false;
-  //   this.arrayMovers.some((mover) => {
-  //     if (item.id === room.item.id) {
-  //       delete[this.mover.room.item.id];
-  //       return true;
-  //     }
-  //     return false;
-  //   });
-  //
-  // }
+  deleteItem(item) {
+    this.arrayMovers.forEach(mover => {
+      mover.rooms.forEach((room) => {
+        room.items.forEach((it, index, arr) => {
+          if (it.id === item.id) {
+            arr.splice(index, 1);
+          }
+        });
+      });
+    });
+  }
+
+  createMover(addressTo) {
+    return {
+      addressFrom: this.addresses[this.addressesCurrentIndex],
+      addressTo: addressTo,
+      rooms: [],
+    };
+  }
 
 
   addMover(addressTo, item) {
 
     if (this.arrayMovers.length === 0) {
-      let mover: Mover = {
-        addressFrom: this.addresses[this.addressesCurrentIndex],
-        addressTo: addressTo,
-        rooms: [],
-      };
+      let mover: Mover = this.createMover(addressTo);
       let room: Room = new Room();
       this.pushItem(room, item);
       mover.rooms.push(room);
       this.arrayMovers.push(mover);
     }
     else {
+      this.deleteItem(item);
       let isMoverExist = false;
       isMoverExist = this.arrayMovers.some((mover) => {
-        if (this.isSameAddresses) {
+        if (this.isSameAddresses(mover, addressTo)) {
           let isRoomExist = false;
           isRoomExist = mover.rooms.some(room => {
             if (room.roomType === this.roomTypeTotal[this.roomTypeCurrentIndex]) {
@@ -224,11 +245,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
       if (!isMoverExist) {
         let room: Room = new Room();
         this.pushItem(room, item);
-        let mover: Mover = {
-          addressFrom: this.addresses[this.addressesCurrentIndex],
-          addressTo: addressTo,
-          rooms: []
-        };
+        let mover: Mover = this.createMover(addressTo);
         mover.rooms.push(room);
         this.arrayMovers.push(mover);
       }

@@ -2,21 +2,22 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {MoveMainAddressComponent} from './move-main-adress/move-main-address.component';
-import {CommonModule} from "@angular/common";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AgmCoreModule} from "@agm/core";
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AgmCoreModule} from '@agm/core';
 import {FromToComponent} from './move-main-adress/from-to/from-to.component';
-import {AddressService} from "./services/address.service";
-import {AppRoutingModule} from "./app-routing.module";
+import {AddressService} from './services/address.service';
+import {AppRoutingModule} from './app-routing.module';
 import {RoomsItemComponent} from './room-items-main-menu/rooms-item/rooms-item.component';
-import {ItemService} from "./services/item.service";
-import {HttpClientModule} from "@angular/common/http";
+import {ItemService} from './services/item.service';
+import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
-import { DialogComponent } from './room-items-main-menu/dialog/dialogItem/dialog.component';
-import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {DialogComponent} from './room-items-main-menu/dialog/dialogItem/dialog.component';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatMenuModule, MatSelectModule} from '@angular/material';
-import {DialogRoomComponent} from "./room-items-main-menu/dialog/dialogRoom/dialogRoom.component";
+import {DialogRoomComponent} from './room-items-main-menu/dialog/dialogRoom/dialogRoom.component';
 import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main-menu.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,7 @@ import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyC4NCBOr2KvWwLGTa1ZwU8V7ZtIuOrInPY',
-      libraries: ["places"]
+      libraries: ['places']
     }),
     HttpClientModule,
     BrowserAnimationsModule,

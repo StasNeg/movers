@@ -9,27 +9,42 @@
 <div class="container" (click)="closeAllDialog()">
   <div class="row" class="col-sm-8 col-sm-offset-2">
     <div class="types" *ngFor="let appartment of roomType; let i = index" (change)="onRoomTypeChange(i)">
-      <label><input type="radio" name="appartment" >
+      <label><input type="radio" name="appartment">
         <span>{{appartment}}</span></label>
     </div>
   </div>
 </div>
 <div class="container" (click)="closeAllDialog()">
   <div class="row" class="col-sm-8 col-sm-offset-2">
-    <div *ngFor="let item of items; let i = index">
-    <button mat-button [matMenuTriggerFor]="menu" type="button" class="btn">
-      <span>{{item.name}}</span>
-      <span *ngFor="let property of item.property"> {{property}}</span>
-    </button>
-      <mat-menu #menu="matMenu" yPosition="above">
-        <button mat-menu-item *ngFor="let address of addresses" (click)="addMover(address, item)">{{address.street}}</button>
-      </mat-menu>
+    <div *ngIf="addressesCurrentIndex===0">
+      <div *ngFor="let item of items; let i = index">
+        <button mat-button [matMenuTriggerFor]="menu" type="button" class="btn">
+          <span>{{item.name}}</span>
+          <span *ngFor="let property of item.property"> {{property}}</span>
+        </button>
+        <mat-menu #menu="matMenu" yPosition="above">
+          <button mat-menu-item *ngFor="let address of addresses" (click)="addMover(address, item)">{{address.street}}
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <div *ngIf="addressesCurrentIndex>0">
+      <div *ngFor="let item of tempItems; let i = index">
+        <button mat-button [matMenuTriggerFor]="menu" type="button" class="btn">
+          <span>{{item.name}}</span>
+          <span *ngFor="let property of item.property"> {{property}}</span>
+        </button>
+        <mat-menu #menu="matMenu" yPosition="above">
+          <button mat-menu-item *ngFor="let address of addresses" (click)="addMover(address, item)">{{address.street}}
+          </button>
+        </mat-menu>
+      </div>
     </div>
   </div>
 </div>
 <div class="container">
   <div class="row" class="col-sm-8 col-sm-offset-2">
-    <button mat-raised-button (click)="openDialog()" [disabled] = " !canAddItem()">
+    <button mat-raised-button (click)="openDialog()" [disabled]=" !canAddItem()">
       <span class="glyphicon glyphicon-plus"></span>
     </button>
   </div>
