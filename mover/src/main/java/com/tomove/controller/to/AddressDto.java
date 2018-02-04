@@ -2,8 +2,8 @@ package com.tomove.controller.to;
 
 public class AddressDto {
     public int seqnumber;
-    public double latitude;
-    public double longitude;
+    public float latitude;
+    public float longitude;
     public String city;
     public String street;
     public String building;
@@ -35,11 +35,11 @@ public class AddressDto {
         return floor;
     }
 
-    public double getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
@@ -58,7 +58,7 @@ public class AddressDto {
         this.lift = lift;
     }
 
-    public AddressDto(int seqnumber, double latitude, double longitude, String city, String street, String building, String apartment, int floor, boolean lift) {
+    public AddressDto(int seqnumber, float latitude, float longitude, String city, String street, String building, String apartment, int floor, boolean lift) {
         this.seqnumber = seqnumber;
         this.latitude = latitude;
         this.longitude = longitude;
