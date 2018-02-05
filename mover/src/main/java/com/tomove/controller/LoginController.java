@@ -1,6 +1,7 @@
 package com.tomove.controller;
 
 
+import com.tomove.common.AccountTo;
 import com.tomove.common.DataTo;
 import com.tomove.model.subjectMover.Account;
 import com.tomove.repository.AccountRepository;
@@ -32,7 +33,7 @@ public class LoginController {
     @RequestMapping(value = POST_LOGIN, method = RequestMethod.POST)
     public DataTo getLoginAccount(@RequestBody Map<String, Object> params) {
         Account account = repository.findByEmailAndPassword((String) params.get("email"), (String) params.get("password"));
-        return account == null ? new DataTo(false, "Wrong login") : new DataTo(true, account);
+        return account == null ? new DataTo(false, "Wrong login") : new DataTo(true, new AccountTo(account));
     }
 
     @RequestMapping(value = GET_ALL_ACCOUNTS, method = RequestMethod.GET)
