@@ -17,7 +17,8 @@ import java.util.List;
 @Access(AccessType.FIELD)
 @Table(name = "trucks")
 public class Truck extends AbstractBaseEntity {
-
+	private final static long globalTruckMovesPerDayLimit = 3;
+	
     @NotBlank
     @Column(name = "truck_type", nullable = false)
     private String truckType;
@@ -129,4 +130,8 @@ public class Truck extends AbstractBaseEntity {
     public void setRequest(List<Request> request) {
         this.request = request;
     }
+    
+    public static long getGlobalTruckMovesPerDayLimit() {
+		return globalTruckMovesPerDayLimit;
+	}
 }

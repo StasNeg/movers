@@ -39,12 +39,32 @@ public class RequestDetails {
 	public List<AddressDto> getAddressesList() {
 		return addressesList;
 	}	
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public void setMovedatetime(LocalDateTime movedatetime) {
+		this.movedatetime = movedatetime;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+
+	public void setIspersonal(boolean ispersonal) {
+		this.ispersonal = ispersonal;
+	}
 
 	public void setAddressesList(List<AddressDto> addressesList) {
 		this.addressesList = addressesList;
 	}	
 
-	public RequestDetails() {	}
+	public RequestDetails(int id) {	}
 
 	public RequestDetails(int id, Status status, LocalDateTime movedatetime, int cost, boolean ispersonal) {
 		this.id = id;
