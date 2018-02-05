@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         this.showMessage(new Message('danger', 'Login or password incorrect, try again'));
       } else {
         this.usersService.setUserIn(data.data);
-
+        this.router.navigate(['/']);
       }
     });
 
