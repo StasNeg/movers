@@ -18,6 +18,7 @@ import com.tomove.model.subjectMover.Mover;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.*;
@@ -213,7 +214,7 @@ public class RequestController {
                     addressDto.longitude,
                     addressDto.latitude,
                     addressDto.floor,
-                    Lift.NO_LIFT,
+                    Lift.valueOf(addressDto.lift),
                     AreaService.getArea(addressDto.latitude, addressDto.longitude));
             addressRepository.save(address);
             RequestAdress requestAdress = new RequestAdress(addressDto.seqnumber, address);
@@ -223,9 +224,7 @@ public class RequestController {
         List<Room> rooms = new ArrayList<>();
 
         Request request = new Request(
-                // FIXME: 23/01/2018 USE SEPARATE DATE AND TIME
-//				LocalDateTime.of(requestData.move_date, requestData.move_time),
-                LocalDateTime.now(),
+				LocalDateTime.of(LocalDate.parse(requestData.move_date), LocalTime.parse(requestData.move_time)),
                 LocalDate.now(),
                 Status.INITIAL,
                 false,
@@ -251,7 +250,7 @@ public class RequestController {
             for (RoomDto room : move.getRooms()) {
                 for (ItemDto itemDto : room.getItems()) {
                     // TODO: 31/01/2018 SAVE ROOM IMAGE FROM REQUEST TO DB
-                    Room itemRoom = new Room(RoomType.valueOf(itemDto.room), null, request);
+                        Room itemRoom = new Room(RoomType.valueOf(room.room), null, request);
                     StringBuilder itemName = new StringBuilder();
                     itemName.append(itemDto.name);
                     for (Map.Entry<String, String> property : itemDto.properties.entrySet()) {
