@@ -1,14 +1,14 @@
 package com.tomove.controller;
 
 import com.tomove.common.*;
-import com.tomove.controller.to.AddressDto;
+import com.tomove.common.AddressDto;
 import com.tomove.model.enums.*;
 import com.tomove.model.objectMover.*;
 import com.tomove.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.tomove.controller.to.RequestDetailsDTO;
+import com.tomove.common.RequestDetailsDTO;
 import com.tomove.model.mapping.RequestDetails;
 import com.tomove.model.mapping.RequestORM;
 import com.tomove.model.subjectMover.Account;
@@ -237,7 +237,7 @@ public class RequestController {
             requestAddressRepository.save(requestAdress);
         }
 
-        for (Move move : requestData.getMoves()) {
+        for (MoveDto move : requestData.getMoves()) {
             // FIXME: 31/01/2018 GET REQUEST ADDRESS BY SEQNUMBER AND NOT BY INDEX (NOW IS NOT GUARANTEED)
             Address addressFrom = requestAdresses.get(move.addressIn.seqnumber).getAddress();
             Address addressTo = requestAdresses.get(move.addressOut.seqnumber).getAddress();

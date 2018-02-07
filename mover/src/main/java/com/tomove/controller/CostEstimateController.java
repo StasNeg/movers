@@ -4,8 +4,7 @@ import com.google.maps.*;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.TravelMode;
 import com.tomove.common.*;
-import com.tomove.controller.to.AddressDto;
-import com.tomove.model.objectMover.Address;
+import com.tomove.common.AddressDto;
 import com.tomove.repository.AccountRepository;
 import com.tomove.repository.RequestRepository;
 import com.tomove.repository.TypePriceRepository;
@@ -79,7 +78,7 @@ public class CostEstimateController {
             coeffDate = PERCENT_IF_HOLIDAY;
         }
 
-        for (Move move : data.getMoves()) {
+        for (MoveDto move : data.getMoves()) {
 
             /* Calculate elevation price */
             List<AddressDto> moveAddresses = Arrays.asList(move.addressIn, move.addressOut);

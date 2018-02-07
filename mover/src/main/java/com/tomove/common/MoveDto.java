@@ -1,15 +1,13 @@
 package com.tomove.common;
 
-import com.tomove.controller.to.AddressDto;
-
 import java.util.List;
 
-public class Move {
+public class MoveDto {
     public AddressDto addressIn;
     public AddressDto addressOut;
     public List<RoomDto> rooms;
 
-    public Move() {
+    public MoveDto() {
     }
 
     public AddressDto getAddressIn() {
