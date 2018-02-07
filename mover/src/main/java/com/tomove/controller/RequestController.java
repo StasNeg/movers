@@ -5,6 +5,7 @@ import com.tomove.common.AddressDto;
 import com.tomove.model.enums.*;
 import com.tomove.model.objectMover.*;
 import com.tomove.repository.*;
+import com.tomove.service.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,141 +28,147 @@ import static com.tomove.common.PathConstant.*;
 @RestController
 @CrossOrigin
 public class RequestController {
-	private AccountRepository accountRepository;
-	private RequestORM requestManager;
-	private RequestRepository requestRepository;
-	private AddressRepository addressRepository;
-	private RequestAddressRepository requestAddressRepository;
-	private ItemRepository itemRepository;
-	private ItemTypeRepository itemTypeRepository;
-	private RoomRepository roomRepository;
+    private AccountRepository accountRepository;
+    private RequestORM requestManager;
+    private RequestRepository requestRepository;
+    private AddressRepository addressRepository;
+    private RequestAddressRepository requestAddressRepository;
+    private ItemRepository itemRepository;
+    private ItemTypeRepository itemTypeRepository;
+    private RoomRepository roomRepository;
 
-	@Autowired
-	public RequestController(
-			RequestORM requestManager,
-			RequestRepository requestRepository,
-			AccountRepository accountRepository,
-			AddressRepository addressRepository,
-			RequestAddressRepository requestAddressRepository,
-			ItemRepository itemRepository,
-			ItemTypeRepository itemTypeRepository,
-			RoomRepository roomRepository) {
-		this.requestManager = requestManager;
-		this.requestRepository = requestRepository;
-		this.accountRepository = accountRepository;
-		this.addressRepository = addressRepository;
-		this.requestAddressRepository = requestAddressRepository;
-		this.itemRepository = itemRepository;
-		this.itemTypeRepository = itemTypeRepository;
-		this.roomRepository = roomRepository;
-	}
-	
-	@RequestMapping(value=GET_RECENT_CUSTOMER_REQUESTS, method=RequestMethod.GET)
-	public DataTo getRecent(@RequestParam(name="token") String tokenVal){
-		//test period only - should be changed to get user from token
-		int userid = Integer.parseInt(tokenVal);
-		
-		Account account = accountRepository.findById(userid).orElse(new Account() {});
-		if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
-		Customer customer1 = (Customer) account; 
-		
-		List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByCustomer(customer1).stream()
-				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
-		return resDb.size() == 0 ? new DataTo(false, "No data for the customer") : new DataTo(true, resDb);
-	}
-	
-	@RequestMapping(value=GET_CALENDAR_CUSTOMER_REQUESTS, method=RequestMethod.GET)
-	public DataTo getRecentFromDate(@RequestParam(name="token") String tokenVal, @RequestParam(name=REQUEST_DATE) String userDate){
-		//test period only - should be changed to get user from token
-		int userid = Integer.parseInt(tokenVal);
-		
-		Account account = accountRepository.findById(userid).orElse(new Account() {});
-		if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
-		Customer customer1 = (Customer) account; 
-		
-		LocalDate requestDate = getRequestDate(userDate);
-		List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByCustomerFromDay(customer1,requestDate).stream()
-				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
-		return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
-	}
-	
-	@RequestMapping(value=GET_DATE_CUSTOMER_REQUESTS, method=RequestMethod.GET)
-	public DataTo getRecentForDate(@RequestParam(name="token") String tokenVal, @RequestParam(name=REQUEST_DATE) String userDate){
-		//test period only - should be changed to get user from token
-		int userid = Integer.parseInt(tokenVal);
-		
-		Account account = accountRepository.findById(userid).orElse(new Account() {});
-		if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
-		Customer customer1 = (Customer) account; 
-		
-		LocalDate requestDate = getRequestDate(userDate);
-		List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByCustomerAndDay(customer1,requestDate).stream()
-				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
-		return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
-	}
-	
-	@RequestMapping(value=GET_DATE_MOVER_REQUESTS, method=RequestMethod.GET)
-	public DataTo getRecentForMoverDate(@RequestParam(name="token") String tokenVal, @RequestParam(name=REQUEST_DATE) String userDate){
-		//test period only - should be changed to get user from token
-		int userid = Integer.parseInt(tokenVal); 
-		
-		Account account = accountRepository.findById(userid).orElse(new Account() {});
-		if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
-		Mover mover1 = (Mover) account; 
-		LocalDate requestDate = getRequestDate(userDate);
-		List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByMoverAndDay(mover1, requestDate).stream()
-				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
-		return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
-		
-	}
-	
-	private LocalDate getRequestDate(String userDate){
-		DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate requestDate = LocalDate.of(2018, 01, 01); //default value could be changed to some value from app.props
-		try {
-			requestDate = LocalDate.parse(userDate,dateformatter);
-		} catch (Exception e) {
-		}
-		return requestDate;		
-	}
-	
-	private Map<String,List<RequestDetailsDTO>> getMapByDates(List<RequestDetailsDTO> iniList){
-		Map<String,List<RequestDetailsDTO>> res = new HashMap<>();
-		iniList.forEach(request -> {	
-			String dateval = request.getMovedatetime().toLocalDate().toString();			
-			List<RequestDetailsDTO> dateList = iniList.stream()
-					.filter(x-> x.getMovedatetime().toLocalDate().equals(request.getMovedatetime().toLocalDate()))
-					.collect(Collectors.toList());
-			res.put(dateval, dateList);
-		});		
-		return res;		
-	}
+    @Autowired
+    public RequestController(
+            RequestORM requestManager,
+            RequestRepository requestRepository,
+            AccountRepository accountRepository,
+            AddressRepository addressRepository,
+            RequestAddressRepository requestAddressRepository,
+            ItemRepository itemRepository,
+            ItemTypeRepository itemTypeRepository,
+            RoomRepository roomRepository) {
+        this.requestManager = requestManager;
+        this.requestRepository = requestRepository;
+        this.accountRepository = accountRepository;
+        this.addressRepository = addressRepository;
+        this.requestAddressRepository = requestAddressRepository;
+        this.itemRepository = itemRepository;
+        this.itemTypeRepository = itemTypeRepository;
+        this.roomRepository = roomRepository;
+    }
 
-	@RequestMapping(value = GET_CALENDAR_MOVER_REQUESTS, method=RequestMethod.GET)
-	public DataTo getRecentForMoverFromDate(@RequestParam(name="token") String tokenVal, @RequestParam(name=REQUEST_DATE) String userDate){
-		//test period only - should be changed to get user from token
-		int userid = Integer.parseInt(tokenVal);
+    @RequestMapping(value = GET_RECENT_CUSTOMER_REQUESTS, method = RequestMethod.GET)
+    public DataTo getRecent(@RequestParam(name = "token") String tokenVal) {
+        //test period only - should be changed to get user from token
+        int userid = Integer.parseInt(tokenVal);
 
-		Account account = accountRepository.findById(userid).orElse(new Account() {});
-		if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
-		Mover mover1 = (Mover) account;
-		LocalDate requestDate = getRequestDate(userDate);
-		List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByMoverFromDay(mover1, requestDate).stream()
-				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
-		return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
-	}
+        Account account = accountRepository.findById(userid).orElse(new Account() {
+        });
+        if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
+        Customer customer1 = (Customer) account;
 
-	@RequestMapping(value = GET_RECENT_MOVER_REQUESTS, method=RequestMethod.GET)
-	public DataTo getPossibleForMover(@RequestParam(name="token") String tokenVal){
-		//test period only - should be changed to get user from token
-		int userid = Integer.parseInt(tokenVal);
-		Account account = accountRepository.findById(userid).orElse(new Account() {});
-		if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
-		Mover mover1 = (Mover) account;
-		List<RequestDetailsDTO> resDb = requestManager.getPossibleRequestsForMover(mover1).stream()
-				.map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
-		return resDb.size() == 0 ? new DataTo(false, "No possible requests for this parameters") : new DataTo(true, resDb);
-	}
+        List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByCustomer(customer1).stream()
+                .map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
+        return resDb.size() == 0 ? new DataTo(false, "No data for the customer") : new DataTo(true, resDb);
+    }
+
+    @RequestMapping(value = GET_CALENDAR_CUSTOMER_REQUESTS, method = RequestMethod.GET)
+    public DataTo getRecentFromDate(@RequestParam(name = "token") String tokenVal, @RequestParam(name = REQUEST_DATE) String userDate) {
+        //test period only - should be changed to get user from token
+        int userid = Integer.parseInt(tokenVal);
+
+        Account account = accountRepository.findById(userid).orElse(new Account() {
+        });
+        if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
+        Customer customer1 = (Customer) account;
+
+        LocalDate requestDate = getRequestDate(userDate);
+        List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByCustomerFromDay(customer1, requestDate).stream()
+                .map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
+        return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
+    }
+
+    @RequestMapping(value = GET_DATE_CUSTOMER_REQUESTS, method = RequestMethod.GET)
+    public DataTo getRecentForDate(@RequestParam(name = "token") String tokenVal, @RequestParam(name = REQUEST_DATE) String userDate) {
+        //test period only - should be changed to get user from token
+        int userid = Integer.parseInt(tokenVal);
+
+        Account account = accountRepository.findById(userid).orElse(new Account() {
+        });
+        if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
+        Customer customer1 = (Customer) account;
+
+        LocalDate requestDate = getRequestDate(userDate);
+        List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByCustomerAndDay(customer1, requestDate).stream()
+                .map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
+        return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
+    }
+
+    @RequestMapping(value = GET_DATE_MOVER_REQUESTS, method = RequestMethod.GET)
+    public DataTo getRecentForMoverDate(@RequestParam(name = "token") String tokenVal, @RequestParam(name = REQUEST_DATE) String userDate) {
+        //test period only - should be changed to get user from token
+        int userid = Integer.parseInt(tokenVal);
+
+        Account account = accountRepository.findById(userid).orElse(new Account() {
+        });
+        if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
+        Mover mover1 = (Mover) account;
+        LocalDate requestDate = getRequestDate(userDate);
+        List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByMoverAndDay(mover1, requestDate).stream()
+                .map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
+        return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
+
+    }
+
+    private LocalDate getRequestDate(String userDate) {
+        DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate requestDate = LocalDate.of(2018, 01, 01); //default value could be changed to some value from app.props
+        try {
+            requestDate = LocalDate.parse(userDate, dateformatter);
+        } catch (Exception e) {
+        }
+        return requestDate;
+    }
+
+    private Map<String, List<RequestDetailsDTO>> getMapByDates(List<RequestDetailsDTO> iniList) {
+        Map<String, List<RequestDetailsDTO>> res = new HashMap<>();
+        iniList.forEach(request -> {
+            String dateval = request.getMovedatetime().toLocalDate().toString();
+            List<RequestDetailsDTO> dateList = iniList.stream()
+                    .filter(x -> x.getMovedatetime().toLocalDate().equals(request.getMovedatetime().toLocalDate()))
+                    .collect(Collectors.toList());
+            res.put(dateval, dateList);
+        });
+        return res;
+    }
+
+    @RequestMapping(value = GET_CALENDAR_MOVER_REQUESTS, method = RequestMethod.GET)
+    public DataTo getRecentForMoverFromDate(@RequestParam(name = "token") String tokenVal, @RequestParam(name = REQUEST_DATE) String userDate) {
+        //test period only - should be changed to get user from token
+        int userid = Integer.parseInt(tokenVal);
+
+        Account account = accountRepository.findById(userid).orElse(new Account() {
+        });
+        if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
+        Mover mover1 = (Mover) account;
+        LocalDate requestDate = getRequestDate(userDate);
+        List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByMoverFromDay(mover1, requestDate).stream()
+                .map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
+        return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
+    }
+
+    @RequestMapping(value = GET_RECENT_MOVER_REQUESTS, method = RequestMethod.GET)
+    public DataTo getPossibleForMover(@RequestParam(name = "token") String tokenVal) {
+        //test period only - should be changed to get user from token
+        int userid = Integer.parseInt(tokenVal);
+        Account account = accountRepository.findById(userid).orElse(new Account() {
+        });
+        if (!account.isMover()) return new DataTo(false, "Not a valid mover id");
+        Mover mover1 = (Mover) account;
+        List<RequestDetailsDTO> resDb = requestManager.getPossibleRequestsForMover(mover1).stream()
+                .map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
+        return resDb.size() == 0 ? new DataTo(false, "No possible requests for this parameters") : new DataTo(true, resDb);
+    }
 
     @GetMapping(value = REQUEST_GET_INFO)
     public DataTo getRequestInfo(@RequestParam Integer id) {
@@ -207,7 +214,7 @@ public class RequestController {
                     addressDto.latitude,
                     addressDto.floor,
                     Lift.NO_LIFT,
-                    getArea(addressDto.latitude, addressDto.longitude));
+                    AreaService.getArea(addressDto.latitude, addressDto.longitude));
             addressRepository.save(address);
             RequestAdress requestAdress = new RequestAdress(addressDto.seqnumber, address);
             requestAdresses.add(requestAdress);
@@ -267,8 +274,5 @@ public class RequestController {
 
         return new DataTo(true, "Saved to db");
     }
-    // TODO: 04/02/2018 @STAS: FILL THIS METHOD
-    private Area getArea(double latitude, double longitude) {
-        return Area.CENTER;
-    }
+
 }
