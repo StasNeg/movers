@@ -2,6 +2,7 @@ package com.tomove.controller;
 
 import com.google.maps.*;
 import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 import com.tomove.common.*;
 import com.tomove.common.AddressDto;
@@ -86,12 +87,12 @@ public class CostEstimateController {
 
                 Double coeffLiftMove = 0.;
 
-                if (!moveAddress.lift) {
+                if (moveAddress.lift.equals("NO_LIFT")) {
                     coeffLiftMove = moveAddress.floor * PERCENT_PER_FLOOR_NO_LIFT / 100;
                     if (coeffLiftMove >= PERCENT_PER_FLOOR_NO_LIFT_CAP) {
                         coeffLiftMove = PERCENT_PER_FLOOR_NO_LIFT_CAP;
                     }
-                } else {
+                } else if (moveAddress.lift.equals("LIFT")) {
                     coeffLiftMove = moveAddress.floor * PERCENT_PER_FLOOR_YES_LIFT / 100;
                     if (coeffLiftMove >= PERCENT_PER_FLOOR_YES_LIFT_CAP) {
                         coeffLiftMove = PERCENT_PER_FLOOR_YES_LIFT_CAP;
@@ -101,9 +102,10 @@ public class CostEstimateController {
             }
 
             /* Calculate distance price */
-            distancePrice = getDistance(move.addressIn.getAddressString(), move.addressOut.getAddressString()) * PRICE_PER_KM;
+            distancePrice = getDistance(move.addressIn, move.addressOut) * PRICE_PER_KM;
 
-            /* Calculate itemDtos price */
+            // TODO: 07/02/2018 INCLUDE DISTANCE FROM ADDRESSES 0-1 AND 1-2 WHEN MOVING ITEM 0-2, VISITING ADDRESS 1. NOW ONLY 0-2 IS CALCULATED
+            /* Calculate items price */
             for (RoomDto room : move.getRooms()) {
                 for (ItemDto item : room.getItems()) {
                     StringBuilder itemNameConcat = new StringBuilder();
@@ -116,7 +118,6 @@ public class CostEstimateController {
                 }
             }
 
-            // TODO: 18/01/2018 HOW TO COVER CALCULATION WITH TESTS?
             /* Calculate total price */
             totalPrice += (distancePrice + itemsPrice) * (coeffLift + coeffDate);
         }
@@ -125,7 +126,7 @@ public class CostEstimateController {
         return (int) (carSupplyPrice + totalPrice + 0.5);
     }
 
-    private Integer getDistance(String addressIn, String addressOut) {
+    private Integer getDistance(AddressDto addressIn, AddressDto addressOut) {
 
         String API_KEY = "AIzaSyAz9zX-L__RluZ8C3hgBWVE3YSoiprfuYs";
 
@@ -135,8 +136,8 @@ public class CostEstimateController {
         DirectionsResult results = new DirectionsResult();
         try {
             results = new DirectionsApiRequest(context)
-                    .origin(addressIn)
-                    .destination(addressOut)
+                    .origin(new LatLng(addressIn.latitude, addressIn.longitude))
+                    .destination(new LatLng(addressOut.latitude, addressOut.longitude))
                     .mode(TravelMode.DRIVING)
                     .await();
         } catch (Exception e) {
