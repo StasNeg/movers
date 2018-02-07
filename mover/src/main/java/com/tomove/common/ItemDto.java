@@ -4,7 +4,6 @@ import java.util.Map;
 
 public class ItemDto {
     public String name;
-    public String room;
     public Map<String, String> properties;
 
     public ItemDto() {

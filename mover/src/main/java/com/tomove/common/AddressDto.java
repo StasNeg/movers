@@ -9,7 +9,7 @@ public class AddressDto {
     public String building;
     public String apartment;
     public int floor;
-    public boolean lift;
+    public String lift;
 
     public int getSeqnumber() {
         return seqnumber;
@@ -43,11 +43,11 @@ public class AddressDto {
         return longitude;
     }
 
-    public boolean isLift() {
+    public String getLift() {
         return lift;
     }
 
-    public AddressDto(int seqnumber, String city, String street, String building, String apartment, int floor, boolean lift) {
+    public AddressDto(int seqnumber, String city, String street, String building, String apartment, int floor, String lift) {
         super();
         this.seqnumber = seqnumber;
         this.city = city;
@@ -58,7 +58,7 @@ public class AddressDto {
         this.lift = lift;
     }
 
-    public AddressDto(int seqnumber, float latitude, float longitude, String city, String street, String building, String apartment, int floor, boolean lift) {
+    public AddressDto(int seqnumber, float latitude, float longitude, String city, String street, String building, String apartment, int floor, String lift) {
         this.seqnumber = seqnumber;
         this.latitude = latitude;
         this.longitude = longitude;
