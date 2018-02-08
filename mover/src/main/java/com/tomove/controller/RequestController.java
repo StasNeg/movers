@@ -251,6 +251,7 @@ public class RequestController {
                 for (ItemDto itemDto : room.getItems()) {
                     // TODO: 31/01/2018 SAVE ROOM IMAGE FROM REQUEST TO DB
                         Room itemRoom = new Room(RoomType.valueOf(room.room), null, request);
+                    // TODO: 07/02/2018 REFACTOR THIS WITH ITEMSINIT
                     StringBuilder itemName = new StringBuilder();
                     itemName.append(itemDto.name);
                     for (Map.Entry<String, String> property : itemDto.properties.entrySet()) {
