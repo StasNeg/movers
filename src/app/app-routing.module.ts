@@ -3,10 +3,13 @@ import {MoveMainAddressComponent} from './move-main-adress/move-main-address.com
 import {NgModule} from '@angular/core';
 import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main-menu.component';
 import {LoginComponent} from './auth/login/login.component';
-import {AuthGuard} from './services/auth-guard.service';
 import {OrdersComponent} from './orders/orders.component';
 import {CalendarComponent} from './calendar/calendar.component';
 import {RequestsComponent} from './requests/requests.component';
+import {PanelSettingsComponent} from "./panel-settings/panel-settings.component";
+import {CustomerComponent} from "./panel-settings/account/customer/customer.component";
+import {MoverComponent} from "./panel-settings/account/mover/mover.component";
+import {SettingsComponent} from "./panel-settings/settings/settings.component";
 
 
 const appRoutes: Routes = [
@@ -18,6 +21,10 @@ const appRoutes: Routes = [
   {path: 'address', component: MoveMainAddressComponent},
   {path: 'room', component: RoomItemsMainMenuComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'panel-settings', component: PanelSettingsComponent},
+  {path: 'customer', component: CustomerComponent},
+  {path: 'mover', component: MoverComponent},
+  {path: 'settings', component: SettingsComponent},
   {path: '**', redirectTo: '/'}
 ];
 

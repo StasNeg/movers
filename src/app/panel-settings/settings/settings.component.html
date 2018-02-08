@@ -1,0 +1,13 @@
+<span>lang</span><br>
+<span *ngFor = "let l of languages">
+  <input type="radio" value="l" name="lang" (change)="lang = l">{{l}}<br>
+</span>
+<button (click)="lan(lang)">Submit</button>
+
+
+<!--
+<span>lang</span><br>
+<span *ngFor = "let l of languages">
+  <input type="radio" value="l" name="lang" (change)="lang = io(l)">{{lang}}
+</span>
+-->

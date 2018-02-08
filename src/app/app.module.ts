@@ -21,13 +21,19 @@ import {LoginComponent} from './auth/login/login.component';
 import {UsersService} from './services/users.service';
 import {AuthService} from './services/auth.service';
 import {AuthGuard} from './services/auth-guard.service';
-import {RequestService} from './request.service';
+import {RequestService} from './services/request.service';
 import {LoginService} from './login.service';
 import {FooterComponent} from './footer/footer.component';
 import {OrdersComponent} from './orders/orders.component';
 import {RequestsComponent} from './requests/requests.component';
 import {HeadersComponent} from './header/header.component';
 import {CalendarComponent} from './calendar/calendar.component';
+import {MoverComponent} from "./panel-settings/account/mover/mover.component";
+import {PanelSettingsComponent} from "./panel-settings/panel-settings.component";
+import {CustomerComponent} from "./panel-settings/account/customer/customer.component";
+import {SettingsComponent} from "./panel-settings/settings/settings.component";
+import {LurriesComponent} from "./panel-settings/account/mover/lurries/lurries.component";
+import {ChoiceComponent} from "./panel-settings/account/mover/choice/choice.component";
 
 
 @NgModule({
@@ -44,7 +50,18 @@ import {CalendarComponent} from './calendar/calendar.component';
     OrdersComponent,
     RequestsComponent,
     HeadersComponent,
-    CalendarComponent],
+    CalendarComponent,
+    PanelSettingsComponent,
+    MoverComponent,
+    CustomerComponent,
+    SettingsComponent,
+    LurriesComponent,
+    ChoiceComponent
+
+
+
+
+  ],
   imports: [
     BrowserModule,
     CommonModule,

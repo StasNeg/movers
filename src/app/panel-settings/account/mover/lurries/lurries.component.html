@@ -1,0 +1,22 @@
+<!--<input type="number" min="0" (input)="numLurries()" [(ngModel)]="nl"><br>
+<div *ngFor="let l of lurries">
+<app-choice> [arr]="engine"</app-choice>
+<app-choice> [arr]="volume"</app-choice>
+</div>-->
+<span>{{mover}}</span><br>
+<select [(ngModel)]="stChange">
+  <option *ngFor="let s of stay">{{s}}</option>
+</select>
+
+<div>
+    <input type="number" [(ngModel)]="numLurries" (input)="setNumberr()">
+    <div *ngFor="let k of lurris" class ="lurry" >
+      <app-choice [header]="headers.type" [arr]="lurryInfo.type"
+                   [lurry]="k" [name]="'type'"></app-choice>
+      <app-choice [header]="headers.works" [arr]="lurryInfo.works"
+                   [lurry]="k" [name]="'works'"></app-choice>
+      <app-choice [header]="headers.usage" [arr]="lurryInfo.usage"
+                   [lurry]="k" [name]="'usage'"></app-choice>
+     </div>
+  <button [disabled]="check()" (click)="submit()">submit</button>
+</div>

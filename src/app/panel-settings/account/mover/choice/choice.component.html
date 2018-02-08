@@ -1,0 +1,14 @@
+<!--
+<select>
+  <option *ngFor="let a of arr">{{a}}</option>
+</select>
+-->
+
+<div class="choice">
+  <span class="header">{{header}}</span><br>
+  <select  [(ngModel)]="lurry[name]">
+    <option></option>
+   <option *ngFor="let a of arr">{{a}}</option>
+  </select>
+</div>
+

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import {RequestService} from '../request.service';
+import {RequestService} from '../services/request.service';
 import {Request} from '../models/request.model';
 import {Router} from '@angular/router';
 

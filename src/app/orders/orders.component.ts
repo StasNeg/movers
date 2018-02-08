@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Request} from '../models/request.model';
-import {RequestService} from '../request.service';
+import {RequestService} from '../services/request.service';
 import * as moment from 'moment';
 import {LoginService} from '../login.service';
 
