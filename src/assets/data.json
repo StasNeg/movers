@@ -1,0 +1,141 @@
+{
+  "customerId": 100000,
+  "move_date": "2018-01-18",
+  "move_time": "19:00",
+  "personal": false,
+  "place_type": "APARTMENT",
+  "cost": 0,
+  "addresses": [
+    {
+      "seqnumber": 0,
+      "latitude": 40.668884,
+      "longitude": -73.893126,
+      "city": "Brooklyn",
+      "street": "Vermont St",
+      "building": "566",
+      "apartment": "6",
+      "floor": 4,
+      "lift": "LIFT"
+    },
+    {
+      "seqnumber": 1,
+      "latitude": 40.638348,
+      "longitude": -74.032107,
+      "city": "Brooklyn",
+      "street": "Pacific St",
+      "building": "68-94",
+      "apartment": "6",
+      "floor": 2,
+      "lift": "NO_LIFT"
+    },
+    {
+      "seqnumber": 2,
+      "latitude": 37.808000,
+      "longitude": -122.417743,
+      "city": "San Francisco",
+      "street": "Fisherman's Wharf",
+      "building": "5",
+      "apartment": "6",
+      "floor": 4,
+      "lift": "LIFT"
+    },
+    {
+      "seqnumber": 3,
+      "latitude": 37.787980,
+      "longitude": -122.407517,
+      "city": "San Francisco",
+      "street": "Union Square",
+      "building": "3",
+      "apartment": "2",
+      "floor": 2,
+      "lift": "NO_LIFT"
+    }
+  ],
+  "moves": [
+    {
+      "addressIn": {
+        "seqnumber": 0,
+        "latitude": 40.668884,
+        "longitude": -73.893126,
+        "city": "Brooklyn",
+        "street": "Vermont St",
+        "building": "566",
+        "apartment": "6",
+        "floor": 4,
+        "lift": "LIFT"
+      },
+      "addressOut": {
+        "seqnumber": 1,
+        "latitude": 40.638348,
+        "longitude": -74.032107,
+        "city": "Brooklyn",
+        "street": "Pacific St",
+        "building": "68-94",
+        "apartment": "6",
+        "floor": 2,
+        "lift": "NO_LIFT"
+      },
+      "rooms": [
+        {
+          "room": "KITCHEN",
+          "items": [
+            {
+              "name": "Fridge",
+              "properties": {
+                "size": "office"
+              }
+            }
+          ]
+        },
+        {
+          "room": "KITCHEN",
+          "items": [
+            {
+              "name": "Fridge",
+              "properties": {
+                "size": "up to 400l"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "addressIn": {
+        "seqnumber": 2,
+        "latitude": 37.808000,
+        "longitude": -122.417743,
+        "city": "San Francisco",
+        "street": "Fisherman's Wharf",
+        "building": "5",
+        "apartment": "6",
+        "floor": 4,
+        "lift": "LIFT"
+      },
+      "addressOut": {
+        "seqnumber": 3,
+        "latitude": 37.787980,
+        "longitude": -122.407517,
+        "city": "San Francisco",
+        "street": "Union Square",
+        "building": "3",
+        "apartment": "2",
+        "floor": 2,
+        "lift": "NO_LIFT"
+      },
+      "rooms": [
+        {
+          "room": "KITCHEN",
+          "items": [
+            {
+              "name": "Fridge",
+              "properties": {
+                "size": "up to 600l"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

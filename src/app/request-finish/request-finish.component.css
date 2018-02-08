@@ -1,0 +1,12 @@
+input[type="number"] {
+  width: 30%;
+}
+
+button {
+  background-color: dodgerblue;
+  padding: 2vmin 5vmin;
+}
+
+.centered {
+  text-align: center;
+}

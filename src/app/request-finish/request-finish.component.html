@@ -1,0 +1,66 @@
+<div *ngIf="pageNum === 'page1'">
+  <input
+    type="checkbox"
+    id="cartons_checkbox"
+    (change)="onChange()"
+    [checked]="cartons_checked"
+    [(ngModel)]="cartons_checked">
+  <label for="cartons">Cartons:</label>
+  <input
+    type="number"
+    id="cartons"
+    [value]="cartons"
+    [(ngModel)]="cartons"
+    (change)="onChange()"
+    [disabled]="!cartons_checked">
+  <br>
+  <input
+    type="checkbox"
+    id="packets_checkbox"
+    (change)="onChange()"
+    [checked]="packets_checked"
+    [(ngModel)]="packets_checked">
+  <label for="packets">Packets:</label>
+  <input
+    type="number"
+    id="packets"
+    [value]="packets"
+    [(ngModel)]="packets"
+    (change)="onChange()"
+    [disabled]="!packets_checked">
+  <br>
+  <input
+    type="checkbox"
+    id="agreedToTerms"
+    [(ngModel)]="terms_checked"><span>All unmarked items paid separately</span>
+  <p>Total cost:
+    <span *ngIf="finalCost === undefined">getting price...</span>
+    <span>{{ finalCost }}</span></p>
+
+  <button [disabled]="!terms_checked || finalCost === undefined" (click)="pageNum='page2'">Next-></button>
+</div>
+
+<div *ngIf="pageNum === 'page2'">
+
+  <div class="centered">{{requestData.place_type}}</div>
+  <br>
+  <div class="centered">
+    <span>{{requestData.move_date}} \\ {{requestData.move_time}}</span>
+  </div>
+  <br>
+  <div class="centered">FROM</div>
+  <div *ngFor="let address of requestData.addresses.slice(0,1)">{{address.city}}, {{address.street}}, {{address.building}}</div>
+  <br>
+  <div class="centered">TO</div>
+  <div *ngFor="let address of requestData.addresses.slice(1)">{{address.city}}, {{address.street}}, {{address.building}}</div>
+  <br>
+  <div class="centered">
+    <span>TOTAL PRICE:</span>
+    <span>{{finalCost}}</span>
+  </div>
+  <br>
+  <div class="centered">
+    <button (click)="pageNum='page1'"><-Back</button>
+    <button (click)="saveRequest()">OK</button>
+  </div>
+</div>

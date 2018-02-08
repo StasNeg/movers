@@ -14,7 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
 import {DialogComponent} from './room-items-main-menu/dialog/dialogItem/dialog.component';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatMenuModule, MatSelectModule} from '@angular/material';
+import {MatButtonModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSelectModule} from '@angular/material';
 import {DialogRoomComponent} from './room-items-main-menu/dialog/dialogRoom/dialogRoom.component';
 import {RoomItemsMainMenuComponent} from './room-items-main-menu/room-items-main-menu.component';
 import {LoginComponent} from './auth/login/login.component';
@@ -34,6 +34,12 @@ import {CustomerComponent} from "./panel-settings/account/customer/customer.comp
 import {SettingsComponent} from "./panel-settings/settings/settings.component";
 import {LurriesComponent} from "./panel-settings/account/mover/lurries/lurries.component";
 import {ChoiceComponent} from "./panel-settings/account/mover/choice/choice.component";
+import {AuthComponent} from "./auth/auth.component";
+import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
+import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
+import {ConnectionsService} from "./services/connections.service";
+import {RequestComponent} from "./request/request.component";
+import {RequestFinishComponent} from "./request-finish/request-finish.component";
 
 
 @NgModule({
@@ -56,11 +62,12 @@ import {ChoiceComponent} from "./panel-settings/account/mover/choice/choice.comp
     CustomerComponent,
     SettingsComponent,
     LurriesComponent,
-    ChoiceComponent
-
-
-
-
+    ChoiceComponent,
+    AuthComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    RequestComponent,
+    RequestFinishComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +84,16 @@ import {ChoiceComponent} from "./panel-settings/account/mover/choice/choice.comp
     MatDialogModule,
     NoopAnimationsModule,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule
+
+
+
+
   ],
   providers: [
     AddressService,
@@ -86,7 +102,11 @@ import {ChoiceComponent} from "./panel-settings/account/mover/choice/choice.comp
     AuthService,
     AuthGuard,
     RequestService,
-    LoginService],
+    LoginService,
+
+    AuthService,
+    ConnectionsService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent, DialogRoomComponent]
 })

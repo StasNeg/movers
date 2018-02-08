@@ -10,6 +10,10 @@ import {PanelSettingsComponent} from "./panel-settings/panel-settings.component"
 import {CustomerComponent} from "./panel-settings/account/customer/customer.component";
 import {MoverComponent} from "./panel-settings/account/mover/mover.component";
 import {SettingsComponent} from "./panel-settings/settings/settings.component";
+import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
+import {RequestComponent} from "./request/request.component";
+import {RequestFinishComponent} from "./request-finish/request-finish.component";
 
 
 const appRoutes: Routes = [
@@ -25,6 +29,10 @@ const appRoutes: Routes = [
   {path: 'customer', component: CustomerComponent},
   {path: 'mover', component: MoverComponent},
   {path: 'settings', component: SettingsComponent},
+  {path: 'forgot', component: ForgotPasswordComponent},
+  {path: 'reset', component: ResetPasswordComponent},
+  {path: 'request', component: RequestComponent},
+  {path: 'request/finish', component: RequestFinishComponent},
   {path: '**', redirectTo: '/'}
 ];
 
