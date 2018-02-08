@@ -2,12 +2,11 @@ package com.tomove.common;
 
 import java.util.Map;
 
-public class Item {
-    String name;
-    String room;
-    Map<String, String> properties;
+public class ItemDto {
+    public String name;
+    public Map<String, String> properties;
 
-    public Item() {
+    public ItemDto() {
     }
 
     public String getName() {

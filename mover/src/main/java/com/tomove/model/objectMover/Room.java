@@ -37,6 +37,12 @@ public class Room extends AbstractBaseEntity {
         this.items = items;
     }
 
+    public Room(RoomType roomType, @NotBlank byte[] image, Request request) {
+        this.roomType = roomType;
+        this.image = image;
+        this.request = request;
+    }
+
     public Room(Integer id, RoomType roomType, @NotBlank byte[] image, Request request, List<Item> items) {
         super(id);
         this.roomType = roomType;

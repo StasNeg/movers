@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.tomove.controller.to.AddressDto;
-import com.tomove.controller.to.RequestDetailsDTO;
+import com.tomove.common.AddressDto;
+import com.tomove.common.RequestDetailsDTO;
 import com.tomove.model.enums.Status;
 
 public class RequestDetails {

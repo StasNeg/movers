@@ -3,19 +3,23 @@ package com.tomove.common;
 import java.util.List;
 
 public class RequestData {
-    public String customerId;
+    public Integer customerId;
     public String move_date;
     public String move_time;
     public boolean personal;
     public String place_type;
-    public List<Address> addresses;
-
-    public List<Move> moves;
+    public List<AddressDto> addresses;
+    public Integer cost;
+    public List<MoveDto> moves;
 
     public RequestData() {
     }
 
-    public String getCustomerId() {
+    public Integer getCost() {
+        return cost;
+    }
+
+    public Integer getCustomerId() {
         return customerId;
     }
 
@@ -35,11 +39,11 @@ public class RequestData {
         return place_type;
     }
 
-    public List<Move> getMoves() {
+    public List<MoveDto> getMoves() {
         return moves;
     }
 
-    public List<Address> getAddresses() {
+    public List<AddressDto> getAddresses() {
         return addresses;
     }
 }

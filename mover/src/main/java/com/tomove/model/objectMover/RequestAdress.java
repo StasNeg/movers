@@ -32,6 +32,11 @@ public class RequestAdress extends AbstractBaseEntity{
         this.address = address;
     }
 
+    public RequestAdress(@NotNull int seqnumberRequest, Address address) {
+        this.seqnumberRequest = seqnumberRequest;
+        this.address = address;
+    }
+
     public RequestAdress(Integer id, @NotNull int seqnumberRequest, Request request, Address address) {
         super(id);
         this.seqnumberRequest = seqnumberRequest;

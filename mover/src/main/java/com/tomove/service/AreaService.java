@@ -33,7 +33,7 @@ public class AreaService {
     }
 
     public static Area getArea(float lat, float lng) {
-        Area area = null;
+        Area area = Area.ALL;
         Coordinate current = new Coordinate(lat, lng);
         for (Area key : areas.keySet()) {
             if (checkBottom(areas.get(key).get(0), areas.get(key).get(1), current)) {
