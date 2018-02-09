@@ -47,6 +47,16 @@ public class AddressDto {
         return lift;
     }
 
+    public AddressDto(int seqnumber, String city, String street, String building, String apartment, int floor) {
+        super();
+        this.seqnumber = seqnumber;
+        this.city = city;
+        this.street = street;
+        this.building = building;
+        this.apartment = apartment;
+        this.floor = floor;
+    }
+
     public AddressDto(int seqnumber, String city, String street, String building, String apartment, int floor, String lift) {
         super();
         this.seqnumber = seqnumber;

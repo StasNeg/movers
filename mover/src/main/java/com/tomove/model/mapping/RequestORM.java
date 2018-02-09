@@ -5,10 +5,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tomove.common.AddressDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tomove.controller.to.AddressDto;
+
 import com.tomove.model.subjectMover.Customer;
 import com.tomove.model.subjectMover.Mover;
 import com.tomove.model.subjectMover.Truck;
