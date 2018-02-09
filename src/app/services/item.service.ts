@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DataTo} from '../interfaces/data-to';
-import {ItemAddressData} from '../interfaces/itemAddress-data';
 import {DataToProperties} from '../interfaces/data-to-properties';
 
 @Injectable()

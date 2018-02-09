@@ -39,11 +39,10 @@ export class DialogComponent implements OnInit {
           this.itemProperties = [];
           this.isItemProperties = true;
           for (let data in <Array<object>>res.data) {
-            this.itemProperties.push({name:res.data[data].name, properties: res.data[data].value.split(' ')});
+            this.itemProperties.push({name:res.data[data].name, properties: res.data[data].value.split('|')});
           }
         })
     } else {
-
       this.isItemProperties = false;
     }
   }

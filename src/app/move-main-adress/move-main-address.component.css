@@ -21,7 +21,7 @@ body {
   overflow:auto;
 
 }
-
+.types input {display:none;}
 .types label span {
   text-align:center;
   font-size: 22px;

@@ -14,12 +14,12 @@ import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.co
 import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
 import {RequestComponent} from "./request/request.component";
 import {RequestFinishComponent} from "./request-finish/request-finish.component";
+import {RegistrationComponent} from "./auth/registration/registration.component";
 
 
 const appRoutes: Routes = [
-  // {path: '', component: MoveMainAddressComponent, canActivate: [AuthGuard]},
   {path: '', component: LoginComponent},
-  {path: 'request', component: RequestsComponent},
+  {path: 'requests', component: RequestsComponent},
   {path: 'calendar', component: CalendarComponent},
   {path: 'orders/:date', component: OrdersComponent},
   {path: 'address', component: MoveMainAddressComponent},
@@ -33,6 +33,7 @@ const appRoutes: Routes = [
   {path: 'reset', component: ResetPasswordComponent},
   {path: 'request', component: RequestComponent},
   {path: 'request/finish', component: RequestFinishComponent},
+  {path: 'registration', component: RegistrationComponent},
   {path: '**', redirectTo: '/'}
 ];
 
