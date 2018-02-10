@@ -7,7 +7,6 @@ import {DialogComponent} from './dialog/dialogItem/dialog.component';
 import {DialogRoomComponent} from './dialog/dialogRoom/dialogRoom.component';
 import {Room} from '../interfaces/room';
 import {Mover} from '../interfaces/mover';
-import {DataModel} from '../models/data.model';
 
 
 @Component({
@@ -29,18 +28,20 @@ export class RoomItemsMainMenuComponent implements OnInit {
   mover: Mover;
   arrayMovers: Mover[] = [];
   tempItems = [];
-  addressesLocalStorage;
-  data: DataModel;
-  idLocalStorage;
-  currentColor;
+  addressesLocalStorage = [];
 
   constructor(private addressService: AddressService, private itemService: ItemService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
+    // this.addresses = this.addressService.createAddressesArray();
     this.addressesLocalStorage = JSON.parse(localStorage.getItem('adresses'));
-    this.addresses = this.addressesLocalStorage.addressesTo;
-    this.idLocalStorage = JSON.parse(localStorage.getItem('user'));
+    console.log(this.addressesLocalStorage);
+    this.addressesLocalStorage.forEach(data => {
+      console.log(data.addressTo);
+    })
+
+    // this.addresses = JSON.parse(localStorage.getItem('adresses'));
     this.itemService.getAppartmentsType().subscribe((responce) => {
       this.roomTypeTotal = [];
       this.roomTypeTotal.push(...responce.data);
@@ -82,6 +83,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
         }
       }
     });
+
     this.showItems();
   }
 
@@ -146,7 +148,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   openDialog(): void {
     this.open = true;
     this.dialog.closeAll();
-    const dialogRef = this.dialog.open(DialogComponent, {
+    let dialogRef = this.dialog.open(DialogComponent, {
       position: {
         left: '350px'
       },
@@ -170,14 +172,14 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
   private arrayFrom(property) {
-    const result = [];
+    let result = [];
     for (let i in  property) {
       result.push(property[i]);
     }
     return result;
   }
 
-  isSelectedAddress() {
+  isSelectedAddres() {
     return this.addressesCurrentIndex >= 0;
   }
 
@@ -219,11 +221,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
 
-  addMover(addressTo, item, i) {
-
-
-this.currentColor = i;
-
+  addMover(addressTo, item) {
 
     if (this.arrayMovers.length === 0) {
       const mover: Mover = this.createMover(addressTo);
