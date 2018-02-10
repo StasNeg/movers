@@ -2,7 +2,7 @@
   <div class="row" class="col-sm-8 col-sm-offset-2">
     <div class="types" *ngFor="let address of addresses; let i = index">
       <label [ngClass]="getColor(i)"><input type="radio" name="toggle" (change)="onAddressChange(i)">
-        <span>{{address.street}}, {{address.city}}, {{address.street}}</span></label>
+        <span>{{address.street}}, {{address.city}}</span></label>
     </div>
   </div>
 </div>
@@ -57,11 +57,8 @@
 </div>
 <div class="container">
   <div class="row" class="col-sm-8 col-sm-offset-2">
-    <button type="button" class="btn btn-primary" (click)="openRoomDialog()" [disabled]="!isSelectedAddress()">
+    <button type="button" class="btn btn-primary" (click)="openRoomDialog()" [disabled]="!isSelectedAddres()">
       Add Room
     </button>
-
   </div>
-  <button (click)="confirmOrder()">Confirm</button>
-  <button (click)="createData()">to See JSON </button>
 </div>
