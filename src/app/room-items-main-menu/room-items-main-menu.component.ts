@@ -8,6 +8,7 @@ import {DialogRoomComponent} from './dialog/dialogRoom/dialogRoom.component';
 import {Room} from '../interfaces/room';
 import {Mover} from '../interfaces/mover';
 
+
 @Component({
   selector: 'app-room-items',
   templateUrl: './room-items-maim-menu.component.html',
@@ -27,22 +28,25 @@ export class RoomItemsMainMenuComponent implements OnInit {
   mover: Mover;
   arrayMovers: Mover[] = [];
   tempItems = [];
+  addressesLocalStorage;
 
   constructor(private addressService: AddressService, private itemService: ItemService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.addresses = this.addressService.createAddressesArray();
+    this.addressesLocalStorage = JSON.parse(localStorage.getItem('adresses'));
+    this.addresses = this.addressesLocalStorage.addressesTo;
     this.itemService.getAppartmentsType().subscribe((responce) => {
       this.roomTypeTotal = [];
       this.roomTypeTotal.push(...responce.data);
       this.createArrayItems();
+      console.log(this.addresses);
     });
   }
 
   createArrayItems() {
     for (let i = 0; i < this.addresses.length; i++) {
-      let tempRooms: Room[] = [];
+      const tempRooms: Room[] = [];
       for (let j = 0; j < 3; j++) {
         tempRooms[j] = {
           id: j,
@@ -114,7 +118,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   openRoomDialog() {
     this.open = true;
     this.dialog.closeAll();
-    let dialogRef = this.dialog.open(DialogRoomComponent, {
+    const dialogRef = this.dialog.open(DialogRoomComponent, {
       position: {
         left: '350px'
       },
@@ -138,7 +142,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   openDialog(): void {
     this.open = true;
     this.dialog.closeAll();
-    let dialogRef = this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       position: {
         left: '350px'
       },
@@ -162,7 +166,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
   private arrayFrom(property) {
-    let result = [];
+    const result = [];
     for (let i in  property) {
       result.push(property[i]);
     }
@@ -214,13 +218,12 @@ export class RoomItemsMainMenuComponent implements OnInit {
   addMover(addressTo, item) {
 
     if (this.arrayMovers.length === 0) {
-      let mover: Mover = this.createMover(addressTo);
-      let room: Room = new Room();
+      const mover: Mover = this.createMover(addressTo);
+      const room: Room = new Room();
       this.pushItem(room, item);
       mover.rooms.push(room);
       this.arrayMovers.push(mover);
-    }
-    else {
+    } else {
       this.deleteItem(item);
       let isMoverExist = false;
       isMoverExist = this.arrayMovers.some((mover) => {
@@ -234,7 +237,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
             return false;
           });
           if (!isRoomExist) {
-            let room: Room = new Room();
+            const room: Room = new Room();
             this.pushItem(room, item);
             mover.rooms.push(room);
           }
@@ -243,13 +246,28 @@ export class RoomItemsMainMenuComponent implements OnInit {
         return false;
       });
       if (!isMoverExist) {
-        let room: Room = new Room();
+        const room: Room = new Room();
         this.pushItem(room, item);
-        let mover: Mover = this.createMover(addressTo);
+        const mover: Mover = this.createMover(addressTo);
         mover.rooms.push(room);
         this.arrayMovers.push(mover);
       }
     }
     console.log(this.arrayMovers);
   }
+
+  confirmOrder() {
+    this.arrayMovers.forEach((mover, index, arr) => {
+      mover.rooms.forEach((room) => {
+        if (room.items.length === 0) {
+          arr.pop();
+          console.log(room.items.length);
+        } else {
+        }
+      });
+      console.log(arr);
+    });
+    console.log(this.arrayMovers);
+  }
+
 }
