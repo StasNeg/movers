@@ -34,7 +34,6 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.addresses = this.addressService.createAddressesArray();
     this.addressesLocalStorage = JSON.parse(localStorage.getItem('adresses'));
     console.log(this.addressesLocalStorage);
     this.addressesLocalStorage.forEach(data => {
