@@ -7,6 +7,7 @@ import {DialogComponent} from './dialog/dialogItem/dialog.component';
 import {DialogRoomComponent} from './dialog/dialogRoom/dialogRoom.component';
 import {Room} from '../interfaces/room';
 import {Mover} from '../interfaces/mover';
+import {DataModel} from '../models/data.model';
 
 
 @Component({
@@ -29,6 +30,9 @@ export class RoomItemsMainMenuComponent implements OnInit {
   arrayMovers: Mover[] = [];
   tempItems = [];
   addressesLocalStorage;
+  data: DataModel;
+  idLocalStorage;
+  currentColor;
 
   constructor(private addressService: AddressService, private itemService: ItemService, public dialog: MatDialog) {
   }
@@ -36,6 +40,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   ngOnInit() {
     this.addressesLocalStorage = JSON.parse(localStorage.getItem('adresses'));
     this.addresses = this.addressesLocalStorage.addressesTo;
+    this.idLocalStorage = JSON.parse(localStorage.getItem('user'));
     this.itemService.getAppartmentsType().subscribe((responce) => {
       this.roomTypeTotal = [];
       this.roomTypeTotal.push(...responce.data);
@@ -77,7 +82,6 @@ export class RoomItemsMainMenuComponent implements OnInit {
         }
       }
     });
-
     this.showItems();
   }
 
@@ -173,7 +177,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
     return result;
   }
 
-  isSelectedAddres() {
+  isSelectedAddress() {
     return this.addressesCurrentIndex >= 0;
   }
 
@@ -215,7 +219,11 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
 
-  addMover(addressTo, item) {
+  addMover(addressTo, item, i) {
+
+
+this.currentColor = i;
+
 
     if (this.arrayMovers.length === 0) {
       const mover: Mover = this.createMover(addressTo);
@@ -253,14 +261,13 @@ export class RoomItemsMainMenuComponent implements OnInit {
         this.arrayMovers.push(mover);
       }
     }
-    console.log(this.arrayMovers);
   }
 
   confirmOrder() {
     this.arrayMovers.forEach((mover, index, arr) => {
       mover.rooms.forEach((room) => {
         if (room.items.length === 0) {
-          arr.pop();
+          arr.splice(index, 1);
           console.log(room.items.length);
         } else {
         }
@@ -268,6 +275,18 @@ export class RoomItemsMainMenuComponent implements OnInit {
       console.log(arr);
     });
     console.log(this.arrayMovers);
+  }
+
+
+  createData() {
+
+
+    this.data.customerId === this.idLocalStorage.id;
+    this.data.move_date = '11.02.2018';
+    this.data.personal = false;
+    this.data.place_type = this.idLocalStorage.typeOfAppartment;
+    this.data.cost = 0;
+    console.log(this.data);
   }
 
 }

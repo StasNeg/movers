@@ -2,7 +2,7 @@
   <div class="row" class="col-sm-8 col-sm-offset-2">
     <div class="types" *ngFor="let address of addresses; let i = index">
       <label [ngClass]="getColor(i)"><input type="radio" name="toggle" (change)="onAddressChange(i)">
-        <span>{{address.street}}, {{address.city}}</span></label>
+        <span>{{address.street}}, {{address.city}}, {{address.street}}</span></label>
     </div>
   </div>
 </div>
@@ -17,23 +17,26 @@
 <div class="container" (click)="closeAllDialog()">
   <div class="row" class="col-sm-8 col-sm-offset-2">
     <div *ngIf="addressesCurrentIndex===0">
-      <div *ngFor="let item of items; let i = index">
-        <button mat-button [matMenuTriggerFor]="menu" type="button" class="btn">
+      <div *ngFor="let item of items; let i = index" >
+        <button  mat-button [matMenuTriggerFor]="menu" type="button" class="btn" [style.background-color]=color[currentColor]>
           <span>{{item.name}}</span>
+
           <span *ngFor="let property of item.property"> {{property}}</span>
         </button>
         <mat-menu #menu="matMenu" yPosition="above">
-          <button mat-menu-item *ngFor="let address of addresses" (click)="addMover(address, item)">{{address.street}}
+          <button mat-menu-item *ngFor="let address of addresses; let i = index" (click)="addMover(address, item, i)">{{address.street}}
           </button>
         </mat-menu>
       </div>
     </div>
     <div *ngIf="addressesCurrentIndex>0">
       <div *ngFor="let item of tempItems; let i = index">
-        <button mat-button [matMenuTriggerFor]="menu" type="button" class="btn">
-          <span>{{item.name}}</span>
-          <span *ngFor="let property of item.property"> {{property}}</span>
+        <button mat-button [matMenuTriggerFor]="menu" type="button" class="btn"  >
+          <span> {{item.name}}</span>
+
+          <span *ngFor="let property of item.property">{{property}}</span>
         </button>
+
         <mat-menu #menu="matMenu" yPosition="above">
           <button mat-menu-item *ngFor="let address of addresses" (click)="addMover(address, item)">{{address.street}}
           </button>
@@ -54,10 +57,11 @@
 </div>
 <div class="container">
   <div class="row" class="col-sm-8 col-sm-offset-2">
-    <button type="button" class="btn btn-primary" (click)="openRoomDialog()" [disabled]="!isSelectedAddres()">
+    <button type="button" class="btn btn-primary" (click)="openRoomDialog()" [disabled]="!isSelectedAddress()">
       Add Room
     </button>
 
   </div>
   <button (click)="confirmOrder()">Confirm</button>
+  <button (click)="createData()">to See JSON </button>
 </div>

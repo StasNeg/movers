@@ -1,7 +1,7 @@
 export class Request {
   id?: number;
-  movedatetime?: string;
-  status?: string;
+  movedatetime: string;
+  move_time: string;
   ispersonal?: boolean;
   cost?: number;
   from?: {

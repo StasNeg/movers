@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ItemService} from '../../../services/item.service';
 
 
@@ -24,7 +24,7 @@ export class DialogComponent implements OnInit {
   ngOnInit() {
     this.itemService.getItemsType(this.data.roomType).subscribe(res => {
       this.itemTypes = res.data;
-    })
+    });
 
   }
 
@@ -33,15 +33,15 @@ export class DialogComponent implements OnInit {
   }
 
   itemTypeOnChange() {
-    if (this.itemTypeSelect != '') {
+    if (this.itemTypeSelect !== '') {
       this.itemService.getItemsProperties(this.getId())
         .subscribe((res) => {
           this.itemProperties = [];
           this.isItemProperties = true;
           for (let data in <Array<object>>res.data) {
-            this.itemProperties.push({name:res.data[data].name, properties: res.data[data].value.split('|')});
+            this.itemProperties.push({name: res.data[data].name, properties: res.data[data].value.split('|')});
           }
-        })
+        });
     } else {
       this.isItemProperties = false;
     }
@@ -65,7 +65,8 @@ export class DialogComponent implements OnInit {
     if (num === 1) {
       this.resultItemType.property = this.property;
       this.dialogRef.close(this.resultItemType);
-    } else
+    } else {
       this.dialogRef.close(null);
-  }
+    }
+   }
 }
