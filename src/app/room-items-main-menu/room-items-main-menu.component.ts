@@ -275,15 +275,5 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
 
-  createData() {
-
-
-    this.data.customerId === this.idLocalStorage.id;
-    this.data.move_date = '11.02.2018';
-    this.data.personal = false;
-    this.data.place_type = this.idLocalStorage.typeOfAppartment;
-    this.data.cost = 0;
-    console.log(this.data);
-  }
 
 }
