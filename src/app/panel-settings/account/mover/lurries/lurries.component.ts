@@ -8,16 +8,13 @@ import {UsersService} from "../../../../services/users.service";
   styleUrls: ['./lurries.component.css']
 })
 export class LurriesComponent implements OnInit {
-  /*engine=[3.2,3.8,4.5,5.3];
-volume = [1, 3, 6, 9];
-nl;
-lurries;*/
 headers = UsersService.headers;
 lurryInfo = UsersService.lurryInfo;
 lurris=[];
 numLurries;
-mover=this.ds.getUserIn().name;
-stay=['center', 'north', 'south', 'east', 'all'];
+  moverId=JSON.parse(localStorage.getItem('user')).id;
+mover=JSON.parse(localStorage.getItem('user')).id;
+stay=['SOUTH', 'CENTER', 'NORTH', 'EAST', 'ALL'];
 constructor(private ds: UsersService) { }
 stChange
   ngOnInit() {
@@ -40,6 +37,8 @@ stChange
     }return false;
   }
   submit(){
+    // const userId = JSON.parse(localStorage.getItem('user')).id;
+    this.lurris.push(this.mover);
     console.log(this.stChange);
     console.log(this.lurris);
    }

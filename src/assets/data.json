@@ -8,69 +8,58 @@
   "addresses": [
     {
       "seqnumber": 0,
-      "latitude": 40.668884,
-      "longitude": -73.893126,
-      "city": "Brooklyn",
-      "street": "Vermont St",
-      "building": "566",
+      "latitude": 31.667367,
+      "longitude": 34.569361,
+      "city": "Ashkelon",
+      "street": "Eli cohen",
+      "building": "19",
       "apartment": "6",
       "floor": 4,
       "lift": "LIFT"
     },
     {
       "seqnumber": 1,
-      "latitude": 40.638348,
-      "longitude": -74.032107,
-      "city": "Brooklyn",
-      "street": "Pacific St",
-      "building": "68-94",
+      "latitude": 31.879491,
+      "longitude": 34.818424,
+      "city": "Rehovot",
+      "street": "Herzl St",
+      "building": "6",
       "apartment": "6",
       "floor": 2,
       "lift": "NO_LIFT"
     },
     {
       "seqnumber": 2,
-      "latitude": 37.808000,
-      "longitude": -122.417743,
-      "city": "San Francisco",
-      "street": "Fisherman's Wharf",
-      "building": "5",
+      "latitude": 32.087400,
+      "longitude": 34.773425,
+      "city": "Tel Aviv",
+      "street": "Arlozorov St",
+      "building": "15",
       "apartment": "6",
       "floor": 4,
       "lift": "LIFT"
-    },
-    {
-      "seqnumber": 3,
-      "latitude": 37.787980,
-      "longitude": -122.407517,
-      "city": "San Francisco",
-      "street": "Union Square",
-      "building": "3",
-      "apartment": "2",
-      "floor": 2,
-      "lift": "NO_LIFT"
     }
   ],
   "moves": [
     {
       "addressIn": {
         "seqnumber": 0,
-        "latitude": 40.668884,
-        "longitude": -73.893126,
-        "city": "Brooklyn",
-        "street": "Vermont St",
-        "building": "566",
+        "latitude": 31.667367,
+        "longitude": 34.569361,
+        "city": "Ashkelon",
+        "street": "Eli cohen",
+        "building": "19",
         "apartment": "6",
         "floor": 4,
         "lift": "LIFT"
       },
       "addressOut": {
         "seqnumber": 1,
-        "latitude": 40.638348,
-        "longitude": -74.032107,
-        "city": "Brooklyn",
-        "street": "Pacific St",
-        "building": "68-94",
+        "latitude": 31.879491,
+        "longitude": 34.818424,
+        "city": "Rehovot",
+        "street": "Herzl St",
+        "building": "6",
         "apartment": "6",
         "floor": 2,
         "lift": "NO_LIFT"
@@ -80,20 +69,20 @@
           "room": "KITCHEN",
           "items": [
             {
-              "name": "Fridge",
+              "name": "Freezer",
               "properties": {
-                "size": "office"
+                "size": "small"
               }
             }
           ]
         },
         {
-          "room": "KITCHEN",
+          "room": "SALON",
           "items": [
             {
-              "name": "Fridge",
+              "name": "Folding sofa",
               "properties": {
-                "size": "up to 400l"
+                "size": "3"
               }
             }
           ]
@@ -102,35 +91,35 @@
     },
     {
       "addressIn": {
+        "seqnumber": 1,
+        "latitude": 31.879491,
+        "longitude": 34.818424,
+        "city": "Rehovot",
+        "street": "Herzl St",
+        "building": "6",
+        "apartment": "6",
+        "floor": 2,
+        "lift": "NO_LIFT"
+      },
+      "addressOut": {
         "seqnumber": 2,
-        "latitude": 37.808000,
-        "longitude": -122.417743,
-        "city": "San Francisco",
-        "street": "Fisherman's Wharf",
-        "building": "5",
+        "latitude": 32.087400,
+        "longitude": 34.773425,
+        "city": "Tel Aviv",
+        "street": "Arlozorov St",
+        "building": "15",
         "apartment": "6",
         "floor": 4,
         "lift": "LIFT"
       },
-      "addressOut": {
-        "seqnumber": 3,
-        "latitude": 37.787980,
-        "longitude": -122.407517,
-        "city": "San Francisco",
-        "street": "Union Square",
-        "building": "3",
-        "apartment": "2",
-        "floor": 2,
-        "lift": "NO_LIFT"
-      },
       "rooms": [
         {
-          "room": "KITCHEN",
+          "room": "BEDROOM",
           "items": [
             {
-              "name": "Fridge",
+              "name": "Wardrobe with opening doors",
               "properties": {
-                "size": "up to 600l"
+                "size": "2"
               }
             }
           ]

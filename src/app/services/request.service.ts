@@ -10,20 +10,27 @@ import {JsonModel} from "../models/json.model";
 @Injectable()
 export class RequestService {
   requests = [new Request()];
-  url: string = 'http://localhost:8080/dashboard/requests/customer/getrecent?token=';
+  urlCustomer: string = 'http://localhost:8080/dashboard/requests/customer/getrecent?token=';
+  urlMover: string = 'http://localhost:8080/dashboard/requests/mover/getrecent?token=';
 
   constructor(private http: HttpClient, private loginService: LoginService, private userService: UsersService) {
   }
 
   getRequests() {
-    console.log(JSON.parse(localStorage.getItem('user')));
-    const taleUrl = JSON.parse(localStorage.getItem('user')).id;
-
-    return this.http.get<JsonModel>(this.url + this.loginService.token + taleUrl)
+    let url;
+    const type = JSON.parse(localStorage.getItem('user')).type;
+    const taleUrl = +JSON.parse(localStorage.getItem('user')).id;
+    if (type === 'customer') {
+      url = this.urlCustomer;
+    }
+    else {
+      url = this.urlMover
+    }
+    const path = '' + url + this.loginService.token + taleUrl + '';
+    console.log(path);
+    return this.http.get<JsonModel>(path)
       .map((request: JsonModel) => {
         this.requests = request.data;
-        console.log(this.url);
-        // console.log(this.userService.getUserIn().id);
         return this.requests;
       });
   }

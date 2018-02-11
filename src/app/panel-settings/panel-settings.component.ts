@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsersService} from "../services/users.service";
@@ -17,11 +17,17 @@ export class PanelSettingsComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute) {
   }
+
   private linkAccount = '';
+
   ngOnInit() {
-    console.log(this.usersService.getUserIn().type);
-    if (this.usersService.getUserIn().type=="mover") {this.linkAccount='/mover'}
-    else {this.linkAccount='/customer'};
-        console.log(this.linkAccount);
+    const type = JSON.parse(localStorage.getItem('user')).type;
+    if (type === "mover") {
+      this.linkAccount = '/mover';
+    }
+    else if (type === "customer") {
+      this.linkAccount = '/customer';
+    }
+    console.log(type);
   }
-  }
+}

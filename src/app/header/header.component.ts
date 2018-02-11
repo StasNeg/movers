@@ -14,4 +14,8 @@ export class HeadersComponent implements OnInit {
   ngOnInit() {
 
 }
+
+  hasUser() {
+    return localStorage.getItem('user')===null;
+  }
 }
