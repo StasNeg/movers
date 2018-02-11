@@ -16,11 +16,10 @@
 </div>
 <div class="container" (click)="closeAllDialog()">
   <div class="row" class="col-sm-8 col-sm-offset-2">
-    <div *ngIf="addressesCurrentIndex===0">
+    <div *ngIf="addressesCurrentIndex >= 0">
       <div *ngFor="let item of items; let i = index" >
         <button  mat-button [matMenuTriggerFor]="menu" type="button" class="btn" [style.background-color]=color[currentColor]>
           <span>{{item.name}}</span>
-
           <span *ngFor="let property of item.property"> {{property}}</span>
         </button>
         <mat-menu #menu="matMenu" yPosition="above">

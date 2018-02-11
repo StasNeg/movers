@@ -8,7 +8,7 @@ import {AgmCoreModule} from "@agm/core";
 import {FromToComponent} from "./move-main-adress/from-to/from-to.component";
 import {AddressService} from "./services/address.service";
 import {AppRoutingModule} from "./app-routing.module";
-import {RoomsItemComponent} from "./room-items-main-menu/rooms-item/rooms-item.component";
+
 import {ItemService} from "./services/item.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -50,7 +50,6 @@ import {AccountsService} from "./services/accounts.service";
     MoveMainAddressComponent,
     FromToComponent,
     RoomItemsMainMenuComponent,
-    RoomsItemComponent,
     DialogComponent,
     DialogRoomComponent,
     LoginComponent,

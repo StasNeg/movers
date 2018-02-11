@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {AddressService} from '../services/address.service';
 import {ItemService} from '../services/item.service';
 import {ItemAddressData} from '../interfaces/itemAddress-data';
 import {MatDialog} from '@angular/material';
@@ -26,26 +25,20 @@ export class RoomItemsMainMenuComponent implements OnInit {
   open = false;
   roomTypeTotal;
   mover: Mover;
-  arrayMovers: Mover[] = [];
-  tempItems = [];
-  addressesLocalStorage = [];
+  addressesLocalStorage;
 
-  constructor(private addressService: AddressService, private itemService: ItemService, public dialog: MatDialog) {
+  constructor(private itemService: ItemService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.addressesLocalStorage = JSON.parse(localStorage.getItem('adresses'));
-    console.log(this.addressesLocalStorage);
-    this.addressesLocalStorage.forEach(data => {
-      console.log(data.addressTo);
-    })
-
-    // this.addresses = JSON.parse(localStorage.getItem('adresses'));
+    this.addresses = [];
+    this.addresses.push(this.addressesLocalStorage.addressFrom);
+    this.addressesLocalStorage.addressesTo.forEach((i) => this.addresses.push(i));
     this.itemService.getAppartmentsType().subscribe((responce) => {
       this.roomTypeTotal = [];
       this.roomTypeTotal.push(...responce.data);
       this.createArrayItems();
-      console.log(this.addresses);
     });
   }
 
@@ -74,25 +67,10 @@ export class RoomItemsMainMenuComponent implements OnInit {
 
   onRoomTypeChange(i) {
     this.roomTypeCurrentIndex = i;
-    this.tempItems = [];
-    this.arrayMovers.forEach(mover => {
-      if (mover.addressTo === this.addresses[this.addressesCurrentIndex]) {
-        if (mover.rooms[this.roomTypeCurrentIndex]) {
-          this.tempItems.push(...mover.rooms[this.roomTypeCurrentIndex].items);
-        }
-      }
-    });
-
     this.showItems();
   }
 
   onAddressChange(i) {
-    this.tempItems = [];
-    this.arrayMovers.forEach(mover => {
-      if (mover.addressTo === this.addresses[i]) {
-        this.tempItems.push(...mover.rooms[this.roomTypeCurrentIndex].items);
-      }
-    });
     this.addressesCurrentIndex = i;
     this.roomType = [];
     for (let i = 0; i < this.arrayItems[this.addressesCurrentIndex].rooms.length; i++) {
@@ -111,6 +89,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
       return;
     }
     this.items = this.arrayItems[this.addressesCurrentIndex].rooms[this.roomTypeCurrentIndex].items;
+    console.log(this.arrayItems);
   }
 
   closeAllDialog() {
@@ -167,7 +146,6 @@ export class RoomItemsMainMenuComponent implements OnInit {
         });
       }
     });
-
   }
 
   private arrayFrom(property) {
@@ -179,101 +157,14 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
   isSelectedAddres() {
-    return this.addressesCurrentIndex >= 0;
+    return this.addressesCurrentIndex >= 0 && this.addressesCurrentIndex !== this.addresses.length - 1;
   }
 
   canAddItem() {
-    if (this.addressesCurrentIndex < 0 || this.roomTypeCurrentIndex < 0) {
+    if (this.addressesCurrentIndex < 0 || this.roomTypeCurrentIndex < 0 || this.addressesCurrentIndex === this.addresses.length - 1) {
       return false;
     }
     return true;
   }
-
-  pushItem(room, item) {
-    room.roomType = this.roomTypeTotal[this.roomTypeCurrentIndex];
-    room.items.push(item);
-  }
-
-  isSameAddresses(mover, addressTo) {
-    let sam = (mover.addressTo === addressTo && mover.addressFrom === this.addresses[this.addressesCurrentIndex]);
-    return sam;
-  }
-
-  deleteItem(item) {
-    this.arrayMovers.forEach(mover => {
-      mover.rooms.forEach((room) => {
-        room.items.forEach((it, index, arr) => {
-          if (it.id === item.id) {
-            arr.splice(index, 1);
-          }
-        });
-      });
-    });
-  }
-
-  createMover(addressTo) {
-    return {
-      addressFrom: this.addresses[this.addressesCurrentIndex],
-      addressTo: addressTo,
-      rooms: [],
-    };
-  }
-
-
-  addMover(addressTo, item) {
-
-    if (this.arrayMovers.length === 0) {
-      const mover: Mover = this.createMover(addressTo);
-      const room: Room = new Room();
-      this.pushItem(room, item);
-      mover.rooms.push(room);
-      this.arrayMovers.push(mover);
-    } else {
-      this.deleteItem(item);
-      let isMoverExist = false;
-      isMoverExist = this.arrayMovers.some((mover) => {
-        if (this.isSameAddresses(mover, addressTo)) {
-          let isRoomExist = false;
-          isRoomExist = mover.rooms.some(room => {
-            if (room.roomType === this.roomTypeTotal[this.roomTypeCurrentIndex]) {
-              room.items.push(item);
-              return true;
-            }
-            return false;
-          });
-          if (!isRoomExist) {
-            const room: Room = new Room();
-            this.pushItem(room, item);
-            mover.rooms.push(room);
-          }
-          return true;
-        }
-        return false;
-      });
-      if (!isMoverExist) {
-        const room: Room = new Room();
-        this.pushItem(room, item);
-        const mover: Mover = this.createMover(addressTo);
-        mover.rooms.push(room);
-        this.arrayMovers.push(mover);
-      }
-    }
-  }
-
-  confirmOrder() {
-    this.arrayMovers.forEach((mover, index, arr) => {
-      mover.rooms.forEach((room) => {
-        if (room.items.length === 0) {
-          arr.splice(index, 1);
-          console.log(room.items.length);
-        } else {
-        }
-      });
-      console.log(arr);
-    });
-    console.log(this.arrayMovers);
-  }
-
-
 
 }
