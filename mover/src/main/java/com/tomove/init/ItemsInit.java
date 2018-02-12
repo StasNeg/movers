@@ -41,7 +41,6 @@ public class ItemsInit implements ApplicationRunner {
 
     public void run(ApplicationArguments args) throws IOException, InvalidFormatException {
         if (!isInit.equals("none")) {
-
             /* Load data from xls file to database */
             InputStream inp = getClass().getResourceAsStream("/items.xlsx");
             Workbook wb = WorkbookFactory.create(inp);
@@ -50,7 +49,6 @@ public class ItemsInit implements ApplicationRunner {
             int currentRow = 1;
             Row row;
             DataFormatter formatter = new DataFormatter();
-
             while (sheet.getRow(currentRow) != null) {
                 row = sheet.getRow(currentRow);
                 String roomType = row.getCell(0).getStringCellValue();
@@ -59,13 +57,12 @@ public class ItemsInit implements ApplicationRunner {
                 String propertyTypeValue = formatter.formatCellValue(row.getCell(4));
                 String key = itemName + propertyType;
                 if (items.containsKey(key)) {
-
                     items.get(key).propertyTypeValue = items.get(key).propertyTypeValue + "|" + propertyTypeValue;
                 } else {
                     items.put(key, new ItemToAdd(roomType, itemName, propertyType, propertyTypeValue));
                 }
                 Double price = row.getCell(6).getNumericCellValue();
-                String typePriceName = itemName + "_" + propertyType + "=" + propertyTypeValue;
+                String typePriceName = (propertyType.isEmpty()) ? itemName : itemName + "_" + propertyType + "=" + propertyTypeValue;
                 typePriceRepository.save(new TypePrice(typePriceName, price));
                 currentRow++;
             }
@@ -86,21 +83,21 @@ public class ItemsInit implements ApplicationRunner {
             this.propertyTypeValue = propertyTypeValue;
         }
     }
-
-    private void addItemToDatabase(String roomType, String itemName, String propertyType, String propertyTypeValue, Double price) {
-        ItemType _itemType;
-        if (itemTypeRepository.findByName(itemName).orElse(null) == null) {
-            _itemType = itemTypeRepository.save(new ItemType(RoomType.valueOf(roomType), itemName));
-        } else {
-            _itemType = itemTypeRepository.findByName(itemName).get();
-        }
-
-        if (!propertyType.equals("")) {
-            itemPropertyRepository.save(new TypeProperties(propertyType, propertyTypeValue, _itemType));
-        } else {
-            typePriceRepository.save(new TypePrice(itemName, price));
-        }
-    }
+//
+//    private void addItemToDatabase(String roomType, String itemName, String propertyType, String propertyTypeValue, Double price) {
+//        ItemType _itemType;
+//        if (itemTypeRepository.findByName(itemName).orElse(null) == null) {
+//            _itemType = itemTypeRepository.save(new ItemType(RoomType.valueOf(roomType), itemName));
+//        } else {
+//            _itemType = itemTypeRepository.findByName(itemName).get();
+//        }
+//
+//        if (!propertyType.equals("")) {
+//            itemPropertyRepository.save(new TypeProperties(propertyType, propertyTypeValue, _itemType));
+//        } else {
+//            typePriceRepository.save(new TypePrice(itemName, price));
+//        }
+//    }
 
     private void addItemToDatabase(Map<String, ItemToAdd> items) {
         for (ItemToAdd item : items.values()) {

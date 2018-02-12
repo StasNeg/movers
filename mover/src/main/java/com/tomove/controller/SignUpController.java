@@ -29,20 +29,20 @@ public class SignUpController {
 		if (account != null) {
 			return new DataTo(false, "Wrong email");
 		}
-		if (((String) params.get("type")).equals("customer"))
+		if (params.get("type").equals("customer"))
 			account = new Customer();
 
 
-		if (((String) params.get("type")).equals("mover"))
+		if (params.get("type").equals("mover"))
 			account = new Mover();
 
 		account.setEmail((String) params.get("email"));
 		account.setPassword((String) params.get("password"));
 
-		int checkNumber = 1000+(int)(Math.random()*9000);
-		String code=""+checkNumber;
-		com.tomove.controller.SmsUtils.sendSMS(account.getPhone(), code, "toMove");
-		account.setVerificationCode(code);
+//		int checkNumber = 1000+(int)(Math.random()*9000);
+//		String code=""+checkNumber;
+//		com.tomove.controller.SmsUtils.sendSMS(account.getPhone(), code, "toMove");
+//		account.setVerificationCode(code);
 		repository.save(account);
 
 
