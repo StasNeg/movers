@@ -8,6 +8,17 @@
 </div>
 <div class="container" (click)="closeAllDialog()">
   <div class="row" class="col-sm-8 col-sm-offset-2">
+    <div class="types" *ngFor="let item of itemsTo; let i = index">
+      <button [disabled]="true" [ngClass]="getColorTo()">
+        <span>{{item.name}}</span>
+        <span *ngFor="let property of item.property"> {{property}}</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container" (click)="closeAllDialog()">
+  <div class="row" class="col-sm-8 col-sm-offset-2">
     <div class="types" *ngFor="let appartment of roomType; let i = index" (change)="onRoomTypeChange(i)">
       <label><input type="radio" name="appartment">
         <span>{{appartment}}</span></label>
@@ -16,28 +27,20 @@
 </div>
 <div class="container" (click)="closeAllDialog()">
   <div class="row" class="col-sm-8 col-sm-offset-2">
-    <div *ngIf="addressesCurrentIndex >= 0">
-      <div *ngFor="let item of items; let i = index" >
-        <button  mat-button [matMenuTriggerFor]="menu" type="button" class="btn" [style.background-color]=color[currentColor]>
+    <div *ngIf="addressesCurrentIndex >= 0 && addressesCurrentIndex < addresses.length-1">
+      <div class="types" *ngFor="let item of items; let i = index">
+        <button mat-button [matMenuTriggerFor]="rootMenu" type="button" class="btn"
+                [ngClass]="getColorFrom(i)">
           <span>{{item.name}}</span>
           <span *ngFor="let property of item.property"> {{property}}</span>
         </button>
-        <mat-menu #menu="matMenu" yPosition="above">
-          <button mat-menu-item *ngFor="let address of addresses; let i = index" (click)="addMover(address, item, i)">{{address.street}}
-          </button>
+        <mat-menu #rootMenu="matMenu">
+          <button mat-menu-item (click)="deleteItem(i)">Delete Item</button>
+          <button mat-menu-item [matMenuTriggerFor]="menu" >Change Destination</button>
         </mat-menu>
-      </div>
-    </div>
-    <div *ngIf="addressesCurrentIndex>0">
-      <div *ngFor="let item of tempItems; let i = index">
-        <button mat-button [matMenuTriggerFor]="menu" type="button" class="btn"  >
-          <span> {{item.name}}</span>
-
-          <span *ngFor="let property of item.property">{{property}}</span>
-        </button>
-
-        <mat-menu #menu="matMenu" yPosition="above">
-          <button mat-menu-item *ngFor="let address of addresses" (click)="addMover(address, item)">{{address.street}}
+        <mat-menu #menu="matMenu" xPosition="after">
+          <button mat-menu-item *ngFor="let address of addresses; let y = index" (click)="changeAddressTo(i, y)">
+            {{address.street}}
           </button>
         </mat-menu>
       </div>
@@ -56,9 +59,9 @@
 </div>
 <div class="container">
   <div class="row" class="col-sm-8 col-sm-offset-2">
-    <button type="button" class="btn btn-primary" (click)="openRoomDialog()" [disabled]="!isSelectedAddres()">
+    <button type="button" class="btn btn-primary" (click)="openRoomDialog()" [disabled]="!isSelectedAddress()">
       Add Room
     </button>
   </div>
-  <button> Finish </button>
+  <button> Finish</button>
 </div>

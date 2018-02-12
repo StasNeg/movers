@@ -18,8 +18,11 @@ export class RoomItemsMainMenuComponent implements OnInit {
   color = ['yellow', 'blue', 'pink', 'green', 'purple', 'orange', 'brown', 'dark-blue'];
   arrayItems: ItemAddressData [] = [];
   roomType;
+  // array with addresses
   addresses;
+  itemsTo;
   items = [];
+  itemsToIndex = [];
   addressesCurrentIndex = -1;
   roomTypeCurrentIndex = -1;
   open = false;
@@ -64,7 +67,13 @@ export class RoomItemsMainMenuComponent implements OnInit {
   getColor(i) {
     return this.color[i];
   }
+  getColorTo(){
+    return this.color[this.addressesCurrentIndex];
+  }
 
+  getColorFrom(i){
+    return this.color[this.itemsToIndex[this.createIndexForItemsTo(i)]];
+  }
   onRoomTypeChange(i) {
     this.roomTypeCurrentIndex = i;
     this.showItems();
@@ -76,6 +85,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
     for (let i = 0; i < this.arrayItems[this.addressesCurrentIndex].rooms.length; i++) {
       this.roomType.push(this.arrayItems[this.addressesCurrentIndex].rooms[i].roomType);
     }
+    this.itemsTo = this.getAllItemsTo();
     if (this.roomTypeCurrentIndex !== -1 && this.roomType.length <= this.roomTypeCurrentIndex) {
       this.items = [];
       this.roomTypeCurrentIndex = -1;
@@ -89,7 +99,6 @@ export class RoomItemsMainMenuComponent implements OnInit {
       return;
     }
     this.items = this.arrayItems[this.addressesCurrentIndex].rooms[this.roomTypeCurrentIndex].items;
-    console.log(this.arrayItems);
   }
 
   closeAllDialog() {
@@ -144,6 +153,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
           propertyWithType: result.property,
           property: this.arrayFrom(result.property)
         });
+        this.itemsToIndex[this.createIndexForItemsTo(this.arrayItems[this.addressesCurrentIndex].rooms[this.roomTypeCurrentIndex].items.length - 1)] = this.addresses.length - 1;
       }
     });
   }
@@ -156,7 +166,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
     return result;
   }
 
-  isSelectedAddres() {
+  isSelectedAddress() {
     return this.addressesCurrentIndex >= 0 && this.addressesCurrentIndex !== this.addresses.length - 1;
   }
 
@@ -167,4 +177,31 @@ export class RoomItemsMainMenuComponent implements OnInit {
     return true;
   }
 
+  createIndexForItemsTo(indexItem) {
+    return (this.addressesCurrentIndex + '_' + this.roomTypeCurrentIndex + '_' + indexItem);
+  }
+
+  getItemByIndexItemTo(index: String) {
+    let indexes = index.split('_');
+    return this.arrayItems[+indexes[0]].rooms[+indexes[1]].items[+indexes[2]];
+  }
+
+  private getAllItemsTo() {
+    let items = [];
+    for (var key in this.itemsToIndex) {
+      if (this.itemsToIndex[key] === this.addressesCurrentIndex) {
+        items.push(this.getItemByIndexItemTo(key));
+      }
+    }
+    return items;
+  }
+  changeAddressTo(itemIndex ,addressToIndex){
+    if (addressToIndex > this.addressesCurrentIndex) {
+      this.itemsToIndex[this.createIndexForItemsTo(itemIndex)] = addressToIndex;
+      this.showItems();
+    }
+  }
+  deleteItem(i){
+    console.log(i);
+  }
 }
