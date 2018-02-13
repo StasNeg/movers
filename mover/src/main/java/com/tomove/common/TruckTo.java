@@ -90,4 +90,13 @@ public class TruckTo implements Serializable {
                 ", area=" + area +
                 '}';
     }
+
+    public Truck save(Truck truck) {
+        truck.setTruckType(this.truckType);
+        truck.setDriver_id(this.driver_id);
+        truck.setRoomsCount(this.roomsCount);
+        truck.setMovesDay(this.movesDay);
+        truck.setArea(this.area);
+        return truck;
+    }
 }

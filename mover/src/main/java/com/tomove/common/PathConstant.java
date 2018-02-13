@@ -30,5 +30,6 @@ public class PathConstant {
 
     public static final String GET_ALL_TRUCKS = "/trucks";
     public static final String DELETE_TRUCKS = "/trucks";
+    public static final String SAVE_EDIT_TRUCKS = "/trucks/{userId}";
 
 }

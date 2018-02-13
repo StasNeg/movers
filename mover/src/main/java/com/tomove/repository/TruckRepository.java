@@ -29,4 +29,6 @@ public interface TruckRepository extends CrudRepository<Truck,Integer> {
 
 	@Transactional
 	Integer deleteTruckByIdAndMover(Integer id, Account mover);
+
+	Optional<Truck> getByIdAndMover(Integer id, Account mover);
 }
