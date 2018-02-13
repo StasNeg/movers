@@ -28,20 +28,18 @@ export class TrucksComponent implements OnInit {
     });
   }
 
-  showConfirm(truck) {
-    console.log(truck);
-    let disposable = this.dialogService.addDialog(TruckEditmenuComponent, {
+  showConfirm(truck: DatatrucksModel) {
+      let disposable = this.dialogService.addDialog(TruckEditmenuComponent, {
       title: 'Confirm title',
       message: 'Confirm message',
       trucks: Object.assign({}, truck)
     })
       .subscribe((trucks) => {
-        if (truck) {
-          this.truckService.changeTruck(truck).subscribe((data: DatatrucksModel) => {
-            this.truckService.getTrucks().subscribe((resp: DatatrucksModel[]) => {
-              this.trucks = resp;
-              console.log(this.trucks);
-            });
+        if (trucks) {
+          this.truckService.changeTruck(trucks).subscribe((data: DatatrucksModel) => {
+            this.truckService.getTrucks().subscribe((resp: TruckModel) => {
+              this.trucks = resp.data;
+     });
           });
         } else {
           alert('You didnt save');

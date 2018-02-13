@@ -1,20 +1,22 @@
-
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" (click)="close()">&times;</button>
       <h4 class="modal-title">{{title || 'Confirm'}}</h4>
-      <div>
-        <div>
-          Truck Area <input type="text" [(ngModel)]="trucks.area" >
-        </div>
+      <div  >  Area of Trucks
+        <select>
+          <option>ALL COUNTRY</option>
+          <option>NORTH</option>
+          <option>SOUTH</option>
+          <option>CENTER</option>
+        </select>
+
         <div>
           Drivers ID: <input type="text" [(ngModel)]="trucks.driver_id">
         </div>
         <div>
           Count of Rooms: <input type="text" [(ngModel)]="trucks.roomsCount">
         </div>
-
         <div>
           Move by Day: <input type="text" [(ngModel)]="trucks.movesDay">
         </div>
