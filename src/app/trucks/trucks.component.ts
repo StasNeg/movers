@@ -29,7 +29,7 @@ export class TrucksComponent implements OnInit {
   }
 
   showConfirm(truck: DatatrucksModel) {
-      let disposable = this.dialogService.addDialog(TruckEditmenuComponent, {
+    let disposable = this.dialogService.addDialog(TruckEditmenuComponent, {
       title: 'Confirm title',
       message: 'Confirm message',
       trucks: Object.assign({}, truck)
@@ -37,9 +37,10 @@ export class TrucksComponent implements OnInit {
       .subscribe((trucks) => {
         if (trucks) {
           this.truckService.changeTruck(trucks).subscribe((data: DatatrucksModel) => {
+            console.log(data);
             this.truckService.getTrucks().subscribe((resp: TruckModel) => {
               this.trucks = resp.data;
-     });
+            });
           });
         } else {
           alert('You didnt save');
@@ -49,7 +50,7 @@ export class TrucksComponent implements OnInit {
   }
 
   deleteTruck(truck) {
- console.log(truck.id);
+    console.log(truck.id);
     this.truckService.deleteTruck(truck).subscribe(data => {
 
       this.trucks = this.trucks.filter(c => c.id !== truck.id);
