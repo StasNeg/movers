@@ -27,7 +27,6 @@ import {OrdersComponent} from './orders/orders.component';
 import {RequestsComponent} from './requests/requests.component';
 import {HeadersComponent} from './header/header.component';
 import {CalendarComponent} from './calendar/calendar.component';
-import {MoverComponent} from './panel-settings/account/mover/mover.component';
 import {PanelSettingsComponent} from './panel-settings/panel-settings.component';
 import {CustomerComponent} from './panel-settings/account/customer/customer.component';
 import {SettingsComponent} from './panel-settings/settings/settings.component';
@@ -61,7 +60,6 @@ import {BootstrapModalModule} from 'ng2-bootstrap-modal';
     HeadersComponent,
     CalendarComponent,
     PanelSettingsComponent,
-    MoverComponent,
     CustomerComponent,
     SettingsComponent,
     ChoiceComponent,

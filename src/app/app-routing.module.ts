@@ -6,15 +6,14 @@ import {LoginComponent} from './auth/login/login.component';
 import {OrdersComponent} from './orders/orders.component';
 import {CalendarComponent} from './calendar/calendar.component';
 import {RequestsComponent} from './requests/requests.component';
-import {PanelSettingsComponent} from "./panel-settings/panel-settings.component";
-import {CustomerComponent} from "./panel-settings/account/customer/customer.component";
-import {MoverComponent} from "./panel-settings/account/mover/mover.component";
-import {SettingsComponent} from "./panel-settings/settings/settings.component";
-import {ForgotPasswordComponent} from "./auth/forgot-password/forgot-password.component";
-import {ResetPasswordComponent} from "./auth/reset-password/reset-password.component";
-import {RequestComponent} from "./request/request.component";
-import {RequestFinishComponent} from "./request-finish/request-finish.component";
-import {RegistrationComponent} from "./auth/registration/registration.component";
+import {PanelSettingsComponent} from './panel-settings/panel-settings.component';
+import {CustomerComponent} from './panel-settings/account/customer/customer.component';
+import {SettingsComponent} from './panel-settings/settings/settings.component';
+import {ForgotPasswordComponent} from './auth/forgot-password/forgot-password.component';
+import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
+import {RequestComponent} from './request/request.component';
+import {RequestFinishComponent} from './request-finish/request-finish.component';
+import {RegistrationComponent} from './auth/registration/registration.component';
 import {TrucksComponent} from './trucks/trucks.component';
 
 
@@ -28,7 +27,6 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'panel-settings', component: PanelSettingsComponent},
   {path: 'customer', component: CustomerComponent},
-  // {path: 'trucks', component: MoverComponent},
   {path: 'trucks', component: TrucksComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'forgot', component: ForgotPasswordComponent},

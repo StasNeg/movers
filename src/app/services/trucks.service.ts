@@ -17,6 +17,7 @@ export class TrucksService implements OnInit {
   }
 
   changeTruck(truck: DatatrucksModel) {
+    console.log(truck);
     const user = JSON.parse(localStorage.getItem('user'));
     return this.http.put(`http://localhost:8000/${truck.id}`, truck);
   }
