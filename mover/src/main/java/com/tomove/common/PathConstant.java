@@ -29,5 +29,6 @@ public class PathConstant {
     public static final String PROPERTIES_OF_ITEM = "/item_properties/value";
 
     public static final String GET_ALL_TRUCKS = "/trucks";
+    public static final String DELETE_TRUCKS = "/trucks";
 
 }
