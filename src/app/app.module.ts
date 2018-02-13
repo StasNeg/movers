@@ -31,7 +31,6 @@ import {MoverComponent} from './panel-settings/account/mover/mover.component';
 import {PanelSettingsComponent} from './panel-settings/panel-settings.component';
 import {CustomerComponent} from './panel-settings/account/customer/customer.component';
 import {SettingsComponent} from './panel-settings/settings/settings.component';
-import {LurriesComponent} from './panel-settings/account/mover/lurries/lurries.component';
 import {ChoiceComponent} from './panel-settings/account/mover/choice/choice.component';
 import {AuthComponent} from './auth/auth.component';
 import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
@@ -65,7 +64,6 @@ import {BootstrapModalModule} from 'ng2-bootstrap-modal';
     MoverComponent,
     CustomerComponent,
     SettingsComponent,
-    LurriesComponent,
     ChoiceComponent,
     AuthComponent,
     ForgotPasswordComponent,

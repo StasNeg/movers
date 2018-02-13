@@ -3,22 +3,32 @@
     <div class="modal-header">
       <button type="button" class="close" (click)="close()">&times;</button>
       <h4 class="modal-title">{{title || 'Confirm'}}</h4>
-      <div  >  Area of Trucks
+      <div> Area of Trucks
         <select (change)="selectedToArea($event)">
-          <option *ngFor="let answer of answers"
-                  [value]="answer" >
-            {{answer}}
+          <option *ngFor="let areaAnswer of areaAnswers"
+                  [value]="areaAnswer">
+            {{areaAnswer}}
           </option>
         </select>
 
         <div>
           Drivers ID: <input type="text" [(ngModel)]="trucks.driver_id">
         </div>
-        <div>
-          Count of Rooms: <input type="text" [(ngModel)]="trucks.roomsCount">
+        <div> Rooms Can Take
+          <select (change)="selectedToRoom($event)">
+            <option *ngFor="let roomAnswer of roomsAnswers"
+                    [value]="roomAnswer">
+              {{roomAnswer}}
+            </option>
+          </select>
         </div>
-        <div>
-          Move by Day: <input type="text" [(ngModel)]="trucks.movesDay">
+        <div> Moves by Day
+          <select (change)="selectedToMoves($event)">
+            <option *ngFor="let movesDayAnswer of movesDayAnswers"
+                    [value]="movesDayAnswer">
+              {{movesDayAnswer}}
+            </option>
+          </select>
         </div>
         <div>
           Truck Type: <input type="text" [(ngModel)]="trucks.truckType">

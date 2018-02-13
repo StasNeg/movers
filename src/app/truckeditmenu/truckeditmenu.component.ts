@@ -16,7 +16,9 @@ export interface ConfirmModel {
   styleUrls: ['./truckeditmenu.component.css']
 })
 export class TruckEditmenuComponent extends DialogComponent<ConfirmModel, DatatrucksModel> implements ConfirmModel {
-  answers = ['CENTER', 'SOUTH', 'NORTH', 'ALL COUNTRY'];
+  areaAnswers = ['CENTER', 'SOUTH', 'NORTH', 'ALL COUNTRY'];
+  roomsAnswers = [1, 2, 3, 4, 5];
+  movesDayAnswers = [1, 2, 3];
   title: string;
   message: string;
   trucks: DatatrucksModel;
@@ -29,10 +31,21 @@ export class TruckEditmenuComponent extends DialogComponent<ConfirmModel, Datatr
     this.result = this.trucks;
     this.close();
   }
+
   selectedToArea(e) {
     this.trucks.area = e.target.value;
-    console.log(this.trucks.area);
 
+
+  }
+
+  selectedToRoom(e) {
+    this.trucks.roomsCount = e.target.value;
+
+
+  }
+
+  selectedToMoves(e) {
+    this.trucks.movesDay = e.target.value;
   }
 
 }

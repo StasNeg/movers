@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {UsersService} from "../../../services/users.service";
+import {Component, OnInit} from '@angular/core';
+import {UsersService} from '../../../services/users.service';
 
 
 @Component({
@@ -8,8 +8,10 @@ import {UsersService} from "../../../services/users.service";
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent implements OnInit {
-  customer=this.ds2.getUserIn().id;
-  constructor(private ds2: UsersService) { }
+  customer = this.ds2.getUserIn().id;
+
+  constructor(private ds2: UsersService) {
+  }
 
   ngOnInit() {
   }

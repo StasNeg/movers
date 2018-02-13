@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UsersService} from "../services/users.service";
-import {AuthService} from "../services/auth.service";
+import {UsersService} from '../services/users.service';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-panel-settings',
@@ -22,10 +22,10 @@ export class PanelSettingsComponent implements OnInit {
 
   ngOnInit() {
     const type = JSON.parse(localStorage.getItem('user')).type;
-    if (type === "mover") {
+    if (type === 'mover') {
       this.linkAccount = '/trucks';
     }
-    else if (type === "customer") {
+    else if (type === 'customer') {
       this.linkAccount = '/customer';
     }
     console.log(type);
