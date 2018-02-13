@@ -23,7 +23,7 @@ export class PanelSettingsComponent implements OnInit {
   ngOnInit() {
     const type = JSON.parse(localStorage.getItem('user')).type;
     if (type === "mover") {
-      this.linkAccount = '/mover';
+      this.linkAccount = '/trucks';
     }
     else if (type === "customer") {
       this.linkAccount = '/customer';

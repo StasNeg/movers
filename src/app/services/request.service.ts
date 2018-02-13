@@ -2,9 +2,9 @@ import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import {Request} from '../models/request.model';
 import {Injectable} from '@angular/core';
-import {LoginService} from "../login.service";
-import {UsersService} from "./users.service";
-import {JsonModel} from "../models/json.model";
+import {LoginService} from '../login.service';
+import {UsersService} from './users.service';
+import {JsonModel} from '../models/json.model';
 
 
 @Injectable()
@@ -22,10 +22,10 @@ export class RequestService {
     const taleUrl = +JSON.parse(localStorage.getItem('user')).id;
     if (type === 'customer') {
       url = this.urlCustomer;
+    } else {
+      url = this.urlMover;
     }
-    else {
-      url = this.urlMover
-    }
+
     const path = '' + url + this.loginService.token + taleUrl + '';
     console.log(path);
     return this.http.get<JsonModel>(path)

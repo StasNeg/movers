@@ -15,6 +15,7 @@ import {ResetPasswordComponent} from "./auth/reset-password/reset-password.compo
 import {RequestComponent} from "./request/request.component";
 import {RequestFinishComponent} from "./request-finish/request-finish.component";
 import {RegistrationComponent} from "./auth/registration/registration.component";
+import {TrucksComponent} from './trucks/trucks.component';
 
 
 const appRoutes: Routes = [
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'panel-settings', component: PanelSettingsComponent},
   {path: 'customer', component: CustomerComponent},
-  {path: 'mover', component: MoverComponent},
+  // {path: 'trucks', component: MoverComponent},
+  {path: 'trucks', component: TrucksComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'forgot', component: ForgotPasswordComponent},
   {path: 'reset', component: ResetPasswordComponent},

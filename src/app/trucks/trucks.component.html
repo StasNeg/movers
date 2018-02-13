@@ -1,0 +1,21 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th *ngFor="let truckMenu of trucksMenu" scope="col">{{truckMenu}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let truck of trucks; let i = 'index'">
+    <th scope="row">{{i+1}}</th>
+    <td>{{truck.area}}</td>
+    <td>{{truck.driver_id}}</td>
+    <td>{{truck.movesDay}}</td>
+    <td>{{truck.roomsCount}}</td>
+    <td>{{truck.truckType}}</td>
+
+    <button class="btn btn-primary" (click)="showConfirm(truck)" > change</button>
+    <button class="btn btn-danger" (click)="deleteTruck(truck)"> delete</button>
+  </tr>
+
+   </tbody>
+</table>

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-// import {User} from '../auth/models/user.model';
 import {HttpClient} from '@angular/common/http';
 
 
@@ -7,15 +6,16 @@ import {HttpClient} from '@angular/common/http';
 export class UsersService {
   constructor(private http: HttpClient) {
   }
-  static lurryInfo ={
-    type : ['tender', 'lurry 4t', 'lurry 7.5t', 'lurry 12t', 'lurry 15t'],
-    works : ['1 room', '2 rooms', '3 rooms', '4 rooms', '5+ rooms'],
-    usage : [1, 2, 3]
+
+  static lurryInfo = {
+    type: ['tender', 'lurry 4t', 'lurry 7.5t', 'lurry 12t', 'lurry 15t'],
+    works: ['1 room', '2 rooms', '3 rooms', '4 rooms', '5+ rooms'],
+    usage: [1, 2, 3]
   };
   static headers = {
-    type : 'lurry type',
-    works : 'space to move',
-    usage : 'number of around trips'
+    type: 'lurry type',
+    works: 'space to move',
+    usage: 'number of around trips'
   };
 
   getUserByEmail(email: string, password: string) {
