@@ -29,5 +29,10 @@ export class TruckEditmenuComponent extends DialogComponent<ConfirmModel, Datatr
     this.result = this.trucks;
     this.close();
   }
+  selectedToArea(e) {
+    this.trucks.area = e.target.value;
+    console.log(this.trucks.area);
+
+  }
 
 }

@@ -4,11 +4,11 @@
       <button type="button" class="close" (click)="close()">&times;</button>
       <h4 class="modal-title">{{title || 'Confirm'}}</h4>
       <div  >  Area of Trucks
-        <select>
-          <option>ALL COUNTRY</option>
-          <option>NORTH</option>
-          <option>SOUTH</option>
-          <option>CENTER</option>
+        <select (change)="selectedToArea($event)">
+          <option *ngFor="let answer of answers"
+                  [value]="answer" >
+            {{answer}}
+          </option>
         </select>
 
         <div>
