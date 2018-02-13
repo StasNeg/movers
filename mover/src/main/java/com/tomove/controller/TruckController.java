@@ -17,14 +17,14 @@ import static com.tomove.common.PathConstant.GET_ALL_TRUCKS;
 
 @RestController
 @CrossOrigin
-public class TrackController {
+public class TruckController {
 
     private AccountRepository repository;
     private TruckRepository truckRepository;
     private EmailService emailService;
 
     @Autowired
-    public TrackController(AccountRepository repository, TruckRepository truckRepository, EmailService emailService) {
+    public TruckController(AccountRepository repository, TruckRepository truckRepository, EmailService emailService) {
         this.repository = repository;
         this.truckRepository = truckRepository;
         this.emailService = emailService;
