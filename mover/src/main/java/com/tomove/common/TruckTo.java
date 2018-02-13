@@ -5,10 +5,10 @@ import com.tomove.model.subjectMover.Truck;
 
 import java.io.Serializable;
 
-/**
- * Created by Stanislav on 13.02.2018.
- */
+
 public class TruckTo implements Serializable {
+
+    private Integer  id;
 
     private String truckType;
 
@@ -24,11 +24,20 @@ public class TruckTo implements Serializable {
     }
 
     public TruckTo(Truck truck) {
+        this.id = truck.getId();
         this.truckType = truck.getTruckType();
         this.driver_id = truck.getDriver_id();
         this.roomsCount = truck.getRoomsCount();
         this.movesDay = truck.getMovesDay();
         this.area = truck.getArea();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTruckType() {
