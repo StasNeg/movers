@@ -3,7 +3,7 @@ package com.tomove.common;
 
 public class PathConstant {
     public static final String URL = "http://localhost:8080";
-    public static final String URL_FRONT = "http://localhost:4202";
+    public static final String URL_FRONT = "http://localhost:4200";
     public static final String GET_ALL_ACCOUNTS = "/";
     public static final String POST_LOGIN = "/login";
     public static final String GET_RECENT_CUSTOMER_REQUESTS = "/dashboard/requests/customer/getrecent";
@@ -27,5 +27,7 @@ public class PathConstant {
     public static final String GET_ALL_ROOMS_TYPE = "/roomstype/all";
     public static final String GET_ALL_ITEMS_FROM_ROOMTYPE = "/itemtype/roomtype";
     public static final String PROPERTIES_OF_ITEM = "/item_properties/value";
+
+    public static final String GET_ALL_TRUCKS = "/trucks";
 
 }

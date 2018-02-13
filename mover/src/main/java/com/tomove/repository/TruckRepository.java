@@ -23,4 +23,6 @@ public interface TruckRepository extends CrudRepository<Truck,Integer> {
 	public Iterable<Truck> getAvailableTrucksForRequest(@Param("maxTruckDayMovesCount") long maxTruckDayMovesCount, @Param("moverId") Account userId, 
 			@Param("reqArea") Area reqArea, @Param("reqRoomCount") int reqRoomCount, 
 			@Param("reqDateFrom") LocalDateTime reqDateMin, @Param("reqDateTo") LocalDateTime reqDateMax);
+
+	public Iterable<Truck> getAllByMoverId(Integer moverId);
 }
