@@ -63,5 +63,6 @@
       Add Room
     </button>
   </div>
-  <button> Finish</button>
+  <button type="button" class="btn btn-primary" (click)="finishAddItem()" [disabled]="!isFinish()"> Finish </button>
 </div>
+<div>{{finalJson}}</div>

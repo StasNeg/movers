@@ -65,7 +65,6 @@ export class MoveMainAddressComponent implements OnInit {
       time: null
     }
     localStorage.setItem('adresses', JSON.stringify(result));
-    console.log(JSON.stringify(result));
     this.router.navigate(['/room'],)
   }
 

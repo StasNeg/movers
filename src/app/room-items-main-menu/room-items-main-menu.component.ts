@@ -5,6 +5,9 @@ import {MatDialog} from '@angular/material';
 import {DialogComponent} from './dialog/dialogItem/dialog.component';
 import {DialogRoomComponent} from './dialog/dialogRoom/dialogRoom.component';
 import {Room} from '../interfaces/room';
+import {AddressItemsData} from "../interfaces/addressItemsData";
+import {Address} from "../interfaces/address";
+import {forEach} from "@angular/router/src/utils/collection";
 
 
 @Component({
@@ -41,6 +44,11 @@ export class RoomItemsMainMenuComponent implements OnInit {
   roomTypeTotal;
   //variable for init addresses From localStorage
   addressesLocalStorage;
+  //finalJson
+  dataItem: AddressItemsData = new AddressItemsData();
+  //for test!!!!! show final JSON for Michael
+  finalJson;
+
 
   constructor(private itemService: ItemService, public dialog: MatDialog) {
   }
@@ -181,6 +189,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
       }
     });
   }
+
   //init array properties in items
   private arrayFrom(property) {
     let result = [];
@@ -202,6 +211,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
     }
     return true;
   }
+
   //create index for itemsToIndex
   createIndexForItemsTo(indexItem) {
     return (this.addressesCurrentIndex + '_' + this.roomTypeCurrentIndex + '_' + indexItem);
@@ -250,4 +260,95 @@ export class RoomItemsMainMenuComponent implements OnInit {
     }
     this.itemsToIndex = tempArray;
   }
+
+  //click on calculate - create Object for calculate parcel charge
+  finishAddItem() {
+    this.dataItem.customerId = JSON.parse(localStorage.getItem('user')).id;
+    this.dataItem.place_type = JSON.parse(localStorage.getItem('adresses')).typeOfAppartment;
+    this.dataItem.addresses = [];
+    for (let i = 0; i < this.addresses.length; i++) {
+      this.dataItem.addresses.push({
+        seqnumber: i,
+        latitude: this.addresses[i].lat,
+        longitude: this.addresses[i].lng,
+        city: this.addresses[i].city,
+        street: this.addresses[i].street,
+        building: this.addresses[i].street_number,
+        apartment: null,
+        floor: this.addresses[i].floor,
+        lift: this.isLift(this.addresses[i].lift)
+      });
+    }
+    this.dataItem.moves = [];
+    for (let key in this.itemsToIndex) {
+      let splitArray = key.split('_');
+      let indexMoves = this.hasMove(+splitArray[0], this.itemsToIndex[key]);
+      if (indexMoves != -1) {
+        //  TODO  find room in rooms or create new room
+        let indexRoom = this.hasRoom(indexMoves, +splitArray[1]);
+        if (indexRoom != -1) {
+          //  TODO add item to rooms[indexRoom]
+          this.dataItem.moves[indexMoves].rooms[indexRoom].items.push(this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].items[+splitArray[2]]);
+        }
+        else {
+          this.dataItem.moves[indexMoves].rooms.push({
+            id: +splitArray[1],
+            roomType: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
+            room: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
+            items: []
+          });
+          this.dataItem.moves[indexMoves].rooms[this.dataItem.moves[indexMoves].rooms.length - 1].items.push(this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].items[+splitArray[2]]);
+
+        }
+      } else {
+        //  TODO  create mew moves and create new rooms after add rooms
+        this.dataItem.moves.push({
+            addressIn: this.dataItem.addresses[this.itemsToIndex[key]],
+            addressOut: this.dataItem.addresses[+splitArray[0]],
+            rooms: []
+          }
+        );
+        this.dataItem.moves[this.dataItem.moves.length - 1].rooms.push({
+          id: +splitArray[1],
+          roomType: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
+          room: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
+          items: []
+
+        });
+        this.dataItem.moves[this.dataItem.moves.length - 1].rooms[this.dataItem.moves[this.dataItem.moves.length - 1].rooms.length - 1].items.push(this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].items[+splitArray[2]])
+      }
+    }
+    // this.finalJson = JSON.stringify(this.dataItem)
+    console.log(this.dataItem);
+  }
+
+
+  private isLift(isLift): string {
+    return isLift ? 'LIFT' : 'NO_LIFT';
+  }
+
+  private hasRoom(indexMoves, idRoom): number {
+    for (let i = 0; i < this.dataItem.moves[indexMoves].rooms.length; i++) {
+
+      if (this.dataItem.moves[indexMoves].rooms[i].id === idRoom) {
+        return i;
+      }
+    }
+    return -1;
+
+  }
+
+  hasMove(secNumberFrom, secNumberTo): number {
+    for (let i = 0; i < this.dataItem.moves.length; i++) {
+      if (this.dataItem.moves[i].addressIn.seqnumber === secNumberTo && this.dataItem.moves[i].addressOut.seqnumber === secNumberFrom) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  isFinish() {
+    return true;
+  }
+
 }
