@@ -265,6 +265,9 @@ export class RoomItemsMainMenuComponent implements OnInit {
   finishAddItem() {
     this.dataItem.customerId = JSON.parse(localStorage.getItem('user')).id;
     this.dataItem.place_type = JSON.parse(localStorage.getItem('adresses')).typeOfAppartment;
+    this.dataItem.move_date = '2018-01-18';
+    this.dataItem.move_time = '19:00';
+    this.dataItem.personal = false;
     this.dataItem.addresses = [];
     for (let i = 0; i < this.addresses.length; i++) {
       this.dataItem.addresses.push({
@@ -325,7 +328,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
 
-  private addMove(key, splitArray){
+  private addMove(key, splitArray) {
     this.dataItem.moves.push({
       addressIn: this.dataItem.addresses[this.itemsToIndex[key]],
       addressOut: this.dataItem.addresses[+splitArray[0]],
@@ -333,7 +336,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
     });
   }
 
-  private addRoom(indexMoves, splitArray){
+  private addRoom(indexMoves, splitArray) {
     this.dataItem.moves[indexMoves].rooms.push({
       id: +splitArray[1],
       roomType: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
