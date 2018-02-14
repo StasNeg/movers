@@ -44,7 +44,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   roomTypeTotal;
   //variable for init addresses From localStorage
   addressesLocalStorage;
-  //finalJson
+  //finalJson for calculating
   dataItem: AddressItemsData = new AddressItemsData();
   //for test!!!!! show final JSON for Michael
   finalJson;
@@ -284,44 +284,22 @@ export class RoomItemsMainMenuComponent implements OnInit {
       let splitArray = key.split('_');
       let indexMoves = this.hasMove(+splitArray[0], this.itemsToIndex[key]);
       if (indexMoves != -1) {
-        //  TODO  find room in rooms or create new room
         let indexRoom = this.hasRoom(indexMoves, +splitArray[1]);
         if (indexRoom != -1) {
-          //  TODO add item to rooms[indexRoom]
           this.dataItem.moves[indexMoves].rooms[indexRoom].items.push(this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].items[+splitArray[2]]);
         }
         else {
-          this.dataItem.moves[indexMoves].rooms.push({
-            id: +splitArray[1],
-            roomType: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
-            room: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
-            items: []
-          });
+          this.addRoom(indexMoves, splitArray);
           this.dataItem.moves[indexMoves].rooms[this.dataItem.moves[indexMoves].rooms.length - 1].items.push(this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].items[+splitArray[2]]);
-
         }
       } else {
-        //  TODO  create mew moves and create new rooms after add rooms
-        this.dataItem.moves.push({
-            addressIn: this.dataItem.addresses[this.itemsToIndex[key]],
-            addressOut: this.dataItem.addresses[+splitArray[0]],
-            rooms: []
-          }
-        );
-        this.dataItem.moves[this.dataItem.moves.length - 1].rooms.push({
-          id: +splitArray[1],
-          roomType: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
-          room: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
-          items: []
-
-        });
+        this.addMove(key, splitArray);
+        this.addRoom(this.dataItem.moves.length - 1, splitArray);
         this.dataItem.moves[this.dataItem.moves.length - 1].rooms[this.dataItem.moves[this.dataItem.moves.length - 1].rooms.length - 1].items.push(this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].items[+splitArray[2]])
       }
     }
-    // this.finalJson = JSON.stringify(this.dataItem)
     console.log(this.dataItem);
   }
-
 
   private isLift(isLift): string {
     return isLift ? 'LIFT' : 'NO_LIFT';
@@ -329,7 +307,6 @@ export class RoomItemsMainMenuComponent implements OnInit {
 
   private hasRoom(indexMoves, idRoom): number {
     for (let i = 0; i < this.dataItem.moves[indexMoves].rooms.length; i++) {
-
       if (this.dataItem.moves[indexMoves].rooms[i].id === idRoom) {
         return i;
       }
@@ -345,6 +322,24 @@ export class RoomItemsMainMenuComponent implements OnInit {
       }
     }
     return -1;
+  }
+
+
+  private addMove(key, splitArray){
+    this.dataItem.moves.push({
+      addressIn: this.dataItem.addresses[this.itemsToIndex[key]],
+      addressOut: this.dataItem.addresses[+splitArray[0]],
+      rooms: []
+    });
+  }
+
+  private addRoom(indexMoves, splitArray){
+    this.dataItem.moves[indexMoves].rooms.push({
+      id: +splitArray[1],
+      roomType: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
+      room: this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].roomType,
+      items: []
+    });
   }
 
   isFinish() {
