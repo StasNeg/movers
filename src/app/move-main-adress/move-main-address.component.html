@@ -1,45 +1,57 @@
 <div class="container">
   <div class="row" class="col-sm-8 col-sm-offset-2" style="border:solid black 3px;">
     <div>
-      <form class="form-horizontal" role="form" #form="ngForm" >
+      <form class="form-horizontal" role="form" #form="ngForm">
         <fieldset>
           <legend>Request</legend>
           <div class="types">
-            <label class="blue"><input type="radio" name="toggle" [(ngModel)] = "typeRadio" value="house" (change)="onTypeRadioClick()"><span>House</span></label>
-            <label class="blue"><input type="radio" name="toggle" [(ngModel)] = "typeRadio" value="appartment" (change)="onTypeRadioClick()"><span>Appartment</span></label>
-            <label class="blue"><input type="radio" name="toggle" [(ngModel)] = "typeRadio" value="office" (change)="onTypeRadioClick()"><span>Office</span></label>
+            <label class="blue"><input type="radio" name="toggle" [(ngModel)]="typeRadio" value="house"
+                                       (change)="onTypeRadioClick()"><span>House</span></label>
+            <label class="blue"><input type="radio" name="toggle" [(ngModel)]="typeRadio" value="appartment"
+                                       (change)="onTypeRadioClick()"><span>Appartment</span></label>
+            <label class="blue"><input type="radio" name="toggle" [(ngModel)]="typeRadio" value="office"
+                                       (change)="onTypeRadioClick()"><span>Office</span></label>
           </div>
           <div class="form-group col-sm-12">
             <app-from-to [parentSubject]="parentSubject" [fromTo]="'from'"></app-from-to>
           </div>
 
-          <div *ngFor="let address of addresses; let i = index"  >
-            <th><button type="button" class="btn btn-sm"  (click)="deleteBetween(i)">
-                  <span class="glyphicon glyphicon-minus"></span>
-            </button></th>
-                <th><button  type="button" class="btn btn-sm" [disabled]= "(i===0)" (click)="upBetween(i)">
-                  <span class="glyphicon glyphicon-arrow-up"></span>
-                </button></th>
-              <th>Street : {{address.street}} Number : {{address.street_number}} City : {{address.city}} Floor : {{address.floor}} Lift : {{address.lift}}</th>
+          <div *ngFor="let address of addresses; let i = index">
+            <th>
+              <button type="button" class="btn btn-sm" (click)="deleteBetween(i)">
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+            </th>
+            <th>
+              <button type="button" class="btn btn-sm" [disabled]="(i===0)" (click)="upBetween(i)">
+                <span class="glyphicon glyphicon-arrow-up"></span>
+              </button>
+            </th>
+            <th>Street : {{address.street}} Number : {{address.street_number}} City : {{address.city}} Floor :
+              {{address.floor}} Lift : {{address.lift}}
+            </th>
 
-            </div>
+          </div>
 
           <!--</div>-->
           <div class="form-group col-sm-12">
             <div class="col-sm-12"><span class="col-sm-12"><h1></h1></span></div>
-            <button type="button" class="btn" (click)="addBetween()" [disabled] = "!addForm()">
+            <button type="button" class="btn" (click)="addBetween()" [disabled]="!addForm()">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
           </div>
 
 
-          <app-from-to  [parentSubject]="parentSubject"  [fromTo] = "'to'"></app-from-to>
+          <app-from-to [parentSubject]="parentSubject" [fromTo]="'to'"></app-from-to>
           <div class="form-group col-sm-12">
             <h1></h1>
-            <label class="col-sm-offset-0 col-sm-2 ">Date</label>
-            <label class="col-sm-offset-7 col-sm-3 ">Time</label>
-            <input type ="date" class="col-sm-offset-0 col-sm-2" disabled>
-            <input type ="time" class="col-sm-offset-7 col-sm-3" disabled>
+            <label class="col-sm-offset-0 col-sm-2">Date</label>
+            <label class="col-sm-offset-7 col-sm-3">Time</label>
+            <!--https://nkalinov.github.io/ng2-datetime/-->
+            <datetime [timepicker]="false" [(ngModel)]="dateOrder" [ngModelOptions]="{standalone: true}"
+                      class="col-sm-offset-0 col-sm-2"></datetime>
+            <datetime [datepicker]="false" [(ngModel)]="timeOrder" [ngModelOptions]="{standalone: true}"
+                      class="col-sm-offset-7 col-sm-3"></datetime>
           </div>
 
           <div class="form-group">
@@ -48,7 +60,9 @@
               <button class="btn btn-block btn-primary ">Back</button>
             </div>
             <div class="col-sm-2">
-              <button class="btn btn-block btn-primary" type="submit" (click)="onSubmitForm()" [disabled] = " !submitForm()">Next</button>
+              <button class="btn btn-block btn-primary" type="submit" (click)="onSubmitForm()"
+                      [disabled]=" !submitForm()">Next
+              </button>
             </div>
           </div>
         </fieldset>

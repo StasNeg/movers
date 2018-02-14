@@ -43,7 +43,7 @@ import {TrucksComponent} from './trucks/trucks.component';
 import {TrucksService} from './services/trucks.service';
 import {TruckEditmenuComponent} from './truckeditmenu/truckeditmenu.component';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
-
+import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 
 @NgModule({
   declarations: [
@@ -71,6 +71,7 @@ import {BootstrapModalModule} from 'ng2-bootstrap-modal';
     RegistrationComponent,
     TrucksComponent,
     TruckEditmenuComponent
+
   ],
   imports: [
     BrowserModule,
@@ -94,7 +95,8 @@ import {BootstrapModalModule} from 'ng2-bootstrap-modal';
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NKDatetimeModule
   ],
   providers: [
     AddressService,

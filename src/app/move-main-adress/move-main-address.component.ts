@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AddressService} from '../services/address.service'
 import {Subject} from "rxjs/Subject";
 import {Router} from "@angular/router";
+import {Time} from "@angular/common";
 
 
 @Component({
@@ -15,6 +16,8 @@ export class MoveMainAddressComponent implements OnInit {
   public addresses;
   public typeRadio;
   public parentSubject: Subject<any> = new Subject();
+  public dateOrder = new Date();
+  public timeOrder = null;
 
   constructor(private addressService: AddressService, private router: Router) {
   }
@@ -46,8 +49,15 @@ export class MoveMainAddressComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.addressService.addressesTo.length > 0 && this.addressService.isCorrectForm() && this.addressService.typeAppartment != null)
+    if (this.addressService.addressesTo.length > 0
+      && this.addressService.isCorrectForm()
+      && this.addressService.typeAppartment != null
+      && this.dateOrder != null
+      && this.timeOrder != null
+    )
       return true;
+    // console.log(this.dateOrder, this.timeOrder);
+
     return false;
   }
 
@@ -61,8 +71,8 @@ export class MoveMainAddressComponent implements OnInit {
       typeOfAppartment: this.addressService.typeAppartment,
       addressFrom: this.addressService.addressFrom,
       addressesTo: this.addressService.addressesTo,
-      date: null,
-      time: null
+      date: this.dateOrder,
+      time: this.timeOrder
     }
     localStorage.setItem('adresses', JSON.stringify(result));
     this.router.navigate(['/room'],)

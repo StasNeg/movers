@@ -6,9 +6,14 @@
     "module": "es2015",
     "types": [
       "googlemaps",
-      "node"
+      "node",
+      "jquery"
     ]
   },
+  "include": [
+    "**/*.ts",
+    "../node_modules/ng2-datetime/ng2-datetime.ts"
+  ],
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
