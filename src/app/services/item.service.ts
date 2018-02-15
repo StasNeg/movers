@@ -5,6 +5,7 @@ import {DataToProperties} from '../interfaces/data-to-properties';
 
 @Injectable()
 export class ItemService {
+  private itemsOrder: any;
 
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -24,5 +25,13 @@ export class ItemService {
 
   getItemsProperties(id) {
     return this.http.get<DataToProperties>('http://localhost:8080/item_properties/value?idItemType=' + id, {headers: this.headers});
+  }
+
+  setItemsOrder(items) {
+    this.itemsOrder = items;
+  }
+
+  getItemsOrder() {
+    return this.itemsOrder;
   }
 }

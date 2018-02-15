@@ -1,8 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AddressService} from '../services/address.service'
+import {Component, OnInit} from "@angular/core";
+import {AddressService} from "../services/address.service";
 import {Subject} from "rxjs/Subject";
 import {Router} from "@angular/router";
-import {Time} from "@angular/common";
 
 
 @Component({

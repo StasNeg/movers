@@ -8,6 +8,7 @@ import {Room} from '../interfaces/room';
 import {AddressItemsData} from "../interfaces/addressItemsData";
 import {Address} from "../interfaces/address";
 import {forEach} from "@angular/router/src/utils/collection";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -50,7 +51,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   finalJson;
 
 
-  constructor(private itemService: ItemService, public dialog: MatDialog) {
+  constructor(private itemService: ItemService, public dialog: MatDialog, private router: Router) {
   }
 
   ngOnInit() {
@@ -302,6 +303,8 @@ export class RoomItemsMainMenuComponent implements OnInit {
       }
     }
     console.log(this.dataItem);
+    this.itemService.setItemsOrder(this.dataItem);
+    this.router.navigate(['/request/finish'],)
   }
 
   private isLift(isLift): string {

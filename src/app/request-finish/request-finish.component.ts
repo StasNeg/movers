@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ConnectionsService} from '../services/connections.service';
+import {ItemService} from "../services/item.service";
 
 @Component({
   selector: 'app-request-finish',
@@ -8,7 +9,8 @@ import {ConnectionsService} from '../services/connections.service';
 })
 export class RequestFinishComponent implements OnInit {
 
-  requestData: any = require('../../assets/data.json');
+  requestData: any =  this.itemService.getItemsOrder();
+    // require('../../assets/data.json');
 
   cartons: number;
   packets: number;
@@ -23,13 +25,13 @@ export class RequestFinishComponent implements OnInit {
   initialCost: number;
   finalCost: number;
 
-  constructor(private connectionsService: ConnectionsService) {
+  constructor(private connectionsService: ConnectionsService, private itemService:ItemService) {
   }
 
   ngOnInit() {
     this.cartons = 40;
     this.packets = 10;
-
+    console.log(this.requestData);
     this.connectionsService.getTotalCostEstimate(this.requestData).subscribe((res) => {
       if (res.success === true) {
         this.cartonPrice = res.data['cartonPrice'];
