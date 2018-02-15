@@ -10,7 +10,6 @@ import {Address} from "../interfaces/address";
 import {forEach} from "@angular/router/src/utils/collection";
 import {Router} from "@angular/router";
 
-
 @Component({
   selector: 'app-room-items',
   templateUrl: './room-items-maim-menu.component.html',
@@ -302,7 +301,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
         this.dataItem.moves[this.dataItem.moves.length - 1].rooms[this.dataItem.moves[this.dataItem.moves.length - 1].rooms.length - 1].items.push(this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].items[+splitArray[2]])
       }
     }
-    console.log(this.dataItem);
+    // this.finalJson = JSON.stringify(this.dataItem,null,'\t')
     this.itemService.setItemsOrder(this.dataItem);
     this.router.navigate(['/request/finish'],)
   }
@@ -318,7 +317,6 @@ export class RoomItemsMainMenuComponent implements OnInit {
       }
     }
     return -1;
-
   }
 
   hasMove(secNumberFrom, secNumberTo): number {

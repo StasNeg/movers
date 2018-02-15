@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-reset-password',
@@ -12,6 +12,7 @@ export class ResetPasswordComponent implements OnInit {
 
   tokenIsOk: boolean;
   token: string;
+  form: FormGroup;
 
   constructor(private authService: AuthService,
               private activatedRoute: ActivatedRoute,
@@ -19,6 +20,9 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
+    });
     this.activatedRoute.queryParams.subscribe(params => {
       this.token = params['token'];
       this.authService.checkToken(this.token).subscribe((data) => {
@@ -29,8 +33,9 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
 
-  setNewPassword(form: NgForm) {
-    const password = form.value.password;
+  setNewPassword() {
+    const password = this.form.value.password;
+    console.log(password);
     this.authService.setNewPassword(password, this.token).subscribe((data) => {
       // TODO MAKE IT WORK WITH JUST ==
       if (data.success === true) {
