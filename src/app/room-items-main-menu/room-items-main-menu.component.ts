@@ -347,7 +347,12 @@ export class RoomItemsMainMenuComponent implements OnInit {
   }
 
   isFinish() {
+    let count = -1;
+    for (let key in this.itemsToIndex){
+      count = 1;
+      break;
+    }
+    if(count === -1) return false;
     return true;
   }
-
 }
