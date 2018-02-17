@@ -110,8 +110,10 @@ public class CostEstimateController {
                 for (ItemDto item : room.getItems()) {
                     StringBuilder itemNameConcat = new StringBuilder();
                     itemNameConcat.append(item.getName());
-                    for (Map.Entry<String, String> property : item.getProperties().entrySet()) {
-                        itemNameConcat.append("_" + property.getKey() + "=" + property.getValue());
+                    if (item.getProperties() !=null) {
+                        for (Map.Entry<String, String> property : item.getProperties().entrySet()) {
+                            itemNameConcat.append("_" + property.getKey() + "=" + property.getValue());
+                        }
                     }
                     Double itemPrice = typePriceRepository.findByName(itemNameConcat.toString()).getPrice();
                     itemsPrice += itemPrice;
