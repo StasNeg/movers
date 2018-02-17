@@ -11,6 +11,7 @@ export class RequestFinishComponent implements OnInit {
 
   requestData: any =  this.itemService.getItemsOrder();
     // require('../../assets/data.json');
+  addressesToAndItems;
 
   cartons: number;
   packets: number;
@@ -31,7 +32,8 @@ export class RequestFinishComponent implements OnInit {
   ngOnInit() {
     this.cartons = 40;
     this.packets = 10;
-    console.log(this.requestData);
+    this.addressesToAndItems = this.itemService.getShowingData(this.requestData);
+    console.log(this.addressesToAndItems);
     this.connectionsService.getTotalCostEstimate(this.requestData).subscribe((res) => {
       if (res.success === true) {
         this.cartonPrice = res.data['cartonPrice'];

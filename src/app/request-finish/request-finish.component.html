@@ -1,3 +1,12 @@
+<div class="box" *ngFor="let move of addressesToAndItems">
+  <div class="address"> City : {{move.addressIn.city}} Street: {{move.addressIn.street}} Bilding:
+    {{move.addressIn.building}}
+    <div *ngFor="let item of move.items">
+      <span>name : {{item.name}} </span>
+      <span *ngFor="let property of item.property"> {{property}}</span>
+    </div>
+  </div>
+</div>
 <div *ngIf="pageNum === 'page1'">
   <input
     type="checkbox"
@@ -49,10 +58,14 @@
   </div>
   <br>
   <div class="centered">FROM</div>
-  <div *ngFor="let address of requestData.addresses.slice(0,1)">{{address.city}}, {{address.street}}, {{address.building}}</div>
+  <div *ngFor="let address of requestData.addresses.slice(0,1)">{{address.city}}, {{address.street}},
+    {{address.building}}
+  </div>
   <br>
   <div class="centered">TO</div>
-  <div *ngFor="let address of requestData.addresses.slice(1)">{{address.city}}, {{address.street}}, {{address.building}}</div>
+  <div *ngFor="let address of requestData.addresses.slice(1)">{{address.city}}, {{address.street}},
+    {{address.building}}
+  </div>
   <br>
   <div class="centered">
     <span>TOTAL PRICE:</span>
