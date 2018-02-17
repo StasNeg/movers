@@ -39,7 +39,6 @@ export class FromToComponent implements OnInit {
     this.zoom = 17;
     this.searchControl = new FormControl('', null, this.checkValidAddress.bind(this));
     this.parentSubject.subscribe(event => {
-      this.clearAddress();
     });
     this.setCurrentPosition();
     this.setFromTo();
@@ -88,7 +87,6 @@ export class FromToComponent implements OnInit {
     var geocoder = geocoder = new google.maps.Geocoder();
     geocoder.geocode({'latLng': latlng}, function (results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-
         if (results[0]) {
           callback(results);
         }
@@ -105,12 +103,16 @@ export class FromToComponent implements OnInit {
   }
 
   private setFromTo() {
-    if (this.fromTo !== 'to') {
-      this.isFromTo = true;
-      this.title = 'From'
+    if (this.fromTo === 'to') {
+      this.isFromTo = 2;
+      this.title = 'To'
+    }
+    else if (this.fromTo === 'from') {
+      this.isFromTo = 1;
+      this.title = 'from'
     }
     else {
-      this.isFromTo = false;
+      this.isFromTo = 3;
       this.title = 'To'
     }
   }
@@ -143,6 +145,7 @@ export class FromToComponent implements OnInit {
           this.lng = langlong.toJSON().lng;
           this.addressService.save(this.isFromTo, info, this.floor, this.haveLift, this.makePacking);
           res(null);
+          console.log(this.addressService.addressFrom, this.addressService.addressTo, this.addressService.addressAdd);
         }
       });
     });
@@ -168,11 +171,5 @@ export class FromToComponent implements OnInit {
     this.addressService.changeFloor(this.isFromTo, this.floor);
   }
 
-  clearAddress(){
-    if(!this.isFromTo) {
-      this.searchElementRef.nativeElement.value = '';
-      this.floor = 1;
-      this.haveLift = false;
-    }
-  }
+
 }

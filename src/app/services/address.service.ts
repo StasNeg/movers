@@ -2,36 +2,52 @@ export class AddressService {
   public addressesTo = [];
   public addressFrom = null;
   public addressTo = null;
+  public addressAdd = null;
   public typeAppartment = null;
 
   public isCorrectForm() {
     if (this.addressFrom === null)
       return false;
-    if (this.addressesTo.length === 0)
+    if (this.addressTo === null)
       return false;
     return true;
   }
 
   public isCorrectAdd() {
-    if (this.addressTo === null)
+    if (this.addressTo === null || this.addressFrom === null)
       return false;
     return true;
   }
 
 
   swithCorrect(isFromTo) {
-    if (isFromTo) {
+    if (isFromTo===1) {
       if (this.addressFrom === null)
         return false;
-    } else {
+    } else if (isFromTo===2){
       if (this.addressTo === null)
+        return false;
+    } else {
+      if (this.addressAdd === null)
         return false;
     }
     return true;
   }
 
   save(isFromTo, info, floor, haveLift, makePacking) {
-    isFromTo ? this.saveFrom(info, floor, haveLift, makePacking) : this.saveTo(info, floor, haveLift);
+    if (isFromTo === 1){
+      this.saveFrom(info, floor, haveLift, makePacking);
+      return;
+    }
+    if(isFromTo === 2){
+      this.saveTo(info, floor, haveLift);
+      return;
+    }
+    if(isFromTo === 3){
+      this.saveAdd(info, floor, haveLift);
+      return;
+    }
+    // isFromTo ? this.saveFrom(info, floor, haveLift, makePacking) : this.saveTo(info, floor, haveLift);
   }
 
   saveFrom(info, floor, haveLift, makePacking) {
@@ -44,8 +60,7 @@ export class AddressService {
       lng: langlong.toJSON().lng,
       floor: floor,
       lift: haveLift,
-      packaging: makePacking,
-
+      packaging: makePacking
     };
   }
 
@@ -61,54 +76,74 @@ export class AddressService {
       lift: haveLift
     };
   }
+  saveAdd(info, floor, haveLift) {
+    let langlong = info.geometry.location;
+    this.addressAdd = {
+      street: info.address_components[1].long_name,
+      street_number: info.address_components[0].long_name,
+      city: info.address_components[2].long_name,
+      lat: langlong.toJSON().lat,
+      lng: langlong.toJSON().lng,
+      floor: floor,
+      lift: haveLift
+    };
+  }
 
-  addTo() {
-    this.addressesTo.push(this.addressTo);
-    this.addressTo = null;
+  addAddressAdd() {
+    this.addressesTo.push(this.addressAdd);
+    this.addressAdd = null;
   }
 
   clear(isFromTo) {
-    isFromTo ? this.addressFrom = null : this.addressTo = null;
+    switch (isFromTo){
+      case 1:
+        this.addressFrom = null;
+        break;
+      case 2:
+        this.addressTo = null;
+        break;
+      case 3:
+        this.addressAdd = null;
+        break;
+    }
   }
 
   changeLift(isFromTo, lift) {
-    isFromTo ? this.addressFrom.lift = lift : this.addressTo.lift = lift;
+    switch (isFromTo){
+      case 1:
+        this.addressFrom.lift = lift
+        break;
+      case 2:
+        this.addressTo.lift = lift
+        break;
+      case 3:
+        this.addressAdd.lift = lift
+        break;
+    }
+
   }
 
   changeFloor(isFromTo, floor) {
-    isFromTo ? this.addressFrom.floor = floor : this.addressTo.floor = floor;
+    switch (isFromTo){
+      case 1:
+        this.addressFrom.floor = floor;
+        break;
+      case 2:
+        this.addressTo.floor = floor;
+        break;
+      case 3:
+        this.addressAdd.floor = floor;
+        break;
+    }
   }
 
   changePacking(packing) {
     this.addressFrom.packaging = packing;
   }
 
-  createAddressesArray() {
-    let ad = [];
-    if (this.addressFrom == null && this.addressesTo.length == 0)
-      return this.defaultMenu();
-    ad.push({
-      street: this.addressFrom.street,
-      city: this.addressFrom.city
-    });
-    for (let i = 0; i < this.addressesTo.length - 1; i++) {
-      ad.push({
-        street: this.addressesTo[i].street,
-        city: this.addressesTo[i].city
-      });
-    }
-    return ad;
+  clearAddress(){
+    this.addressFrom = null;
+    this.addressesTo = null;
+    this.addressTo = null;
   }
-
-  defaultMenu() {
-    let ad = [];
-    for (let i = 0; i < 8; i++) {
-      ad.push({
-        street: 'Street: ' + i,
-        city: 'City: ' + i
-      });
-    }
-    return ad;
-  }
-
 }

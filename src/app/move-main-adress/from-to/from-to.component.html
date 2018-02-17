@@ -31,7 +31,7 @@
             </label>
             <label class="control-label">Lift</label>
       </span>
-  <div *ngIf="isFromTo">
+  <div *ngIf="isFromTo===1">
       <span class="col-sm-offset-7">
             <label class="switch">
               <input type="checkbox" [(ngModel)]="makePacking" [disabled] = "!isCorrectForSwitch()" (change)="makePackingOnclick()">

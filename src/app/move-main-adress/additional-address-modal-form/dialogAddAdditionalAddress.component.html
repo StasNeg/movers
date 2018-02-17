@@ -1,0 +1,7 @@
+<div>Choose the item and type</div>
+
+<app-from-to [parentSubject]="parentSubject" [fromTo]="'add'"></app-from-to>
+
+<button class="btn btn-primary" (click)="closeForm(1)" [disabled]="isAdd()">Add</button>
+<button class="btn btn-primary" (click)="closeForm(2)">Close</button>
+

@@ -44,6 +44,7 @@ import {TrucksService} from './services/trucks.service';
 import {TruckEditmenuComponent} from './truckeditmenu/truckeditmenu.component';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
+import {AddAdditionalAddressComponent} from "./move-main-adress/additional-address-modal-form/dialogAddAdditionalAddress.component";
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
     RequestFinishComponent,
     RegistrationComponent,
     TrucksComponent,
-    TruckEditmenuComponent
+    TruckEditmenuComponent,
+    AddAdditionalAddressComponent
 
   ],
   imports: [
@@ -113,7 +115,7 @@ import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent, DialogRoomComponent, TruckEditmenuComponent]
+  entryComponents: [DialogComponent, DialogRoomComponent, TruckEditmenuComponent, AddAdditionalAddressComponent]
 })
 export class AppModule {
 }

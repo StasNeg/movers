@@ -2,6 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {AddressService} from "../services/address.service";
 import {Subject} from "rxjs/Subject";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material";
+import {AddAdditionalAddressComponent} from "./additional-address-modal-form/dialogAddAdditionalAddress.component";
 
 
 @Component({
@@ -18,14 +20,13 @@ export class MoveMainAddressComponent implements OnInit {
   public dateOrder = new Date();
   public timeOrder = null;
 
-  constructor(private addressService: AddressService, private router: Router) {
+  constructor(private addressService: AddressService, private router: Router,  public dialog: MatDialog) {
   }
 
   ngOnInit() {
   }
 
   deleteBetween(i) {
-
     this.addressService.addressesTo.splice(i, 1);
     this.addresses = this.addressService.addressesTo;
   }
@@ -38,9 +39,20 @@ export class MoveMainAddressComponent implements OnInit {
   }
 
   addBetween() {
-    this.addressService.addTo();
-    this.addresses = this.addressService.addressesTo;
-    this.parentSubject.next('some value');
+    const dialogRef = this.dialog.open(AddAdditionalAddressComponent, {
+      position: {
+        left: '350px'
+      },
+      height: '400px',
+      width: '600px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.addressService.addAddressAdd();
+        this.addresses = this.addressService.addressesTo;
+      }
+    })
+
   }
 
   addForm() {
@@ -48,15 +60,12 @@ export class MoveMainAddressComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.addressService.addressesTo.length > 0
-      && this.addressService.isCorrectForm()
+    if (this.addressService.isCorrectForm()
       && this.addressService.typeAppartment != null
       && this.dateOrder != null
       && this.timeOrder != null
     )
       return true;
-    // console.log(this.dateOrder, this.timeOrder);
-
     return false;
   }
 
@@ -66,6 +75,7 @@ export class MoveMainAddressComponent implements OnInit {
 
 
   onSubmitForm() {
+    this.addressService.addressesTo.push(this.addressService.addressTo);
     let result = {
       typeOfAppartment: this.addressService.typeAppartment,
       addressFrom: this.addressService.addressFrom,
@@ -73,7 +83,9 @@ export class MoveMainAddressComponent implements OnInit {
       date: this.dateOrder,
       time: this.timeOrder
     }
+    this.addressService.clearAddress();
     localStorage.setItem('adresses', JSON.stringify(result));
+
     this.router.navigate(['/room'],)
   }
 
