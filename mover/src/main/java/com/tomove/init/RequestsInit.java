@@ -84,9 +84,11 @@ public class RequestsInit implements ApplicationRunner {
         	List<Address> addresses = Arrays.asList(address1,address2,address3,address4);
         	addressRepo.saveAll(addresses);
         	
-        	Truck truck1 = new Truck("Kamaz 20T", "123sdq13", 5, 3, Area.CENTER, mover1);	
+        	Truck truck1 = new Truck("Kamaz 20T", "123sdq13", 5, 3, Area.CENTER, mover1);
         	Truck truck2 = new Truck("Kamaz 20T", "123sdq13", 5, 3, Area.NORTH, mover2);
-        	List<Truck> trucks = Arrays.asList(truck1,truck2);
+			Truck truck3 = new Truck("Kamaz 30T", "123sdq13", 3, 2, Area.CENTER, mover1);
+			Truck truck4 = new Truck("Kamaz 10T", "123sdq13", 1, 1, Area.EAST, mover2);
+        	List<Truck> trucks = Arrays.asList(truck1,truck2,truck3,truck4);
         	truckRepo.saveAll(trucks);
         	
         	LocalDate date1 = LocalDate.now();

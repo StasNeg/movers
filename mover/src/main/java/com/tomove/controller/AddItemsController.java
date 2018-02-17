@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Stream;
 
-import static com.tomove.controller.PathConstant.GET_ALL_ITEMS_FROM_ROOMTYPE;
-import static com.tomove.controller.PathConstant.GET_ALL_ROOMS_TYPE;
-import static com.tomove.controller.PathConstant.PROPERTIES_OF_ITEM;
+import static com.tomove.common.PathConstant.GET_ALL_ITEMS_FROM_ROOMTYPE;
+import static com.tomove.common.PathConstant.GET_ALL_ROOMS_TYPE;
+import static com.tomove.common.PathConstant.PROPERTIES_OF_ITEM;
 
 @RestController
 @CrossOrigin
@@ -47,7 +47,6 @@ public class AddItemsController {
 	@RequestMapping(value = PROPERTIES_OF_ITEM, method = RequestMethod.GET)
 	public DataTo getAllPropertiesOfItem(@RequestParam(value = "idItemType", required = false) String itemType) {
 		Iterable<TypeProperties> data = null;
-		System.out.print("hello there");
 		data = repository.findTypeProperties(Integer.parseInt(itemType));
 		return new DataTo(false,data);
 	}

@@ -21,8 +21,8 @@ public class LoginController {
 
     private AccountRepository repository;
 
-//    @Autowired
-//    private EmailService emailService;
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     public LoginController(AccountRepository repository) {
@@ -64,7 +64,7 @@ public class LoginController {
         passwordResetEmail.setText("To reset your password, click the link below:\n" + URL_FRONT
                 + "/reset?token=" + token);
 
-//        emailService.sendEmail(passwordResetEmail);
+        emailService.sendEmail(passwordResetEmail);
     }
 
     @RequestMapping(value = CHECK_TOKEN, method = RequestMethod.GET)

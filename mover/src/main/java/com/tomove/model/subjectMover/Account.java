@@ -14,8 +14,7 @@ import javax.validation.constraints.NotNull;
 @DiscriminatorValue(value="account")
 public abstract class Account extends AbstractBaseEntity {
 
-    @NotBlank
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone")
     protected String phone;
 
 

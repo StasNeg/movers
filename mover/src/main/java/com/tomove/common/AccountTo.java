@@ -15,24 +15,24 @@ public class AccountTo implements Serializable {
 
     protected String email;
 
-    protected String password;
+
 
     protected boolean enabled;
 
     protected String type;
 
-    protected String verificationCode;
+
 
     protected Language language;
 
-    public AccountTo(int id, String phone, String email, String password, boolean enabled, String type, String verificationCode, Language language) {
+    public AccountTo(int id, String phone, String email,  boolean enabled, String type,  Language language) {
         this.id = id;
         this.phone = phone;
         this.email = email;
-        this.password = password;
+
         this.enabled = enabled;
         this.type = type;
-        this.verificationCode = verificationCode;
+
         this.language = language;
     }
 
@@ -43,10 +43,10 @@ public class AccountTo implements Serializable {
         this.id = account.getId();
         this.phone = account.getPhone();
         this.email = account.getEmail();
-        this.password = account.getPassword();
+
         this.enabled = account.getEnabled();
         this.type = account.getType();
-        this.verificationCode = account.getVerificationCode();
+
         this.language = account.getLanguage();
     }
 
@@ -74,14 +74,6 @@ public class AccountTo implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
@@ -96,14 +88,6 @@ public class AccountTo implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
     }
 
     public Language getLanguage() {
