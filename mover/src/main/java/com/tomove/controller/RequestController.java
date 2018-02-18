@@ -37,6 +37,7 @@ public class RequestController {
     private ItemRepository itemRepository;
     private ItemTypeRepository itemTypeRepository;
     private RoomRepository roomRepository;
+    private TypePriceRepository typePriceRepository;
 
     @Autowired
     public RequestController(
@@ -47,7 +48,7 @@ public class RequestController {
             RequestAddressRepository requestAddressRepository,
             ItemRepository itemRepository,
             ItemTypeRepository itemTypeRepository,
-            RoomRepository roomRepository) {
+            RoomRepository roomRepository, TypePriceRepository typePriceRepository) {
         this.requestManager = requestManager;
         this.requestRepository = requestRepository;
         this.accountRepository = accountRepository;
@@ -56,6 +57,7 @@ public class RequestController {
         this.itemRepository = itemRepository;
         this.itemTypeRepository = itemTypeRepository;
         this.roomRepository = roomRepository;
+        this.typePriceRepository = typePriceRepository;
     }
 
     @RequestMapping(value = GET_RECENT_CUSTOMER_REQUESTS, method = RequestMethod.GET)
@@ -230,7 +232,7 @@ public class RequestController {
                 false,
                 requestData.cost,
                 0,
-                Place.valueOf(requestData.place_type),
+                Place.valueOf(requestData.place_type.toUpperCase()),
                 requestAdresses,
                 rooms
         );
@@ -254,16 +256,13 @@ public class RequestController {
                     // TODO: 07/02/2018 REFACTOR THIS WITH ITEMSINIT
                     StringBuilder itemName = new StringBuilder();
                     itemName.append(itemDto.name);
-                    for (Map.Entry<String, String> property : itemDto.properties.entrySet()) {
-                        itemName.append("_" + property.getKey() + "=" + property.getValue());
-                    }
-
+                    if(itemDto.getProperties()!=null)
+                        itemName.append(itemDto.getProperties());
                     Item item = new Item(itemName.toString(),
-                            itemTypeRepository.findByName(itemDto.name).orElse(null),
+                            typePriceRepository.findByName(itemName.toString()),
                             addressFrom,
                             addressTo,
                             itemRoom);
-
                     itemRoom.setItems(new ArrayList<>());
                     itemRoom.getItems().add(item);
                     roomRepository.save(itemRoom);
@@ -271,7 +270,6 @@ public class RequestController {
                 }
             }
         }
-
         return new DataTo(true, "Saved to db");
     }
 

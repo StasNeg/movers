@@ -27,8 +27,8 @@ public class Address extends AbstractBaseEntity{
     @NotBlank
     private String building;
 
-    @Column(name = "apartment", nullable = false)
-    @NotBlank
+    @Column(name = "apartment")
+//    @NotBlank
     private String apartment;
 
     @Column(name = "longitude", nullable = false)

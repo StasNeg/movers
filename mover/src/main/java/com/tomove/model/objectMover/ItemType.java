@@ -24,7 +24,7 @@ public class ItemType extends AbstractBaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "itemType")
     private Set<TypeProperties> properties;
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "itemType")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "typePrice")
     private Set<Item> items;
 
     public ItemType() {

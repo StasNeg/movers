@@ -4,7 +4,6 @@ import com.tomove.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
 
 
 @Entity
@@ -17,8 +16,8 @@ public class Item extends AbstractBaseEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_type")
-    private ItemType itemType;
+    @JoinColumn(name = "type_price")
+    private TypePrice typePrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "add_from")
@@ -35,18 +34,18 @@ public class Item extends AbstractBaseEntity {
     public Item() {
     }
 
-    public Item(@NotBlank String name, ItemType itemType, Address from, Address to, Room room) {
+    public Item(@NotBlank String name, TypePrice typePrice, Address from, Address to, Room room) {
         this.name = name;
-        this.itemType = itemType;
+        this.typePrice = typePrice;
         this.from = from;
         this.to = to;
         this.room = room;
     }
 
-    public Item(Integer id, @NotBlank String name, ItemType itemType, Address from, Address to, Room room) {
+    public Item(Integer id, @NotBlank String name, TypePrice typePrice, Address from, Address to, Room room) {
         super(id);
         this.name = name;
-        this.itemType = itemType;
+        this.typePrice = typePrice;
         this.from = from;
         this.to = to;
         this.room = room;
@@ -60,12 +59,12 @@ public class Item extends AbstractBaseEntity {
         this.name = name;
     }
 
-    public ItemType getItemType() {
-        return itemType;
+    public TypePrice getTypePrice() {
+        return typePrice;
     }
 
-    public void setItemType(ItemType itemType) {
-        this.itemType = itemType;
+    public void setTypePrice(TypePrice itemType) {
+        this.typePrice = itemType;
     }
 
     public Address getFrom() {

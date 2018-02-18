@@ -1,10 +1,10 @@
 package com.tomove.common;
 
-import java.util.Map;
+
 
 public class ItemDto {
     public String name;
-    public Map<String, String> properties;
+    public String propertiesWithType;
 
     public ItemDto() {
     }
@@ -13,7 +13,7 @@ public class ItemDto {
         return name;
     }
 
-    public Map<String, String> getProperties() {
-        return properties;
+    public String getProperties() {
+        return propertiesWithType;
     }
 }
