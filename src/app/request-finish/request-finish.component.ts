@@ -33,7 +33,6 @@ export class RequestFinishComponent implements OnInit {
     this.cartons = 40;
     this.packets = 10;
     this.addressesToAndItems = this.itemService.getShowingData(this.requestData);
-    console.log(this.addressesToAndItems);
     this.connectionsService.getTotalCostEstimate(this.requestData).subscribe((res) => {
       if (res.success === true) {
         this.cartonPrice = res.data['cartonPrice'];

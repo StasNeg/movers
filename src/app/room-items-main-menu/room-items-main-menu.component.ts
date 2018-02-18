@@ -182,13 +182,23 @@ export class RoomItemsMainMenuComponent implements OnInit {
         this.arrayItems[this.addressesCurrentIndex].rooms[this.roomTypeCurrentIndex].items.push({
           id: result.item.id,
           name: result.item.name,
-          propertyWithType: result.property,
-          property: this.arrayFrom(result.property)
+          propertiesWithType: this.toStringProperties(result.properties),
+          properties: this.arrayFrom(result.properties)
         });
         this.itemsToIndex[this.createIndexForItemsTo(this.arrayItems[this.addressesCurrentIndex].rooms[this.roomTypeCurrentIndex].items.length - 1)] = this.addresses.length - 1;
       }
     });
   }
+
+  private toStringProperties(properties) {
+    var resultString: string = '';
+    for (let i in  properties) {
+      resultString += ('_'+ i +'='+ properties[i]);
+    }
+
+    return resultString;
+  }
+
 
   //init array properties in items
   private arrayFrom(property) {
@@ -301,7 +311,6 @@ export class RoomItemsMainMenuComponent implements OnInit {
         this.dataItem.moves[this.dataItem.moves.length - 1].rooms[this.dataItem.moves[this.dataItem.moves.length - 1].rooms.length - 1].items.push(this.arrayItems[+splitArray[0]].rooms[+splitArray[1]].items[+splitArray[2]])
       }
     }
-    // this.finalJson = JSON.stringify(this.dataItem,null,'\t')
     this.itemService.setItemsOrder(this.dataItem);
     this.router.navigate(['/request/finish'],)
   }
@@ -348,11 +357,11 @@ export class RoomItemsMainMenuComponent implements OnInit {
 
   isFinish() {
     let count = -1;
-    for (let key in this.itemsToIndex){
+    for (let key in this.itemsToIndex) {
       count = 1;
       break;
     }
-    if(count === -1) return false;
+    if (count === -1) return false;
     return true;
   }
 }

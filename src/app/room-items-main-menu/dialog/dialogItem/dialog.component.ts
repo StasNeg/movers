@@ -14,7 +14,7 @@ export class DialogComponent implements OnInit {
   private itemTypeSelect = '';
   private itemProperties = [];
   private property = [];
-  private resultItemType: { item: any, property?: any };
+  private resultItemType: { item: any, properties?: any };
   private isItemProperties = false;
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
@@ -63,7 +63,7 @@ export class DialogComponent implements OnInit {
 
   closeForm(num) {
     if (num === 1) {
-      this.resultItemType.property = this.property;
+      this.resultItemType.properties = this.property;
       this.dialogRef.close(this.resultItemType);
     } else {
       this.dialogRef.close(null);

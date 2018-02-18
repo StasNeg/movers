@@ -145,7 +145,6 @@ export class FromToComponent implements OnInit {
           this.lng = langlong.toJSON().lng;
           this.addressService.save(this.isFromTo, info, this.floor, this.haveLift, this.makePacking);
           res(null);
-          console.log(this.addressService.addressFrom, this.addressService.addressTo, this.addressService.addressAdd);
         }
       });
     });

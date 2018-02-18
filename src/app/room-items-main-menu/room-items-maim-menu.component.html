@@ -11,7 +11,7 @@
     <div class="types" *ngFor="let item of itemsTo; let i = index">
       <button [disabled]="true" [ngClass]="getColorTo()">
         <span>{{item.name}}</span>
-        <span *ngFor="let property of item.property"> {{property}}</span>
+        <span *ngFor="let property of item.properties"> {{property}}</span>
       </button>
     </div>
   </div>
@@ -32,7 +32,7 @@
         <button mat-button [matMenuTriggerFor]="rootMenu" type="button" class="btn"
                 [ngClass]="getColorFrom(i)">
           <span>{{item.name}}</span>
-          <span *ngFor="let property of item.property"> {{property}}</span>
+          <span *ngFor="let property of item.properties"> {{property}}</span>
         </button>
         <mat-menu #rootMenu="matMenu">
           <button mat-menu-item (click)="deleteItem(i)">Delete Item</button>
