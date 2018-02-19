@@ -96,15 +96,15 @@ public class RequestsInit implements ApplicationRunner {
         	LocalDateTime date3 = LocalDateTime.of(2018, 6, 21, 12, 30);
         	LocalDateTime date4 = LocalDateTime.of(2018, 6, 21, 15, 38);
         	List<Room> roomsList = new ArrayList<Room>();
-        	Request request1 = new Request(date2, date1, Status.INITIAL, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
-        	Request request2 = new Request(date3, date1, Status.INITIAL, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
-        	Request request3 = new Request(date4, date1, Status.INITIAL, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
-        	Request request4 = new Request(date2, date1, Status.INITIAL, false, 1500, 0, Place.APARTMENT, null, customer1, null, roomsList);
-        	Request request5 = new Request(date3, date1, Status.INITIAL, false, 1100, 0, Place.APARTMENT, null, customer1, null, roomsList);
-        	Request request6 = new Request(date4, date1, Status.INITIAL, false, 1400, 0, Place.APARTMENT, null, customer1, null, roomsList);
-        	Request request9 = new Request(date2, date1, Status.INITIAL, false, 1300, 0, Place.APARTMENT, null, customer2, null, roomsList);
-        	Request request8 = new Request(date3, date1, Status.CANCELLED_BY_CUSTOMERS, false, 1800, 0, Place.APARTMENT, null, customer1, null, roomsList);
-        	Request request7 = new Request(date4, date1, Status.CANCELLED_BY_MOVER, false, 1900, 0, Place.APARTMENT, null, customer1, null, roomsList);
+        	Request request1 = new Request(date2, date1, Status.INITIAL, false, 1200, 0, Place.APPARTMENT, mover1, customer1, truck1, roomsList);
+        	Request request2 = new Request(date3, date1, Status.INITIAL, false, 1200, 0, Place.APPARTMENT, mover1, customer1, truck1, roomsList);
+        	Request request3 = new Request(date4, date1, Status.INITIAL, false, 1200, 0, Place.APPARTMENT, mover1, customer1, truck1, roomsList);
+        	Request request4 = new Request(date2, date1, Status.INITIAL, false, 1500, 0, Place.APPARTMENT, null, customer1, null, roomsList);
+        	Request request5 = new Request(date3, date1, Status.INITIAL, false, 1100, 0, Place.APPARTMENT, null, customer1, null, roomsList);
+        	Request request6 = new Request(date4, date1, Status.INITIAL, false, 1400, 0, Place.APPARTMENT, null, customer1, null, roomsList);
+        	Request request9 = new Request(date2, date1, Status.INITIAL, false, 1300, 0, Place.APPARTMENT, null, customer2, null, roomsList);
+        	Request request8 = new Request(date3, date1, Status.CANCELLED_BY_CUSTOMERS, false, 1800, 0, Place.APPARTMENT, null, customer1, null, roomsList);
+        	Request request7 = new Request(date4, date1, Status.CANCELLED_BY_MOVER, false, 1900, 0, Place.APPARTMENT, null, customer1, null, roomsList);
         	List<Request> requests = Arrays.asList(request1,request2,request3,request4,request5,request6,request7,request8,request9);    	
         	requestRepo.saveAll(requests);	
         	

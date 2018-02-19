@@ -61,7 +61,7 @@ public class DatabaseInit implements ApplicationRunner {
                             false,
                             200,
                             20,
-                            Place.APARTMENT,
+                            Place.APPARTMENT,
                             new ArrayList<RequestAdress>(),
                             new ArrayList<Room>()),
                     new Request(
@@ -71,7 +71,7 @@ public class DatabaseInit implements ApplicationRunner {
                             false,
                             200,
                             10,
-                            Place.APARTMENT,
+                            Place.APPARTMENT,
                             new ArrayList<RequestAdress>(),
                             new ArrayList<Room>())
             );

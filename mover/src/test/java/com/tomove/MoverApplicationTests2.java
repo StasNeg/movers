@@ -120,16 +120,16 @@ public class MoverApplicationTests2 {
 		mover2 = new Mover("05031214212", "2@co.il", "bumbumbigalow", true, "Wizzy", null);
 		truck1 = new Truck("Kamaz 20T", "123sdq13", 5, 3, Area.CENTER, mover1);
 		truck2 = new Truck("Kamaz 20T", "123sdq13", 5, 3, Area.NORTH, mover2);
-		request1 = new Request(date2, date1, Status.CONFIRMED, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
-    	request2 = new Request(date3, date1, Status.CONFIRMED, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
-    	request3 = new Request(date4, date1, Status.CONFIRMED, false, 1200, 0, Place.APARTMENT, mover1, customer1, truck1, roomsList);
+		request1 = new Request(date2, date1, Status.CONFIRMED, false, 1200, 0, Place.APPARTMENT, mover1, customer1, truck1, roomsList);
+    	request2 = new Request(date3, date1, Status.CONFIRMED, false, 1200, 0, Place.APPARTMENT, mover1, customer1, truck1, roomsList);
+    	request3 = new Request(date4, date1, Status.CONFIRMED, false, 1200, 0, Place.APPARTMENT, mover1, customer1, truck1, roomsList);
     	
-    	request4 = new Request(date2, date1, Status.INITIAL, false, 1500, 0, Place.APARTMENT, null, customer1, null, roomsList);
-    	request5 = new Request(date3, date1, Status.INITIAL, false, 1100, 0, Place.APARTMENT, null, customer1, null, roomsList);
-    	request6 = new Request(date4, date1, Status.INITIAL, false, 1400, 0, Place.APARTMENT, null, customer1, null, roomsList);
-    	request9 = new Request(date2, date1, Status.INITIAL, false, 1300, 0, Place.APARTMENT, null, customer2, null, roomsList);
-    	request8 = new Request(date3, date1, Status.CANCELLED_BY_CUSTOMERS, false, 1800, 0, Place.APARTMENT, null, customer1, null, roomsList);
-    	request7 = new Request(date4, date1, Status.CANCELLED_BY_MOVER, false, 1900, 0, Place.APARTMENT, null, customer1, null, roomsList);
+    	request4 = new Request(date2, date1, Status.INITIAL, false, 1500, 0, Place.APPARTMENT, null, customer1, null, roomsList);
+    	request5 = new Request(date3, date1, Status.INITIAL, false, 1100, 0, Place.APPARTMENT, null, customer1, null, roomsList);
+    	request6 = new Request(date4, date1, Status.INITIAL, false, 1400, 0, Place.APPARTMENT, null, customer1, null, roomsList);
+    	request9 = new Request(date2, date1, Status.INITIAL, false, 1300, 0, Place.APPARTMENT, null, customer2, null, roomsList);
+    	request8 = new Request(date3, date1, Status.CANCELLED_BY_CUSTOMERS, false, 1800, 0, Place.APPARTMENT, null, customer1, null, roomsList);
+    	request7 = new Request(date4, date1, Status.CANCELLED_BY_MOVER, false, 1900, 0, Place.APPARTMENT, null, customer1, null, roomsList);
     	requests = Arrays.asList(request1,request2,request3,request4,request5,request6,request7,request8,request9);    	
 		
     	/*how to detect isPersonal ... personal for whom?*/
