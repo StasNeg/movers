@@ -247,8 +247,8 @@ public class RequestController {
 
         for (MoveDto move : requestData.getMoves()) {
             // FIXME: 31/01/2018 GET REQUEST ADDRESS BY SEQNUMBER AND NOT BY INDEX (NOW IS NOT GUARANTEED)
-            Address addressFrom = requestAdresses.get(move.addressIn.seqnumber).getAddress();
-            Address addressTo = requestAdresses.get(move.addressOut.seqnumber).getAddress();
+            Address addressFrom = requestAdresses.get(move.addressOut.seqnumber).getAddress();
+            Address addressTo = requestAdresses.get(move.addressIn.seqnumber).getAddress();
             for (RoomDto room : move.getRooms()) {
                 for (ItemDto itemDto : room.getItems()) {
                     // TODO: 31/01/2018 SAVE ROOM IMAGE FROM REQUEST TO DB
