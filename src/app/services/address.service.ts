@@ -143,7 +143,7 @@ export class AddressService {
 
   clearAddress(){
     this.addressFrom = null;
-    this.addressesTo = null;
     this.addressTo = null;
+    this.addressesTo = [];
   }
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ConnectionsService} from '../services/connections.service';
 import {ItemService} from "../services/item.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-request-finish',
@@ -26,12 +27,12 @@ export class RequestFinishComponent implements OnInit {
   initialCost: number;
   finalCost: number;
 
-  constructor(private connectionsService: ConnectionsService, private itemService:ItemService) {
+  constructor(private connectionsService: ConnectionsService, private itemService:ItemService, private router:Router) {
   }
 
   ngOnInit() {
-    this.cartons = 40;
-    this.packets = 10;
+    this.cartons = 5;
+    this.packets = 5;
     this.addressesToAndItems = this.itemService.getShowingData(this.requestData);
     this.connectionsService.getTotalCostEstimate(this.requestData).subscribe((res) => {
       if (res.success === true) {
@@ -60,9 +61,12 @@ export class RequestFinishComponent implements OnInit {
 
   saveRequest() {
     this.requestData.cost = this.finalCost;
+    localStorage.removeItem('adresses')
+    this.router.navigate(['/requests'])
     this.connectionsService.saveRequest(this.requestData)
       .subscribe((response) => {
         alert(response.data);
+
       });
   }
 

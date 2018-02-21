@@ -21,7 +21,7 @@ export class AddAdditionalAddressComponent implements OnInit {
   }
 
   isAdd() {
-    return this.addressService.addressAdd == null ? true: false
+    return this.addressService.addressAdd == null;
   }
 
   closeForm(num) {

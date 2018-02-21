@@ -22,7 +22,7 @@ export class RoomItemsMainMenuComponent implements OnInit {
   arrayItems: ItemAddressData [] = [];
   roomType;
   // array with addresses
-  addresses;
+  addresses =[];
   // array with items which are displayed in part TO on every address
   itemsTo;
   // array with items which are displayed in part FROM on every address
@@ -56,7 +56,6 @@ export class RoomItemsMainMenuComponent implements OnInit {
   ngOnInit() {
     //init addresses
     this.addressesLocalStorage = JSON.parse(localStorage.getItem('adresses'));
-    this.addresses = [];
     this.addresses.push(this.addressesLocalStorage.addressFrom);
     this.addressesLocalStorage.addressesTo.forEach((i) => this.addresses.push(i));
     //get roomType from server, init arrayItems
@@ -275,8 +274,8 @@ export class RoomItemsMainMenuComponent implements OnInit {
   finishAddItem() {
     this.dataItem.customerId = JSON.parse(localStorage.getItem('user')).id;
     this.dataItem.place_type = JSON.parse(localStorage.getItem('adresses')).typeOfAppartment;
-    this.dataItem.move_date = '2018-01-18';
-    this.dataItem.move_time = '19:00';
+    this.dataItem.move_date = JSON.parse(localStorage.getItem('adresses')).date;
+    this.dataItem.move_time = JSON.parse(localStorage.getItem('adresses')).time;
     this.dataItem.personal = false;
     this.dataItem.addresses = [];
     for (let i = 0; i < this.addresses.length; i++) {

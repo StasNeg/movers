@@ -4,7 +4,7 @@ import {Subject} from "rxjs/Subject";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material";
 import {AddAdditionalAddressComponent} from "./additional-address-modal-form/dialogAddAdditionalAddress.component";
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-move-main-address',
@@ -20,7 +20,7 @@ export class MoveMainAddressComponent implements OnInit {
   public dateOrder = new Date();
   public timeOrder = null;
 
-  constructor(private addressService: AddressService, private router: Router,  public dialog: MatDialog) {
+  constructor(private addressService: AddressService, private router: Router, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -80,14 +80,13 @@ export class MoveMainAddressComponent implements OnInit {
       typeOfAppartment: this.addressService.typeAppartment,
       addressFrom: this.addressService.addressFrom,
       addressesTo: this.addressService.addressesTo,
-      date: this.dateOrder,
-      time: this.timeOrder
+      date: moment(this.dateOrder).format('YYYY-MM-DD').toString(),
+      time: moment(this.timeOrder).format('HH:mm').toString()
     }
     this.addressService.clearAddress();
     localStorage.setItem('adresses', JSON.stringify(result));
 
     this.router.navigate(['/room'],)
   }
-
 
 }
