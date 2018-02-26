@@ -51,6 +51,14 @@ public class Item extends AbstractBaseEntity {
         this.room = room;
     }
 
+    public Item(Integer id, @NotBlank String name, Address from, Address to, Room room) {
+        super(id);
+        this.name = name;
+        this.from = from;
+        this.to = to;
+        this.room = room;
+    }
+
     public String getName() {
         return name;
     }
@@ -89,5 +97,17 @@ public class Item extends AbstractBaseEntity {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" + super.toString() +
+                "name='" + name + '\'' +
+//                ", typePrice=" + typePrice +
+                ", from=" + from +
+                ", to=" + to +
+                ", id=" + id +
+                ", room=" + room +
+                "} ";
     }
 }

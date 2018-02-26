@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RequestAddressRepository extends CrudRepository<RequestAdress, Integer> {
-	@Query("select new com.tomove.common.AddressDto(ra.seqnumberRequest, addr.city, addr.street, addr.building, addr.apartment, addr.floor) from RequestAdress ra "
+	@Query("select new com.tomove.common.AddressDto(addr.id, ra.seqnumberRequest, addr.city, addr.street, addr.building, addr.apartment, addr.floor, addr.lift) from RequestAdress ra "
 			+ " join ra.address addr "
 			+ " join ra.request req "
 	   		+ " where req.id = :reqId order by ra.seqnumberRequest asc" )

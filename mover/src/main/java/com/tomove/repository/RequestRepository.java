@@ -68,9 +68,9 @@ public interface RequestRepository extends CrudRepository<Request,Integer>{
     		+ " and adfrom.area in "
     			+ " ( select distinct truck.area from Truck truck "
     			+ " where truck.mover =:moverId ) "
-    		+ " and ( select count(*) from Room room where room.request = r.id )  <= "
-    			+ " ( select max(truck.roomsCount) from Truck truck "
-    			+ " where truck.mover =:moverId )"
+//    		+ " and ( select count(*) from Room room where room.request = r.id )  <= "
+//    			+ " ( select max(truck.roomsCount) from Truck truck "
+//    			+ " where truck.mover =:moverId )"
     		+ " order by r.dateTime asc ")
 	public Iterable<RequestDetailsAdvanced> reqFilteredByMover(@Param("moverId") Account userId, @Param("reqDateFrom") LocalDateTime reqDateMin);
     

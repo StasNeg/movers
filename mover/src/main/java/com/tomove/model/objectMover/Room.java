@@ -5,6 +5,7 @@ import com.tomove.model.enums.RoomType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -81,5 +82,16 @@ public class Room extends AbstractBaseEntity {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomType=" + roomType +
+//                ", image=" + Arrays.toString(image) +
+                ", request=" + request +
+//                ", id=" + id +
+//                ", items=" + items +
+                "} " + super.toString();
     }
 }

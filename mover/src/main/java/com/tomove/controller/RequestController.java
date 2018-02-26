@@ -6,6 +6,7 @@ import com.tomove.model.enums.*;
 import com.tomove.model.objectMover.*;
 import com.tomove.repository.*;
 import com.tomove.service.AreaService;
+import com.tomove.service.RequestDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class RequestController {
     private ItemTypeRepository itemTypeRepository;
     private RoomRepository roomRepository;
     private TypePriceRepository typePriceRepository;
+    private RequestDetailService requestDetailService;
 
     @Autowired
     public RequestController(
@@ -48,7 +50,7 @@ public class RequestController {
             RequestAddressRepository requestAddressRepository,
             ItemRepository itemRepository,
             ItemTypeRepository itemTypeRepository,
-            RoomRepository roomRepository, TypePriceRepository typePriceRepository) {
+            RoomRepository roomRepository, TypePriceRepository typePriceRepository, RequestDetailService requestDetailService) {
         this.requestManager = requestManager;
         this.requestRepository = requestRepository;
         this.accountRepository = accountRepository;
@@ -58,13 +60,13 @@ public class RequestController {
         this.itemTypeRepository = itemTypeRepository;
         this.roomRepository = roomRepository;
         this.typePriceRepository = typePriceRepository;
+        this.requestDetailService = requestDetailService;
     }
 
     @RequestMapping(value = GET_RECENT_CUSTOMER_REQUESTS, method = RequestMethod.GET)
     public DataTo getRecent(@RequestParam(name = "token") String tokenVal) {
         //test period only - should be changed to get user from token
         int userid = Integer.parseInt(tokenVal);
-
         Account account = accountRepository.findById(userid).orElse(new Account() {
         });
         if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
@@ -79,7 +81,6 @@ public class RequestController {
     public DataTo getRecentFromDate(@RequestParam(name = "token") String tokenVal, @RequestParam(name = REQUEST_DATE) String userDate) {
         //test period only - should be changed to get user from token
         int userid = Integer.parseInt(tokenVal);
-
         Account account = accountRepository.findById(userid).orElse(new Account() {
         });
         if (!account.isCustomer()) return new DataTo(false, "Not a valid customer id");
@@ -120,7 +121,6 @@ public class RequestController {
         List<RequestDetailsDTO> resDb = requestManager.getRequestDetailsByMoverAndDay(mover1, requestDate).stream()
                 .map(RequestDetails::makeReqDetailsDTO).collect(Collectors.toList());
         return resDb.size() == 0 ? new DataTo(false, "No data for the date") : new DataTo(true, resDb);
-
     }
 
     private LocalDate getRequestDate(String userDate) {
@@ -179,6 +179,14 @@ public class RequestController {
         return request == null ? new DataTo(false, "No request with id " + id) : new DataTo(true, request);
     }
 
+    @GetMapping(value = GET_REQUESTS_DETAIL)
+    public DataTo getRequestDetail(@RequestParam(name = "token") Integer requestId) {
+        Request request = requestRepository.findById(requestId).orElse(null);
+        if (request == null)
+            return new DataTo(false, "No request with id " + requestId);
+        return new DataTo(true, requestDetailService.getRequestMoverDetail(requestId));
+    }
+
     @PostMapping(value = REQUEST_ASSIGN_TO_MOVER)
     public DataTo assignRequestToMover(@RequestBody Map<String, Integer> params) {
         Integer request_id = params.get("request_id");
@@ -222,9 +230,7 @@ public class RequestController {
             RequestAdress requestAdress = new RequestAdress(addressDto.seqnumber, address);
             requestAdresses.add(requestAdress);
         }
-
         List<Room> rooms = new ArrayList<>();
-
         Request request = new Request(
 				LocalDateTime.of(LocalDate.parse(requestData.move_date), LocalTime.parse(requestData.move_time)),
                 LocalDate.now(),
@@ -239,12 +245,11 @@ public class RequestController {
         Customer customer = (Customer) accountRepository.findById(requestData.customerId).get();
         request.setCustomer(customer);
         requestRepository.save(request);
-
         for (RequestAdress requestAdress : requestAdresses) {
             requestAdress.setRequest(request);
             requestAddressRepository.save(requestAdress);
         }
-
+        Map<RoomType, Room> addedRooms = new HashMap<>();
         for (MoveDto move : requestData.getMoves()) {
             // FIXME: 31/01/2018 GET REQUEST ADDRESS BY SEQNUMBER AND NOT BY INDEX (NOW IS NOT GUARANTEED)
             Address addressFrom = requestAdresses.get(move.addressOut.seqnumber).getAddress();
@@ -252,7 +257,12 @@ public class RequestController {
             for (RoomDto room : move.getRooms()) {
                 for (ItemDto itemDto : room.getItems()) {
                     // TODO: 31/01/2018 SAVE ROOM IMAGE FROM REQUEST TO DB
-                        Room itemRoom = new Room(RoomType.valueOf(room.room), null, request);
+                    Room itemRoom;
+                    if ((itemRoom = addedRooms.get(RoomType.valueOf(room.room))) == null) {
+                        itemRoom = new Room(RoomType.valueOf(room.room), null, request);
+                        roomRepository.save(itemRoom);
+                        addedRooms.put(itemRoom.getRoomType(), itemRoom);
+                    }
                     // TODO: 07/02/2018 REFACTOR THIS WITH ITEMSINIT
                     StringBuilder itemName = new StringBuilder();
                     itemName.append(itemDto.name);
@@ -263,14 +273,10 @@ public class RequestController {
                             addressFrom,
                             addressTo,
                             itemRoom);
-                    itemRoom.setItems(new ArrayList<>());
-                    itemRoom.getItems().add(item);
-                    roomRepository.save(itemRoom);
                     itemRepository.save(item);
                 }
             }
         }
         return new DataTo(true, "Saved to db");
     }
-
 }

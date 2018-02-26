@@ -12,7 +12,10 @@ public class PathConstant {
     public static final String GET_RECENT_MOVER_REQUESTS = "/dashboard/requests/mover/getrecent";
     public static final String GET_CALENDAR_MOVER_REQUESTS = "/dashboard/requests/mover/getforcalendar";
     public static final String GET_DATE_MOVER_REQUESTS = "/dashboard/requests/mover/getfordate";
-    
+    public static final String GET_REQUESTS_DETAIL = "/dashboard/requests/mover/getdetail";
+
+
+
     public static final String REQUEST_DATE = "request_date";
 
     public static final String FORGOT_PASSWORD = "/forgot"; // { "email" : "myemail@gmail.com" }
@@ -31,5 +34,6 @@ public class PathConstant {
     public static final String GET_ALL_TRUCKS = "/trucks";
     public static final String DELETE_TRUCKS = "/trucks";
     public static final String SAVE_EDIT_TRUCKS = "/trucks/{userId}";
+
 
 }

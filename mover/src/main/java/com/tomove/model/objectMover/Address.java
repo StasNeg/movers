@@ -216,4 +216,23 @@ public class Address extends AbstractBaseEntity{
     public void setRequestAdresses(List<RequestAdress> requestAdresses) {
         this.requestAdresses = requestAdresses;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", id=" + id +
+                ", building='" + building + '\'' +
+                ", apartment='" + apartment + '\'' +
+                ", longitude=" + longitude +
+                ", lattitude=" + lattitude +
+                ", floor=" + floor +
+                ", lift=" + lift +
+                ", area=" + area +
+//                ", itemsFrom=" + itemsFrom +
+//                ", itemsTo=" + itemsTo +
+//                ", requestAdresses=" + requestAdresses +
+                "} " + super.toString();
+    }
 }

@@ -1,6 +1,9 @@
 package com.tomove.common;
 
+import com.tomove.model.enums.Lift;
+
 public class AddressDto {
+    public int id;
     public int seqnumber;
     public float latitude;
     public float longitude;
@@ -9,6 +12,51 @@ public class AddressDto {
     public String building;
     public String apartment;
     public int floor;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setSeqnumber(int seqnumber) {
+        this.seqnumber = seqnumber;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
+
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public void setLift(String lift) {
+        this.lift = lift;
+    }
+
     public String lift;
 
     public int getSeqnumber() {
@@ -45,6 +93,17 @@ public class AddressDto {
 
     public String getLift() {
         return lift;
+    }
+
+    public AddressDto(int id, int seqnumber, String city, String street, String building, String apartment, int floor, Lift lift) {
+        this.id = id;
+        this.seqnumber = seqnumber;
+        this.city = city;
+        this.street = street;
+        this.building = building;
+        this.apartment = apartment;
+        this.floor = floor;
+        this.lift = lift.name();
     }
 
     public AddressDto(int seqnumber, String city, String street, String building, String apartment, int floor) {

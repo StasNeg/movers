@@ -236,4 +236,10 @@ public class Request extends AbstractBaseEntity{
         this.truck = truck;
     }
 
+    @Override
+    public String toString() {
+        return "Request{" +
+                "id=" + id +
+                "} ";
+    }
 }
