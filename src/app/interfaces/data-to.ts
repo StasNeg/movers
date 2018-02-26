@@ -1,4 +1,4 @@
 export interface DataTo {
   success: boolean;
-  data: any[];
+  data: any;
 }

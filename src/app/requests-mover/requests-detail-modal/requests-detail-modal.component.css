@@ -1,0 +1,32 @@
+.box {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 4px;
+  text-align: left;
+  padding: 4px;
+  font-size: 14px;
+
+}
+
+#cost {
+  position: absolute;
+  left:65vw;
+  top:20px;
+  font-weight: 100;
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  position: relative;
+  margin: 4px;
+  text-align: left;
+  padding: 4px;
+  font-size: 12px;
+}
+
+.address{
+  width: 75%;
+}

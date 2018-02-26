@@ -45,6 +45,8 @@ import {TruckEditmenuComponent} from './truckeditmenu/truckeditmenu.component';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 import {AddAdditionalAddressComponent} from "./move-main-adress/additional-address-modal-form/dialogAddAdditionalAddress.component";
+import {RequestsMoverComponent} from "./requests-mover/requests-mover.component";
+import {RequestDetailDialog} from "./requests-mover/requests-detail-modal/requests-detail-modal.component";
 
 @NgModule({
   declarations: [
@@ -72,8 +74,9 @@ import {AddAdditionalAddressComponent} from "./move-main-adress/additional-addre
     RegistrationComponent,
     TrucksComponent,
     TruckEditmenuComponent,
-    AddAdditionalAddressComponent
-
+    AddAdditionalAddressComponent,
+    RequestsMoverComponent,
+    RequestDetailDialog
   ],
   imports: [
     BrowserModule,
@@ -115,7 +118,7 @@ import {AddAdditionalAddressComponent} from "./move-main-adress/additional-addre
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent, DialogRoomComponent, TruckEditmenuComponent, AddAdditionalAddressComponent]
+  entryComponents: [DialogComponent, DialogRoomComponent, TruckEditmenuComponent, AddAdditionalAddressComponent, RequestDetailDialog]
 })
 export class AppModule {
 }

@@ -16,7 +16,7 @@ export interface ConfirmModel {
   styleUrls: ['./truckeditmenu.component.css']
 })
 export class TruckEditmenuComponent extends DialogComponent<ConfirmModel, DatatrucksModel> implements ConfirmModel {
-  areaAnswers = ['CENTER', 'SOUTH', 'NORTH', 'ALL COUNTRY'];
+  areaAnswers = ['CENTER', 'SOUTH', 'NORTH', 'EAST', 'ALL'];
   roomsAnswers = [1, 2, 3, 4, 5];
   movesDayAnswers = [1, 2, 3];
   title: string;

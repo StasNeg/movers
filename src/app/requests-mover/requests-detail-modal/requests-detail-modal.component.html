@@ -1,0 +1,23 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" (click)="close()">&times;</button>
+      <h4 class="modal-title">{{title || 'Details'}}</h4>
+      <div class="box" *ngFor="let i of data">
+        <div *ngIf="i.itemsFrom.length > 0" class="address"> From: {{i.addressDto.addressString}}</div>
+        <div *ngFor="let j of i.itemsFrom">
+          <div class="item"> Item: {{j.name}}</div>
+        </div>
+        <div *ngIf="i.itemsTo.length > 0" class="address"> To: {{i.addressDto.addressString}}</div>
+        <div *ngFor="let j of i.itemsTo">
+          <div class="item"> Item: {{j.name}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="confirm()">OK</button>
+      <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+    </div>
+  </div>
+</div>
+

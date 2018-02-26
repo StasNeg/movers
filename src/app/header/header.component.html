@@ -1,5 +1,5 @@
 <div class="header">
 
-  <button [disabled] = "hasUser()" [routerLink]="'/requests'">Dashboard</button>
+  <button [disabled] = "hasUser()" (click)="onButtonClick()">Dashboard</button>
 
 </div>

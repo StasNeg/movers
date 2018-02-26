@@ -15,11 +15,13 @@ import {RequestComponent} from './request/request.component';
 import {RequestFinishComponent} from './request-finish/request-finish.component';
 import {RegistrationComponent} from './auth/registration/registration.component';
 import {TrucksComponent} from './trucks/trucks.component';
+import {RequestsMoverComponent} from "./requests-mover/requests-mover.component";
 
 
 const appRoutes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'requests', component: RequestsComponent},
+  {path: 'requestsMover', component: RequestsMoverComponent},
   {path: 'calendar', component: CalendarComponent},
   {path: 'orders/:date', component: OrdersComponent},
   {path: 'address', component: MoveMainAddressComponent},

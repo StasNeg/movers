@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,7 @@ import {Component, OnInit} from '@angular/core';
 export class HeadersComponent implements OnInit {
 
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
@@ -17,5 +18,14 @@ export class HeadersComponent implements OnInit {
 
   hasUser() {
     return localStorage.getItem('user')===null;
+  }
+
+  onButtonClick(){
+    let type = JSON.parse(localStorage.getItem('user')).type;
+    if (type === 'customer') {
+      this.router.navigate(['/requests']);
+    } else {
+      this.router.navigate(['/requestsMover']);
+    }
   }
 }

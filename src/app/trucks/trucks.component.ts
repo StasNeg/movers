@@ -24,7 +24,6 @@ export class TrucksComponent implements OnInit {
   ngOnInit() {
     this.truckService.getTrucks().subscribe((res: TruckModel) => {
       this.trucks = res.data;
-      console.log(this.trucks);
     });
   }
 
@@ -37,7 +36,6 @@ export class TrucksComponent implements OnInit {
       .subscribe((trucks) => {
         if (trucks) {
           this.truckService.changeTruck(trucks).subscribe((data: DatatrucksModel) => {
-            console.log(data);
             this.truckService.getTrucks().subscribe((resp: TruckModel) => {
               this.trucks = resp.data;
             });
@@ -50,9 +48,7 @@ export class TrucksComponent implements OnInit {
   }
 
   deleteTruck(truck) {
-    console.log(truck.id);
     this.truckService.deleteTruck(truck).subscribe(data => {
-
       this.trucks = this.trucks.filter(c => c.id !== truck.id);
     });
   }
